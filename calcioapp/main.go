@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bytes"
+	"log"
 	"net/http"
+	"net/url"
 
 	echo "github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -41,6 +44,25 @@ func main() {
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "hello world")
+
+		url, _ := url.Parse(baseURL)
+		//url.Path = path.Join(url.Path, "search")
+		queryParams := url.Query()
+		queryParams.Set("hogehoge", "hugahuga")
+
+		url.RawQuery = queryParams.Encode()
+		resp, err := http.Get(url.String())
+		if err != nil {
+			log.Fatal(err)
+			return echo.NewHTTPError(http.StatusInternalServerError)
+		}
+		defer resp.Body.Close()
+
+		buf := new(bytes.Buffer)
+		buf.ReadFrom(resp.Body)
+		jsonBytes := ([]byte)(buf.String())
+
+		return c.JSON(http.StatusOK, jsonBytes)
 	})
 
 	e.Logger.Fatal(e.Start(":8080"))
