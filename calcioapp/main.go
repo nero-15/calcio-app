@@ -23,6 +23,8 @@ import (
 // 	return t.templates.ExecuteTemplate(w, name, data)
 // }
 
+const baseURL = "https://api.football-data.org/v2/"
+
 func main() {
 	e := echo.New()
 
