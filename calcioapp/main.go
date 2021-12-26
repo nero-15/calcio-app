@@ -43,9 +43,8 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.GET("/", func(c echo.Context) error {
-		//return c.String(http.StatusOK, "hello world")
 
-		url, _ := url.Parse(baseURL)
+		url, _ := url.Parse("https://api.football-data.org/v2/") //baseUrl
 		url.Path = path.Join(url.Path, "matches")
 		queryParams := url.Query()
 		//queryParams.Set("hogehoge", "hugahuga")
