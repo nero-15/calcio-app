@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"net/http"
 	"net/url"
+	"path"
 
 	echo "github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -42,11 +43,12 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "hello world")
+		//return c.String(http.StatusOK, "hello world")
 
 		url, _ := url.Parse(baseURL)
+		url.Path = path.Join(url.Path, "matches")
 		queryParams := url.Query()
-		queryParams.Set("hogehoge", "hugahuga")
+		//queryParams.Set("hogehoge", "hugahuga")
 
 		url.RawQuery = queryParams.Encode()
 		req, _ := http.NewRequest("GET", url.String(), nil)
