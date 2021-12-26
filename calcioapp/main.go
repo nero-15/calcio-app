@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bytes"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
@@ -57,11 +57,9 @@ func main() {
 		resp, _ := client.Do(req)
 		defer resp.Body.Close()
 
-		buf := new(bytes.Buffer)
-		buf.ReadFrom(resp.Body)
-		jsonBytes := ([]byte)(buf.String())
-
-		return c.JSON(http.StatusOK, jsonBytes)
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		//fmt.Println(string(byteArray))
+		return c.String(http.StatusOK, string(byteArray))
 	})
 
 	e.Logger.Fatal(e.Start(":8080"))
