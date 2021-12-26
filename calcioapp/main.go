@@ -1,65 +1,26 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
-
-	echo "github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
-// // TemplateRenderer is a custom html/template renderer for Echo framework
-// type TemplateRenderer struct {
-// 	templates *template.Template
-// }
-
-// // Render renders a template document
-// func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-
-// 	// Add global methods if data is a map
-// 	if viewContext, isMap := data.(map[string]interface{}); isMap {
-// 		viewContext["reverse"] = c.Echo().Reverse
-// 	}
-
-// 	return t.templates.ExecuteTemplate(w, name, data)
-// }
-
-const baseURL = "https://api.football-data.org/v2/"
-
 func main() {
-	e := echo.New()
+	url, _ := url.Parse("https://api.football-data.org/v2/") //baseUrl
+	url.Path = path.Join(url.Path, "matches")
+	queryParams := url.Query()
+	//queryParams.Set("hogehoge", "hugahuga")
 
-	// renderer := &TemplateRenderer{
-	// 	templates: template.Must(template.New("").Delims("[[", "]]").ParseGlob("views/*.html")), // vue.jsとdelimsがかぶるので変更
-	// }
-	// e.Renderer = renderer
+	url.RawQuery = queryParams.Encode()
+	req, _ := http.NewRequest("GET", url.String(), nil)
+	req.Header.Add("X-Auth-Token", "Your API token")
+	client := new(http.Client)
+	resp, _ := client.Do(req)
+	defer resp.Body.Close()
 
-	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: `"time":"${time_rfc3339}","remote_ip":"${remote_ip}","host":"${host}",` +
-			`"method":"${method}","uri":"${uri}","status":${status},"error":"${error}"` + "\n",
-	}))
-	e.Use(middleware.Recover())
-
-	e.GET("/", func(c echo.Context) error {
-
-		url, _ := url.Parse("https://api.football-data.org/v2/") //baseUrl
-		url.Path = path.Join(url.Path, "matches")
-		queryParams := url.Query()
-		//queryParams.Set("hogehoge", "hugahuga")
-
-		url.RawQuery = queryParams.Encode()
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("X-Auth-Token", "Your API token")
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		//fmt.Println(string(byteArray))
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
-	e.Logger.Fatal(e.Start(":8080"))
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(byteArray))
 }
