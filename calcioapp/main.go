@@ -9,14 +9,12 @@ import (
 )
 
 func main() {
-	url, _ := url.Parse("https://api.football-data.org/v2/") //baseUrl
-	url.Path = path.Join(url.Path, "matches")
-	queryParams := url.Query()
-	//queryParams.Set("hogehoge", "hugahuga")
+	// 取得したいデータのURL作成
+	url, _ := url.Parse("https://api.football-data.org/v2/")
+	url.Path = path.Join(url.Path, "teams", "108")
 
-	url.RawQuery = queryParams.Encode()
 	req, _ := http.NewRequest("GET", url.String(), nil)
-	req.Header.Add("X-Auth-Token", "Your API token")
+	req.Header.Add("X-Auth-Token", "Your API token") // アカウント登録時に送られてきたAPIトークンをリクエストヘッダーに追加
 	client := new(http.Client)
 	resp, _ := client.Do(req)
 	defer resp.Body.Close()
