@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"log"
 	"net/http"
 	"net/url"
 
@@ -46,16 +45,14 @@ func main() {
 		return c.String(http.StatusOK, "hello world")
 
 		url, _ := url.Parse(baseURL)
-		//url.Path = path.Join(url.Path, "search")
 		queryParams := url.Query()
 		queryParams.Set("hogehoge", "hugahuga")
 
 		url.RawQuery = queryParams.Encode()
-		resp, err := http.Get(url.String())
-		if err != nil {
-			log.Fatal(err)
-			return echo.NewHTTPError(http.StatusInternalServerError)
-		}
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("X-Auth-Token", `Your API token`)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
 		defer resp.Body.Close()
 
 		buf := new(bytes.Buffer)
