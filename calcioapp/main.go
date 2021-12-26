@@ -52,7 +52,7 @@ func main() {
 
 		url.RawQuery = queryParams.Encode()
 		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("X-Auth-Token", `Your API token`)
+		req.Header.Add("X-Auth-Token", "Your API token")
 		client := new(http.Client)
 		resp, _ := client.Do(req)
 		defer resp.Body.Close()
