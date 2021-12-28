@@ -4,5 +4,5 @@ go 1.14
 
 require (
 	github.com/labstack/echo/v4 v4.6.1
-	gopkg.in/ini.v1 v1.66.2 // indirect
+	gopkg.in/ini.v1 v1.66.2
 )
