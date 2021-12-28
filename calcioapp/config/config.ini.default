@@ -1,0 +1,3 @@
+[footballData]
+apiToken = your-api-token
+baseUrl = https://api.football-data.org/v2/
