@@ -12,7 +12,7 @@ import (
 
 func main() {
 	// 取得したいデータのURL作成
-	url, _ := url.Parse("https://api.football-data.org/v2/")
+	url, _ := url.Parse(config.Config.FootballDataBaseUrl)
 	url.Path = path.Join(url.Path, "teams", "108")
 
 	req, _ := http.NewRequest("GET", url.String(), nil)
