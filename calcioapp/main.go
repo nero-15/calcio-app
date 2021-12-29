@@ -43,7 +43,7 @@ func main() {
 	}))
 	e.Use(middleware.Recover())
 
-	e.GET("/", func(c echo.Context) error {
+	e.GET("/inter", func(c echo.Context) error {
 		// 取得したいデータのURL作成
 		url, _ := url.Parse(config.Config.FootballDataBaseUrl)
 		url.Path = path.Join(url.Path, "teams", "108")
