@@ -43,6 +43,10 @@ func main() {
 	}))
 	e.Use(middleware.Recover())
 
+	e.GET("/", func(c echo.Context) error {
+		return c.Render(http.StatusOK, "index.html", map[string]interface{}{})
+	})
+
 	e.GET("/inter", func(c echo.Context) error {
 		// 取得したいデータのURL作成
 		url, _ := url.Parse(config.Config.FootballDataBaseUrl)
