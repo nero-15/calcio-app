@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -59,7 +60,7 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-		//fmt.Println(string(byteArray))
+		fmt.Println(string(byteArray))
 		return c.JSON(http.StatusOK, string(byteArray))
 	})
 
