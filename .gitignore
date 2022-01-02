@@ -1,2 +1,3 @@
 go.sum
 calcioapp/config/config.ini
+node_modules
