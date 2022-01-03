@@ -11,6 +11,8 @@ import (
 type ConfigList struct {
 	FootballDataApiToken string
 	FootballDataBaseUrl  string
+	ApiFootballApiToken  string
+	ApiFootballBaseUrl   string
 }
 
 // Config is ConfigList
@@ -26,5 +28,7 @@ func init() {
 	Config = ConfigList{
 		FootballDataApiToken: cfg.Section("footballData").Key("apiToken").String(),
 		FootballDataBaseUrl:  cfg.Section("footballData").Key("baseUrl").String(),
+		ApiFootballApiToken:  cfg.Section("apiFootball").Key("apiToken").String(),
+		ApiFootballBaseUrl:   cfg.Section("apiFootball").Key("baseUrl").String(),
 	}
 }
