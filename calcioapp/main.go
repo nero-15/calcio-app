@@ -64,4 +64,8 @@ func main() {
 		return c.JSON(http.StatusOK, string(byteArray))
 	})
 
+	e.GET("/api", func(c echo.Context) error {
+		return c.String(http.StatusOK, "api-football")
+	})
+
 }
