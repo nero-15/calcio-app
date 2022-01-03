@@ -65,7 +65,17 @@ func main() {
 	})
 
 	e.GET("/api", func(c echo.Context) error {
+		url, _ := url.Parse("https://v3.football.api-sports.io/status")
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		fmt.Println(string(byteArray))
+
 		return c.String(http.StatusOK, "api-football")
 	})
 
+	e.Logger.Fatal(e.Start(":8080"))
 }
