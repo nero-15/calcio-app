@@ -66,6 +66,7 @@ func main() {
 
 	e.GET("/api", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "status")
 		req, _ := http.NewRequest("GET", url.String(), nil)
 		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
 		client := new(http.Client)

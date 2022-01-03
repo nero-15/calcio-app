@@ -4,4 +4,4 @@ baseUrl = https://api.football-data.org/v2/
 
 [apiFootball]
 apiToken = your-api-token
-baseUrl = https://v3.football.api-sports.io/status
+baseUrl = https://v3.football.api-sports.io/
