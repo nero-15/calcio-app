@@ -84,7 +84,7 @@ func main() {
 		url.Path = path.Join(url.Path, "countries")
 
 		queryParams := url.Query()
-		queryParams.Set("code", "JP")
+		queryParams.Set("code", "IT")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
