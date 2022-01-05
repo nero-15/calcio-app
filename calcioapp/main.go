@@ -118,7 +118,7 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/teams", func(c echo.Context) error {
+	e.GET("/api/teams/SerieA", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "teams")
 
