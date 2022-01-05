@@ -160,7 +160,7 @@ func main() {
 
 	e.GET("/api/teams/statistics", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "teams")
+		url.Path = path.Join(url.Path, "teams", "statistics")
 
 		queryParams := url.Query()
 		queryParams.Set("league", "136")
