@@ -165,6 +165,7 @@ func main() {
 		queryParams := url.Query()
 		queryParams.Set("league", "136")
 		queryParams.Set("season", "2021")
+		queryParams.Set("team", "15")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
