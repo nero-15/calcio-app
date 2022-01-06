@@ -200,10 +200,10 @@ func main() {
 
 	e.GET("/api/venues", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "teams", "seasons")
+		url.Path = path.Join(url.Path, "venues")
 
 		queryParams := url.Query()
-		queryParams.Set("team", "505")
+		queryParams.Set("id", "907")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
