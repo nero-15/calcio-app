@@ -259,10 +259,10 @@ func main() {
 
 	e.GET("/api/fixtures/rounds", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "standings")
+		url.Path = path.Join(url.Path, "fixtures", "rounds")
 
 		queryParams := url.Query()
-		queryParams.Set("league", "136")
+		queryParams.Set("league", "135")
 		queryParams.Set("season", "2021")
 		url.RawQuery = queryParams.Encode()
 
