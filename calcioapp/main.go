@@ -456,7 +456,7 @@ func main() {
 		url.Path = path.Join(url.Path, "players", "seasons")
 
 		queryParams := url.Query()
-		queryParams.Set("team", "505")
+		queryParams.Set("player", "217")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
