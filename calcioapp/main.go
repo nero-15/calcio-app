@@ -588,6 +588,7 @@ func main() {
 
 		queryParams := url.Query()
 		queryParams.Set("team", "505")
+		queryParams.Set("player", "30558")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
