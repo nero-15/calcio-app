@@ -584,7 +584,7 @@ func main() {
 
 	e.GET("/api/transfers", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "players", "transfers")
+		url.Path = path.Join(url.Path, "transfers")
 
 		queryParams := url.Query()
 		queryParams.Set("team", "505")
