@@ -525,5 +525,186 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
+	e.GET("/api/players/topassists", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "players", "topassists")
+
+		queryParams := url.Query()
+		queryParams.Set("league", "135")
+		queryParams.Set("season", "2021")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/players/topyellowcards", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "players", "topyellowcards")
+
+		queryParams := url.Query()
+		queryParams.Set("league", "135")
+		queryParams.Set("season", "2021")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/players/topredcards", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "players", "topredcards")
+
+		queryParams := url.Query()
+		queryParams.Set("league", "135")
+		queryParams.Set("season", "2021")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/transfers", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "transfers")
+
+		queryParams := url.Query()
+		queryParams.Set("player", "30558")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/trophies", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "trophies")
+
+		queryParams := url.Query()
+		queryParams.Set("player", "30558")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/sidelined", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "sidelined")
+
+		queryParams := url.Query()
+		queryParams.Set("player", "201")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/odds", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "odds")
+
+		queryParams := url.Query()
+		queryParams.Set("league", "135")
+		queryParams.Set("season", "2021")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/odds/mapping", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "odds", "mapping")
+
+		queryParams := url.Query()
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/odds/bookmakers", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "odds", "bookmakers")
+
+		queryParams := url.Query()
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/odds/bets", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "odds", "bets")
+
+		queryParams := url.Query()
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
