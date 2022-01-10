@@ -587,7 +587,6 @@ func main() {
 		url.Path = path.Join(url.Path, "transfers")
 
 		queryParams := url.Query()
-		queryParams.Set("team", "505")
 		queryParams.Set("player", "30558")
 		url.RawQuery = queryParams.Encode()
 
