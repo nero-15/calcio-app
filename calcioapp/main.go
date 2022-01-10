@@ -623,7 +623,7 @@ func main() {
 		url.Path = path.Join(url.Path, "sidelined")
 
 		queryParams := url.Query()
-		queryParams.Set("player", "30558")
+		queryParams.Set("player", "201")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
