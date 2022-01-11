@@ -64,7 +64,7 @@ func main() {
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
 		fmt.Println(string(byteArray))
-		return c.JSON(http.StatusOK, string(byteArray))
+		return c.String(http.StatusOK, string(byteArray))
 	})
 
 	e.GET("/api/status", func(c echo.Context) error {
