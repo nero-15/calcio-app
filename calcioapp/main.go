@@ -48,10 +48,13 @@ func main() {
 		return c.Render(http.StatusOK, "index.html", map[string]interface{}{})
 	})
 
-	e.GET("/inter", func(c echo.Context) error {
+	e.GET("api/footballData/teams/:teamId", func(c echo.Context) error {
+		//inter = 108
+		teamId := c.Param("teamId")
+
 		// 取得したいデータのURL作成
 		url, _ := url.Parse(config.Config.FootballDataBaseUrl)
-		url.Path = path.Join(url.Path, "teams", "108")
+		url.Path = path.Join(url.Path, "teams", teamId)
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
 		req.Header.Add("X-Auth-Token", config.Config.FootballDataApiToken) // アカウント登録時に送られてきたAPIトークンをリクエストヘッダーに追加
@@ -60,8 +63,7 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-		fmt.Println(string(byteArray))
-		return c.JSON(http.StatusOK, string(byteArray))
+		return c.String(http.StatusOK, string(byteArray))
 	})
 
 	e.GET("/api/status", func(c echo.Context) error {
