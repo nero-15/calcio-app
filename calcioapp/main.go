@@ -63,7 +63,6 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-		fmt.Println(string(byteArray))
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
