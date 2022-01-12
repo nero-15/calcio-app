@@ -99,7 +99,7 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/leagues", func(c echo.Context) error {
+	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "leagues")
 
