@@ -66,7 +66,7 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/status", func(c echo.Context) error {
+	e.GET("/api/apiFootball/status", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "status")
 		req, _ := http.NewRequest("GET", url.String(), nil)
