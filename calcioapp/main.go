@@ -78,7 +78,7 @@ func main() {
 		byteArray, _ := ioutil.ReadAll(resp.Body)
 		fmt.Println(string(byteArray))
 
-		return c.String(http.StatusOK, "api-football")
+		return c.String(http.StatusOK, string(byteArray))
 	})
 
 	e.GET("/api/countries", func(c echo.Context) error {
