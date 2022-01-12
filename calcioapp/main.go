@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -66,9 +65,10 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/status", func(c echo.Context) error {
+	e.GET("/api/apiFootball/status", func(c echo.Context) error { //apiFootballのアカウント情報を取得
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "status")
+
 		req, _ := http.NewRequest("GET", url.String(), nil)
 		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
 		client := new(http.Client)
@@ -76,17 +76,17 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-		fmt.Println(string(byteArray))
-
-		return c.String(http.StatusOK, "api-football")
+		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/countries", func(c echo.Context) error {
+	e.GET("/api/apiFootball/country/:code", func(c echo.Context) error { //Alpha2コードから国のデータを取得
+		code := c.Param("code") //IT: イタリア, JP: 日本
+
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "countries")
 
 		queryParams := url.Query()
-		queryParams.Set("code", "IT")
+		queryParams.Set("code", code)
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
@@ -96,11 +96,10 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/leagues", func(c echo.Context) error {
+	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "leagues")
 
@@ -116,7 +115,6 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
