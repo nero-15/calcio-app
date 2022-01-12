@@ -65,7 +65,7 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/apiFootball/status", func(c echo.Context) error {
+	e.GET("/api/apiFootball/status", func(c echo.Context) error { //apiFootballのアカウント情報を取得
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "status")
 
