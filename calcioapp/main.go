@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -69,6 +68,7 @@ func main() {
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "status")
+
 		req, _ := http.NewRequest("GET", url.String(), nil)
 		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
 		client := new(http.Client)
@@ -76,8 +76,6 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-		fmt.Println(string(byteArray))
-
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
