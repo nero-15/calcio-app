@@ -147,7 +147,7 @@ func main() {
 		url.Path = path.Join(url.Path, "venues")
 
 		queryParams := url.Query()
-		//queryParams.Set("id", "907")
+		queryParams.Set("country", "Italy")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
