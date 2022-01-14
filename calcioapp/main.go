@@ -119,7 +119,7 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/teams", func(c echo.Context) error {
-		leagueId := c.Param("leagueId")
+		leagueId := c.Param("leagueId") //SerieA: 135, SerieB: 136
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "teams")
 
