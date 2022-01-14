@@ -142,12 +142,12 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/venues", func(c echo.Context) error {
+	e.GET("/api/apiFootball/venues", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "venues")
 
 		queryParams := url.Query()
-		queryParams.Set("id", "907")
+		//queryParams.Set("id", "907")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
