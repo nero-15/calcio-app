@@ -79,26 +79,6 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/apiFootball/country/:code", func(c echo.Context) error { //Alpha2コードから国のデータを取得
-		code := c.Param("code") //IT: イタリア, JP: 日本
-
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "countries")
-
-		queryParams := url.Query()
-		queryParams.Set("code", code)
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
 	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "leagues")
@@ -119,7 +99,7 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/teams", func(c echo.Context) error {
-		leagueId := c.Param("leagueId")
+		leagueId := c.Param("leagueId") //SerieA: 135, SerieB: 136
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "teams")
 
@@ -139,34 +119,17 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/SerieB/teams", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "teams")
+	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/statistics", func(c echo.Context) error {
+		leagueId := c.Param("leagueId")
+		teamId := c.Param("teamId") //inter: 505
 
-		queryParams := url.Query()
-		queryParams.Set("league", "136")
-		queryParams.Set("season", "2021")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
-	e.GET("/api/teams/statistics/inter", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "teams", "statistics")
 
 		queryParams := url.Query()
-		queryParams.Set("league", "135")
+		queryParams.Set("league", leagueId)
+		queryParams.Set("team", teamId)
 		queryParams.Set("season", "2021")
-		queryParams.Set("team", "505")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
@@ -176,35 +139,15 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/teams/seasons", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "teams", "seasons")
-
-		queryParams := url.Query()
-		queryParams.Set("team", "505")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
-	e.GET("/api/venues", func(c echo.Context) error {
+	e.GET("/api/apiFootball/venues", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "venues")
 
 		queryParams := url.Query()
-		queryParams.Set("id", "907")
+		queryParams.Set("country", "Italy")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
@@ -214,7 +157,27 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
 
+	e.GET("/api/apiFootball/venue/:venueId", func(c echo.Context) error {
+		venueId := c.Param("venueId") //Stadio Giuseppe Meazza: 907
+
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "venues")
+
+		queryParams := url.Query()
+		queryParams.Set("id", venueId)
+		queryParams.Set("country", "Italy")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
