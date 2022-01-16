@@ -232,7 +232,7 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/apiFootball/league/:leagueId/headtohead/:h2h", func(c echo.Context) error {
+	e.GET("/api/apiFootball/league/:leagueId/fixtures/headtohead/:h2h", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
 		h2h := c.Param("h2h")
 
