@@ -138,6 +138,29 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
+	e.GET("/api/apiFootball/league/:leagueId/team/:teamId", func(c echo.Context) error {
+		leagueId := c.Param("leagueId") //SerieA: 135, SerieB: 136
+		teamId := c.Param("teamId")
+
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "teams")
+
+		queryParams := url.Query()
+		queryParams.Set("league", leagueId)
+		queryParams.Set("team", teamId)
+		queryParams.Set("season", "2021")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
 	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/statistics", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
 		teamId := c.Param("teamId") //inter: 505
@@ -148,6 +171,99 @@ func main() {
 		queryParams := url.Query()
 		queryParams.Set("league", leagueId)
 		queryParams.Set("team", teamId)
+		queryParams.Set("season", "2021")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/fixtures", func(c echo.Context) error {
+		leagueId := c.Param("leagueId")
+		teamId := c.Param("teamId")
+
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "fixtures")
+
+		queryParams := url.Query()
+		queryParams.Set("league", leagueId)
+		queryParams.Set("team", teamId)
+		queryParams.Set("season", "2021")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/fixture/:fixtureId", func(c echo.Context) error {
+		leagueId := c.Param("leagueId")
+		teamId := c.Param("teamId")
+		fixtureId := c.Param("fixtureId")
+
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "fixtures")
+
+		queryParams := url.Query()
+		queryParams.Set("id", fixtureId)
+		queryParams.Set("league", leagueId)
+		queryParams.Set("team", teamId)
+		queryParams.Set("season", "2021")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/apiFootball/team/:teamId/fixture/:fixtureId/statistics", func(c echo.Context) error {
+		teamId := c.Param("teamId")
+		fixtureId := c.Param("fixtureId")
+
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "fixtures", "statistics")
+
+		queryParams := url.Query()
+		queryParams.Set("fixture", fixtureId)
+		queryParams.Set("team", teamId)
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
+	e.GET("/api/apiFootball/league/:leagueId/fixtures/headtohead/:h2h", func(c echo.Context) error {
+		leagueId := c.Param("leagueId")
+		h2h := c.Param("h2h")
+
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "fixtures", "headtohead")
+
+		queryParams := url.Query()
+		queryParams.Set("league", leagueId)
+		queryParams.Set("h2h", h2h)
 		queryParams.Set("season", "2021")
 		url.RawQuery = queryParams.Encode()
 
@@ -197,67 +313,6 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
-	e.GET("/api/apiFootball/fixtures", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "fixtures")
-
-		queryParams := url.Query()
-		queryParams.Set("league", "135")
-		queryParams.Set("season", "2021")
-		queryParams.Set("team", "505")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
-	e.GET("/api/fixtures/headtohead", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "fixtures", "headtohead")
-
-		queryParams := url.Query()
-		queryParams.Set("league", "135")
-		queryParams.Set("season", "2021")
-		queryParams.Set("h2h", "505-489")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
-	e.GET("/api/fixtures/statistics", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "fixtures", "statistics")
-
-		queryParams := url.Query()
-		queryParams.Set("fixture", "731698")
-		queryParams.Set("team", "505")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
