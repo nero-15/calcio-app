@@ -276,6 +276,24 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
+	e.GET("/api/apiFootball/team/:teamId/fixture/:fixtureId/lineups", func(c echo.Context) error {
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "fixtures", "lineups")
+
+		queryParams := url.Query()
+		queryParams.Set("fixture", "731698")
+		url.RawQuery = queryParams.Encode()
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
 	e.GET("/api/apiFootball/league/:leagueId/fixtures/headtohead/:h2h", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
 		h2h := c.Param("h2h")
