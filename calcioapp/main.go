@@ -241,7 +241,7 @@ func main() {
 		url.Path = path.Join(url.Path, "injuries")
 
 		queryParams := url.Query()
-		queryParams.Set("id", fixtureId)
+		queryParams.Set("fixture", fixtureId)
 		queryParams.Set("league", leagueId)
 		queryParams.Set("team", teamId)
 		queryParams.Set("season", "2021")
