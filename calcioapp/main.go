@@ -407,12 +407,14 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/predictions", func(c echo.Context) error {
+	e.GET("/api/apiFootball/predictions/:fixtureId", func(c echo.Context) error {
+		fixtureId := c.Param("fixtureId")
+
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "predictions")
 
 		queryParams := url.Query()
-		queryParams.Set("fixture", "731698")
+		queryParams.Set("fixture", fixtureId)
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
