@@ -346,11 +346,13 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/team/:teamId/coachs", func(c echo.Context) error {
+		teamId := c.Param("teamId")
+
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "coachs")
 
 		queryParams := url.Query()
-		queryParams.Set("team", "505")
+		queryParams.Set("team", teamId)
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
