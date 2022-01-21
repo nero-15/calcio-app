@@ -185,11 +185,15 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/players", func(c echo.Context) error {
+		leagueId := c.Param("leagueId")
+		teamId := c.Param("teamId")
+
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "players")
 
 		queryParams := url.Query()
-		queryParams.Set("id", "217")
+		queryParams.Set("league", leagueId)
+		queryParams.Set("team", teamId)
 		queryParams.Set("season", "2021")
 		url.RawQuery = queryParams.Encode()
 
