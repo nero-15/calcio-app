@@ -615,12 +615,14 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/trophies", func(c echo.Context) error {
+	e.GET("/api/apiFootball/player/:playerId/trophies", func(c echo.Context) error {
+		playerId := c.Param("playerId")
+
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "trophies")
 
 		queryParams := url.Query()
-		queryParams.Set("player", "30558")
+		queryParams.Set("player", playerId)
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
