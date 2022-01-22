@@ -575,13 +575,14 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/player/:playerId", func(c echo.Context) error {
-		playerId := c.Param("playerId")
+		playerId := c.Param("playerId") // M. Škriniar: 198
 
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "players")
 
 		queryParams := url.Query()
 		queryParams.Set("id", playerId)
+		queryParams.Set("season", "2021")
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
@@ -594,7 +595,7 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/apiFootball/transfers", func(c echo.Context) error {
+	e.GET("/api/apiFootball/predictions/transfers", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "transfers")
 
