@@ -574,66 +574,14 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/transfers", func(c echo.Context) error {
+	e.GET("/api/apiFootball/player/:playerId", func(c echo.Context) error {
+		playerId := c.Param("playerId") // M. Škriniar: 198
+
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "transfers")
+		url.Path = path.Join(url.Path, "players")
 
 		queryParams := url.Query()
-		queryParams.Set("player", "30558")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
-	e.GET("/api/trophies", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "trophies")
-
-		queryParams := url.Query()
-		queryParams.Set("player", "30558")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
-	e.GET("/api/sidelined", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "sidelined")
-
-		queryParams := url.Query()
-		queryParams.Set("player", "201")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
-	})
-
-	e.GET("/api/odds", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "odds")
-
-		queryParams := url.Query()
-		queryParams.Set("league", "135")
+		queryParams.Set("id", playerId)
 		queryParams.Set("season", "2021")
 		url.RawQuery = queryParams.Encode()
 
@@ -647,11 +595,14 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/odds/mapping", func(c echo.Context) error {
+	e.GET("/api/apiFootball/player/:playerId/transfers", func(c echo.Context) error {
+		playerId := c.Param("playerId")
+
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "odds", "mapping")
+		url.Path = path.Join(url.Path, "transfers")
 
 		queryParams := url.Query()
+		queryParams.Set("player", playerId)
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
@@ -664,11 +615,14 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/odds/bookmakers", func(c echo.Context) error {
+	e.GET("/api/apiFootball/player/:playerId/trophies", func(c echo.Context) error {
+		playerId := c.Param("playerId")
+
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "odds", "bookmakers")
+		url.Path = path.Join(url.Path, "trophies")
 
 		queryParams := url.Query()
+		queryParams.Set("player", playerId)
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
@@ -681,11 +635,14 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/odds/bets", func(c echo.Context) error {
+	e.GET("/api/apiFootball/player/:playerId/sidelined", func(c echo.Context) error {
+		playerId := c.Param("playerId")
+
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "odds", "bets")
+		url.Path = path.Join(url.Path, "sidelined")
 
 		queryParams := url.Query()
+		queryParams.Set("player", playerId)
 		url.RawQuery = queryParams.Encode()
 
 		req, _ := http.NewRequest("GET", url.String(), nil)
