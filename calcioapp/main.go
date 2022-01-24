@@ -67,7 +67,7 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	e.GET("/api/apiFootball/status", func(c echo.Context) error { //apiFootballのアカウント情報を取得
+	e.GET("/api/apiFootball/status", func(c echo.Context) error {
 		return c.String(http.StatusOK, apifootball.GetStatus())
 	})
 
