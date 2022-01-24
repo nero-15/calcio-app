@@ -10,6 +10,7 @@ import (
 
 	echo "github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/nero-15/calcio-app/apifootball"
 	"github.com/nero-15/calcio-app/config"
 )
 
@@ -76,7 +77,7 @@ func main() {
 		defer resp.Body.Close()
 
 		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		return c.String(http.StatusOK, apifootball.GetStatus())
 	})
 
 	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
