@@ -5,8 +5,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-
-	"github.com/nero-15/calcio-app/config"
 )
 
 type APIClient struct {
@@ -15,12 +13,17 @@ type APIClient struct {
 	httpClient *http.Client
 }
 
-func GetStatus() string {
-	url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+func New(token string, baseUrl string) *APIClient {
+	apiClient := &APIClient{token, baseUrl, &http.Client{}}
+	return apiClient
+}
+
+func (api *APIClient) GetStatus() string {
+	url, _ := url.Parse(api.baseUrl)
 	url.Path = path.Join(url.Path, "status")
 
 	req, _ := http.NewRequest("GET", url.String(), nil)
-	req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+	req.Header.Add("x-apisports-key", api.token)
 	client := new(http.Client)
 	resp, _ := client.Do(req)
 	defer resp.Body.Close()
