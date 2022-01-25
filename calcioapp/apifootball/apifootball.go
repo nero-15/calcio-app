@@ -5,8 +5,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-
-	"github.com/nero-15/calcio-app/config"
 )
 
 type APIClient struct {
@@ -15,8 +13,8 @@ type APIClient struct {
 	httpClient *http.Client
 }
 
-func New() *APIClient {
-	apiClient := &APIClient{config.Config.ApiFootballApiToken, config.Config.ApiFootballBaseUrl, &http.Client{}}
+func New(token string, baseUrl string) *APIClient {
+	apiClient := &APIClient{token, baseUrl, &http.Client{}}
 	return apiClient
 }
 
