@@ -45,7 +45,7 @@ func main() {
 	}))
 	e.Use(middleware.Recover())
 
-	apifootball := apifootball.New()
+	apifootball := apifootball.New(config.Config.FootballDataApiToken, config.Config.FootballDataBaseUrl)
 
 	e.GET("/", func(c echo.Context) error {
 		return c.Render(http.StatusOK, "index.html", map[string]interface{}{})
