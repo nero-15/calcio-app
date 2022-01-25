@@ -68,6 +68,7 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
+		apifootball := apifootball.New()
 		return c.String(http.StatusOK, apifootball.GetStatus())
 	})
 
