@@ -45,6 +45,8 @@ func main() {
 	}))
 	e.Use(middleware.Recover())
 
+	apifootball := apifootball.New()
+
 	e.GET("/", func(c echo.Context) error {
 		return c.Render(http.StatusOK, "index.html", map[string]interface{}{})
 	})
@@ -68,7 +70,6 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
-		apifootball := apifootball.New()
 		return c.String(http.StatusOK, apifootball.GetStatus())
 	})
 
