@@ -1,6 +1,7 @@
 package apifootball
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -18,9 +19,11 @@ func New(token string, baseUrl string) *APIClient {
 	return apiClient
 }
 
-func (api *APIClient) GetStatus() string {
+func (api *APIClient) doRequest(urlPath string, query map[string]string) (body string, err error) {
 	url, _ := url.Parse(api.baseUrl)
-	url.Path = path.Join(url.Path, "status")
+	url.Path = path.Join(url.Path, urlPath)
+	fmt.Println(url.Path)
+	fmt.Println(url.String())
 
 	req, _ := http.NewRequest("GET", url.String(), nil)
 	req.Header.Add("x-apisports-key", api.token)
@@ -29,5 +32,12 @@ func (api *APIClient) GetStatus() string {
 	defer resp.Body.Close()
 
 	byteArray, _ := ioutil.ReadAll(resp.Body)
-	return string(byteArray)
+	fmt.Println(string(byteArray))
+	return string(byteArray), nil
+}
+
+func (api *APIClient) GetStatus() string {
+	body, _ := api.doRequest("status", map[string]string{})
+	fmt.Println(body)
+	return body
 }
