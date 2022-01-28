@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+
+	"github.com/nero-15/calcio-app/config"
 )
 
 type APIClient struct {
@@ -35,4 +37,23 @@ func (api *APIClient) doRequest(urlPath string, query map[string]string) (body s
 func (api *APIClient) GetStatus() string {
 	body, _ := api.doRequest("status", map[string]string{})
 	return body
+}
+
+func (api *APIClient) GetLeagues() string {
+	url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+	url.Path = path.Join(url.Path, "leagues")
+
+	queryParams := url.Query()
+	queryParams.Set("code", "IT")
+	queryParams.Set("season", "2021")
+	url.RawQuery = queryParams.Encode()
+
+	req, _ := http.NewRequest("GET", url.String(), nil)
+	req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+	client := new(http.Client)
+	resp, _ := client.Do(req)
+	defer resp.Body.Close()
+
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	return string(byteArray)
 }
