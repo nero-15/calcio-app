@@ -73,6 +73,20 @@ func main() {
 		return c.String(http.StatusOK, apifootball.GetStatus())
 	})
 
+	e.GET("/api/apiFootball/status2", func(c echo.Context) error { //apiFootballのアカウント情報を取得
+		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+		url.Path = path.Join(url.Path, "status")
+
+		req, _ := http.NewRequest("GET", url.String(), nil)
+		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+		client := new(http.Client)
+		resp, _ := client.Do(req)
+		defer resp.Body.Close()
+
+		byteArray, _ := ioutil.ReadAll(resp.Body)
+		return c.String(http.StatusOK, string(byteArray))
+	})
+
 	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "leagues")
