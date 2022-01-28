@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -45,7 +46,7 @@ func main() {
 	}))
 	e.Use(middleware.Recover())
 
-	apifootball := apifootball.New(config.Config.FootballDataApiToken, config.Config.FootballDataBaseUrl)
+	apifootball := apifootball.New(config.Config.ApiFootballApiToken, config.Config.ApiFootballBaseUrl)
 
 	e.GET("/", func(c echo.Context) error {
 		return c.Render(http.StatusOK, "index.html", map[string]interface{}{})
@@ -70,6 +71,8 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
+
+		fmt.Println(apifootball.GetStatus())
 		return c.String(http.StatusOK, apifootball.GetStatus())
 	})
 
