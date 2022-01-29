@@ -5,8 +5,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-
-	"github.com/nero-15/calcio-app/config"
 )
 
 type APIClient struct {
@@ -40,20 +38,26 @@ func (api *APIClient) GetStatus() string {
 }
 
 func (api *APIClient) GetLeagues() string {
-	url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-	url.Path = path.Join(url.Path, "leagues")
+	body, _ := api.doRequest("leagues", map[string]string{
+		"code":   "IT",
+		"season": "2021",
+	})
+	return body
 
-	queryParams := url.Query()
-	queryParams.Set("code", "IT")
-	queryParams.Set("season", "2021")
-	url.RawQuery = queryParams.Encode()
+	// url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
+	// url.Path = path.Join(url.Path, "leagues")
 
-	req, _ := http.NewRequest("GET", url.String(), nil)
-	req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-	client := new(http.Client)
-	resp, _ := client.Do(req)
-	defer resp.Body.Close()
+	// queryParams := url.Query()
+	// queryParams.Set("code", "IT")
+	// queryParams.Set("season", "2021")
+	// url.RawQuery = queryParams.Encode()
 
-	byteArray, _ := ioutil.ReadAll(resp.Body)
-	return string(byteArray)
+	// req, _ := http.NewRequest("GET", url.String(), nil)
+	// req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
+	// client := new(http.Client)
+	// resp, _ := client.Do(req)
+	// defer resp.Body.Close()
+
+	// byteArray, _ := ioutil.ReadAll(resp.Body)
+	// return string(byteArray)
 }
