@@ -49,21 +49,4 @@ func (api *APIClient) GetLeagues() string {
 		"season": "2021",
 	})
 	return body
-
-	// url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-	// url.Path = path.Join(url.Path, "leagues")
-
-	// queryParams := url.Query()
-	// queryParams.Set("code", "IT")
-	// queryParams.Set("season", "2021")
-	// url.RawQuery = queryParams.Encode()
-
-	// req, _ := http.NewRequest("GET", url.String(), nil)
-	// req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-	// client := new(http.Client)
-	// resp, _ := client.Do(req)
-	// defer resp.Body.Close()
-
-	// byteArray, _ := ioutil.ReadAll(resp.Body)
-	// return string(byteArray)
 }
