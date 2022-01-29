@@ -77,6 +77,11 @@ func main() {
 		return c.String(http.StatusOK, apifootball.GetLeagues())
 	})
 
+	e.GET("/api/apiFootball/league/:leagueId", func(c echo.Context) error {
+		leagueId := c.Param("leagueId")
+		return c.String(http.StatusOK, apifootball.GetLeague(leagueId))
+	})
+
 	e.GET("/api/apiFootball/league/:leagueId/standings", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
