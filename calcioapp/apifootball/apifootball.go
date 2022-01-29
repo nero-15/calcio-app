@@ -63,7 +63,7 @@ func (api *APIClient) GetLeagueByLeagueId(leagueId string) string {
 func (api *APIClient) GetStandingsByLeagueId(leagueId string) string {
 	body, _ := api.doRequest("standings", map[string]string{
 		"season": "2021",
-		"id":     leagueId,
+		"league": leagueId,
 	})
 	return body
 }
