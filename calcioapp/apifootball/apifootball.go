@@ -22,6 +22,17 @@ func (api *APIClient) doRequest(urlPath string, query map[string]string) (body s
 	url, _ := url.Parse(api.baseUrl)
 	url.Path = path.Join(url.Path, urlPath)
 
+	queryParams := url.Query()
+	for key, value := range query {
+		queryParams.Set(key, value)
+	}
+	url.RawQuery = queryParams.Encode()
+
+	// queryParams := url.Query()
+	// queryParams.Set("code", "IT")
+	// queryParams.Set("season", "2021")
+	// url.RawQuery = queryParams.Encode()
+
 	req, _ := http.NewRequest("GET", url.String(), nil)
 	req.Header.Add("x-apisports-key", api.token)
 	client := new(http.Client)
