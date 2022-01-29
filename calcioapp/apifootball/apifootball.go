@@ -59,3 +59,12 @@ func (api *APIClient) GetLeagueByLeagueId(leagueId string) string {
 	})
 	return body
 }
+
+func (api *APIClient) GetStandingsByLeagueId(leagueId string) string {
+	body, _ := api.doRequest("standings", map[string]string{
+		"code":   "IT",
+		"season": "2021",
+		"id":     leagueId,
+	})
+	return body
+}
