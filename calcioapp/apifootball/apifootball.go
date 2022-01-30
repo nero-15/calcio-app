@@ -76,3 +76,11 @@ func (api *APIClient) GetTopscorersByLeagueId(leagueId string) string {
 	})
 	return body
 }
+
+func (api *APIClient) GetTopassistsByLeagueId(leagueId string) string {
+	body, _ := api.doRequest("players/topassists", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+	})
+	return body
+}
