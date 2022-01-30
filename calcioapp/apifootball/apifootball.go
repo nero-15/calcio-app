@@ -18,6 +18,7 @@ func New(token string, baseUrl string) *APIClient {
 	return apiClient
 }
 
+//TODO 404だった時の処理追加
 func (api *APIClient) doRequest(urlPath string, query map[string]string) (body string, err error) {
 	url, _ := url.Parse(api.baseUrl)
 	url.Path = path.Join(url.Path, urlPath)
@@ -62,6 +63,22 @@ func (api *APIClient) GetLeagueByLeagueId(leagueId string) string {
 
 func (api *APIClient) GetStandingsByLeagueId(leagueId string) string {
 	body, _ := api.doRequest("standings", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+	})
+	return body
+}
+
+func (api *APIClient) GetTopscorersByLeagueId(leagueId string) string {
+	body, _ := api.doRequest("players/topscorers", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+	})
+	return body
+}
+
+func (api *APIClient) GetTopassistsByLeagueId(leagueId string) string {
+	body, _ := api.doRequest("players/topassists", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
