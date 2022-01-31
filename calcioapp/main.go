@@ -76,7 +76,7 @@ func main() {
 		// if status.response == nil {
 		// 	return echo.NewHTTPError(http.StatusNotFound, "not found")
 		// }
-		return c.String(http.StatusOK, status)
+		return c.String(http.StatusOK, string(status))
 	})
 
 	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {

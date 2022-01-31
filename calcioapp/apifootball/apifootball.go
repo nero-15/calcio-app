@@ -39,9 +39,9 @@ func (api *APIClient) doRequest(urlPath string, query map[string]string) (body [
 	return byteArray, nil
 }
 
-func (api *APIClient) GetStatus() string {
-	body, _ := api.doRequest("status", map[string]string{})
-	return body
+func (api *APIClient) GetStatus() []byte {
+	resp, _ := api.doRequest("status", map[string]string{})
+	return resp
 }
 
 func (api *APIClient) GetLeagues() string {
