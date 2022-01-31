@@ -80,7 +80,7 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
-		return c.String(http.StatusOK, apifootball.GetLeagues())
+		return c.String(http.StatusOK, string(apifootball.GetLeagues()))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId", func(c echo.Context) error {

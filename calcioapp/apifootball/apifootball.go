@@ -44,12 +44,12 @@ func (api *APIClient) GetStatus() []byte {
 	return resp
 }
 
-func (api *APIClient) GetLeagues() string {
-	body, _ := api.doRequest("leagues", map[string]string{
+func (api *APIClient) GetLeagues() []byte {
+	resp, _ := api.doRequest("leagues", map[string]string{
 		"code":   "IT",
 		"season": "2021",
 	})
-	return body
+	return resp
 }
 
 func (api *APIClient) GetLeagueByLeagueId(leagueId string) string {
