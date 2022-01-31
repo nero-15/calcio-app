@@ -19,7 +19,7 @@ func New(token string, baseUrl string) *APIClient {
 }
 
 //TODO 404だった時の処理追加
-func (api *APIClient) doRequest(urlPath string, query map[string]string) (body string, err error) {
+func (api *APIClient) doRequest(urlPath string, query map[string]string) (body []byte, err error) {
 	url, _ := url.Parse(api.baseUrl)
 	url.Path = path.Join(url.Path, urlPath)
 
@@ -36,7 +36,7 @@ func (api *APIClient) doRequest(urlPath string, query map[string]string) (body s
 	defer resp.Body.Close()
 
 	byteArray, _ := ioutil.ReadAll(resp.Body)
-	return string(byteArray), nil
+	return byteArray, nil
 }
 
 func (api *APIClient) GetStatus() string {
