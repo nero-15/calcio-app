@@ -19,7 +19,7 @@ func New(token string, baseUrl string) *APIClient {
 }
 
 //TODO 404だった時の処理追加
-func (api *APIClient) doRequest(urlPath string, query map[string]string) (body string, err error) {
+func (api *APIClient) doRequest(urlPath string, query map[string]string) (body []byte, err error) {
 	url, _ := url.Parse(api.baseUrl)
 	url.Path = path.Join(url.Path, urlPath)
 
@@ -36,51 +36,51 @@ func (api *APIClient) doRequest(urlPath string, query map[string]string) (body s
 	defer resp.Body.Close()
 
 	byteArray, _ := ioutil.ReadAll(resp.Body)
-	return string(byteArray), nil
+	return byteArray, nil
 }
 
-func (api *APIClient) GetStatus() string {
-	body, _ := api.doRequest("status", map[string]string{})
-	return body
+func (api *APIClient) GetStatus() []byte {
+	resp, _ := api.doRequest("status", map[string]string{})
+	return resp
 }
 
-func (api *APIClient) GetLeagues() string {
-	body, _ := api.doRequest("leagues", map[string]string{
+func (api *APIClient) GetLeagues() []byte {
+	resp, _ := api.doRequest("leagues", map[string]string{
 		"code":   "IT",
 		"season": "2021",
 	})
-	return body
+	return resp
 }
 
-func (api *APIClient) GetLeagueByLeagueId(leagueId string) string {
-	body, _ := api.doRequest("leagues", map[string]string{
+func (api *APIClient) GetLeagueByLeagueId(leagueId string) []byte {
+	resp, _ := api.doRequest("leagues", map[string]string{
 		"code":   "IT",
 		"season": "2021",
 		"id":     leagueId,
 	})
-	return body
+	return resp
 }
 
-func (api *APIClient) GetStandingsByLeagueId(leagueId string) string {
-	body, _ := api.doRequest("standings", map[string]string{
+func (api *APIClient) GetStandingsByLeagueId(leagueId string) []byte {
+	resp, _ := api.doRequest("standings", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
-	return body
+	return resp
 }
 
-func (api *APIClient) GetTopscorersByLeagueId(leagueId string) string {
-	body, _ := api.doRequest("players/topscorers", map[string]string{
+func (api *APIClient) GetTopscorersByLeagueId(leagueId string) []byte {
+	resp, _ := api.doRequest("players/topscorers", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
-	return body
+	return resp
 }
 
-func (api *APIClient) GetTopassistsByLeagueId(leagueId string) string {
-	body, _ := api.doRequest("players/topassists", map[string]string{
+func (api *APIClient) GetTopassistsByLeagueId(leagueId string) []byte {
+	resp, _ := api.doRequest("players/topassists", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
-	return body
+	return resp
 }

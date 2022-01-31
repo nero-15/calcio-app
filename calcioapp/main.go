@@ -70,31 +70,37 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
-		return c.String(http.StatusOK, apifootball.GetStatus())
+		status := apifootball.GetStatus()
+		// fmt.Println(status.response)
+
+		// if status.response == nil {
+		// 	return echo.NewHTTPError(http.StatusNotFound, "not found")
+		// }
+		return c.String(http.StatusOK, string(status))
 	})
 
 	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
-		return c.String(http.StatusOK, apifootball.GetLeagues())
+		return c.String(http.StatusOK, string(apifootball.GetLeagues()))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, apifootball.GetLeagueByLeagueId(leagueId))
+		return c.String(http.StatusOK, string(apifootball.GetLeagueByLeagueId(leagueId)))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/standings", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, apifootball.GetStandingsByLeagueId(leagueId))
+		return c.String(http.StatusOK, string(apifootball.GetStandingsByLeagueId(leagueId)))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topscorers", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, apifootball.GetTopscorersByLeagueId(leagueId))
+		return c.String(http.StatusOK, string(apifootball.GetTopscorersByLeagueId(leagueId)))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topassists", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, apifootball.GetTopassistsByLeagueId(leagueId))
+		return c.String(http.StatusOK, string(apifootball.GetTopassistsByLeagueId(leagueId)))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topyellowcards", func(c echo.Context) error {
