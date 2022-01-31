@@ -95,7 +95,7 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/topscorers", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, apifootball.GetTopscorersByLeagueId(leagueId))
+		return c.String(http.StatusOK, string(apifootball.GetTopscorersByLeagueId(leagueId)))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topassists", func(c echo.Context) error {
