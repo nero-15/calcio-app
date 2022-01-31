@@ -90,7 +90,7 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/standings", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, apifootball.GetStandingsByLeagueId(leagueId))
+		return c.String(http.StatusOK, string(apifootball.GetStandingsByLeagueId(leagueId)))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topscorers", func(c echo.Context) error {
