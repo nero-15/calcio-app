@@ -108,6 +108,7 @@ func main() {
 		fmt.Println(s.Response)
 		fmt.Println(s.Errors)
 
+		// TODO
 		// if s.Response == nil {
 		// 	return echo.NewHTTPError(http.StatusNotFound, "not found")
 		// }
