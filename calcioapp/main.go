@@ -107,6 +107,7 @@ func main() {
 		fmt.Println(s)
 		fmt.Println(s.Response)
 		fmt.Println(s.Errors)
+		fmt.Println(len(s.Errors))
 
 		// TODO
 		// if s.Response == nil {
