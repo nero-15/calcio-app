@@ -109,10 +109,9 @@ func main() {
 		fmt.Println(s.Errors)
 		fmt.Println(len(s.Errors))
 
-		// TODO
-		// if s.Response == nil {
-		// 	return echo.NewHTTPError(http.StatusNotFound, "not found")
-		// }
+		if len(s.Errors) != 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		return c.String(http.StatusOK, string(status))
 	})
 
