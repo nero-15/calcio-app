@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -101,14 +100,8 @@ func main() {
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
 		status := apifootball.GetStatus()
-
 		var s Status
 		json.Unmarshal(status, &s)
-		fmt.Println(s)
-		fmt.Println(s.Response)
-		fmt.Println(s.Errors)
-		fmt.Println(len(s.Errors))
-
 		if len(s.Errors) != 0 {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
