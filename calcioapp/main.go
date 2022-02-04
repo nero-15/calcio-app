@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -71,6 +72,7 @@ func main() {
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
 		status := apifootball.GetStatus()
+		fmt.Println(status)
 		if len(status.Errors) != 0 {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}

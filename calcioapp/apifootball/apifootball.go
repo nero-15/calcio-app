@@ -70,9 +70,9 @@ type Status struct {
 
 func (api *APIClient) GetStatus() Status {
 	resp, _ := api.doRequest("status", map[string]string{})
-	var s Status
-	json.Unmarshal(resp, &s)
-	return s
+	var status Status
+	json.Unmarshal(resp, &status)
+	return status
 }
 
 func (api *APIClient) GetLeagues() []byte {
