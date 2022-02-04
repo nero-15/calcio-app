@@ -20,7 +20,6 @@ func New(token string, baseUrl string) *APIClient {
 	return apiClient
 }
 
-//TODO 404だった時の処理追加
 func (api *APIClient) doRequest(urlPath string, query map[string]string) (body []byte, err error) {
 	url, _ := url.Parse(api.baseUrl)
 	url.Path = path.Join(url.Path, urlPath)
