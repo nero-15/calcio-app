@@ -1,10 +1,12 @@
 package apifootball
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
+	"time"
 )
 
 type APIClient struct {
@@ -18,7 +20,6 @@ func New(token string, baseUrl string) *APIClient {
 	return apiClient
 }
 
-//TODO 404だった時の処理追加
 func (api *APIClient) doRequest(urlPath string, query map[string]string) (body []byte, err error) {
 	url, _ := url.Parse(api.baseUrl)
 	url.Path = path.Join(url.Path, urlPath)
@@ -39,9 +40,41 @@ func (api *APIClient) doRequest(urlPath string, query map[string]string) (body [
 	return byteArray, nil
 }
 
-func (api *APIClient) GetStatus() []byte {
-	resp, _ := api.doRequest("status", map[string]string{})
-	return resp
+type Status struct {
+	Get        string        `json:"get"`
+	Parameters []interface{} `json:"parameters"`
+	Errors     []interface{} `json:"errors"`
+	Results    int           `json:"results"`
+	Paging     struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response struct {
+		Account struct {
+			Firstname string `json:"firstname"`
+			Lastname  string `json:"lastname"`
+			Email     string `json:"email"`
+		} `json:"account"`
+		Subscription struct {
+			Plan   string    `json:"plan"`
+			End    time.Time `json:"end"`
+			Active bool      `json:"active"`
+		} `json:"subscription"`
+		Requests struct {
+			Current  int `json:"current"`
+			LimitDay int `json:"limit_day"`
+		} `json:"requests"`
+	} `json:"response"`
+}
+
+func (api *APIClient) GetStatus() (Status, error) {
+	resp, err := api.doRequest("status", map[string]string{})
+	var status Status
+	if err != nil {
+		return status, err
+	}
+	json.Unmarshal(resp, &status)
+	return status, nil
 }
 
 func (api *APIClient) GetLeagues() []byte {
