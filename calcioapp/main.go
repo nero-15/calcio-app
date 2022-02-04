@@ -1,14 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"html/template"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
-	"time"
 
 	echo "github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -71,41 +69,12 @@ func main() {
 		return c.String(http.StatusOK, string(byteArray))
 	})
 
-	type Status struct {
-		Get        string        `json:"get"`
-		Parameters []interface{} `json:"parameters"`
-		Errors     []interface{} `json:"errors"`
-		Results    int           `json:"results"`
-		Paging     struct {
-			Current int `json:"current"`
-			Total   int `json:"total"`
-		} `json:"paging"`
-		Response struct {
-			Account struct {
-				Firstname string `json:"firstname"`
-				Lastname  string `json:"lastname"`
-				Email     string `json:"email"`
-			} `json:"account"`
-			Subscription struct {
-				Plan   string    `json:"plan"`
-				End    time.Time `json:"end"`
-				Active bool      `json:"active"`
-			} `json:"subscription"`
-			Requests struct {
-				Current  int `json:"current"`
-				LimitDay int `json:"limit_day"`
-			} `json:"requests"`
-		} `json:"response"`
-	}
-
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
 		status := apifootball.GetStatus()
-		var s Status
-		json.Unmarshal(status, &s)
-		if len(s.Errors) != 0 {
+		if len(status.Errors) != 0 {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
-		return c.String(http.StatusOK, string(status))
+		return c.String(http.StatusOK, "status")
 	})
 
 	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
