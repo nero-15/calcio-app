@@ -1,10 +1,12 @@
 package apifootball
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
+	"time"
 )
 
 type APIClient struct {
@@ -39,9 +41,38 @@ func (api *APIClient) doRequest(urlPath string, query map[string]string) (body [
 	return byteArray, nil
 }
 
-func (api *APIClient) GetStatus() []byte {
+type Status struct {
+	Get        string        `json:"get"`
+	Parameters []interface{} `json:"parameters"`
+	Errors     []interface{} `json:"errors"`
+	Results    int           `json:"results"`
+	Paging     struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response struct {
+		Account struct {
+			Firstname string `json:"firstname"`
+			Lastname  string `json:"lastname"`
+			Email     string `json:"email"`
+		} `json:"account"`
+		Subscription struct {
+			Plan   string    `json:"plan"`
+			End    time.Time `json:"end"`
+			Active bool      `json:"active"`
+		} `json:"subscription"`
+		Requests struct {
+			Current  int `json:"current"`
+			LimitDay int `json:"limit_day"`
+		} `json:"requests"`
+	} `json:"response"`
+}
+
+func (api *APIClient) GetStatus() Status {
 	resp, _ := api.doRequest("status", map[string]string{})
-	return resp
+	var s Status
+	json.Unmarshal(resp, &s)
+	return s
 }
 
 func (api *APIClient) GetLeagues() []byte {
