@@ -71,9 +71,9 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
-		status := apifootball.GetStatus()
+		status, err := apifootball.GetStatus()
 		fmt.Println(status)
-		if len(status.Errors) != 0 {
+		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
 		return c.String(http.StatusOK, "status")
