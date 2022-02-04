@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -73,8 +72,6 @@ func main() {
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
 		status, err := apifootball.GetStatus()
-		fmt.Println(status)
-		fmt.Println(status.Results)
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
@@ -82,8 +79,7 @@ func main() {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
 		statusByteArray, _ := json.Marshal(status)
-		//return c.JSON(http.StatusOK, string(statusByteArray))
-		return c.String(http.StatusOK, string(statusByteArray))
+		return c.String(http.StatusOK, string(statusByteArray)) //JSON形式で返す場合はc.JSON()メソッドを使う
 	})
 
 	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
