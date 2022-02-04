@@ -69,8 +69,11 @@ type Status struct {
 }
 
 func (api *APIClient) GetStatus() (Status, error) {
-	resp, _ := api.doRequest("status", map[string]string{})
+	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
+	if err != nil {
+		return status, err
+	}
 	json.Unmarshal(resp, &status)
 	return status, nil
 }
