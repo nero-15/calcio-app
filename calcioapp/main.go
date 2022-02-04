@@ -76,6 +76,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if status.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		return c.String(http.StatusOK, "status")
 	})
 
