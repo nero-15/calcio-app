@@ -139,13 +139,18 @@ func (api *APIClient) GetLeagues() (Leagues, error) {
 	return leagues, nil
 }
 
-func (api *APIClient) GetLeagueByLeagueId(leagueId string) []byte {
-	resp, _ := api.doRequest("leagues", map[string]string{
+func (api *APIClient) GetLeagueByLeagueId(leagueId string) (Leagues, error) {
+	resp, err := api.doRequest("leagues", map[string]string{
 		"code":   "IT",
 		"season": "2021",
 		"id":     leagueId,
 	})
-	return resp
+	var leagues Leagues
+	if err != nil {
+		return leagues, err
+	}
+	json.Unmarshal(resp, &leagues)
+	return leagues, nil
 }
 
 func (api *APIClient) GetStandingsByLeagueId(leagueId string) []byte {
