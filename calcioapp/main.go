@@ -83,12 +83,27 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/leagues", func(c echo.Context) error {
-		return c.String(http.StatusOK, string(apifootball.GetLeagues()))
+		leagues, err := apifootball.GetLeagues()
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if leagues.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		leaguesByteArray, _ := json.Marshal(leagues)
+		return c.String(http.StatusOK, string(leaguesByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId", func(c echo.Context) error {
-		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, string(apifootball.GetLeagueByLeagueId(leagueId)))
+		league, err := apifootball.GetLeagueByLeagueId(c.Param("leagueId"))
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if league.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		leagueByteArray, _ := json.Marshal(league)
+		return c.String(http.StatusOK, string(leagueByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/standings", func(c echo.Context) error {
