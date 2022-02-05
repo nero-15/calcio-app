@@ -126,12 +126,12 @@ type Leagues struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetLeagues() []byte {
+func (api *APIClient) GetLeagues() ([]byte, error) {
 	resp, _ := api.doRequest("leagues", map[string]string{
 		"code":   "IT",
 		"season": "2021",
 	})
-	return resp
+	return resp, nil
 }
 
 func (api *APIClient) GetLeagueByLeagueId(leagueId string) []byte {
