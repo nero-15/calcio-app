@@ -100,6 +100,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if league.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		leagueByteArray, _ := json.Marshal(league)
 		return c.String(http.StatusOK, string(leagueByteArray))
 	})
