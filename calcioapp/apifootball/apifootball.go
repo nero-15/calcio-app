@@ -127,10 +127,13 @@ type Leagues struct {
 }
 
 func (api *APIClient) GetLeagues() ([]byte, error) {
-	resp, _ := api.doRequest("leagues", map[string]string{
+	resp, err := api.doRequest("leagues", map[string]string{
 		"code":   "IT",
 		"season": "2021",
 	})
+	if err != nil {
+		return resp, err
+	}
 	return resp, nil
 }
 
