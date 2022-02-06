@@ -108,7 +108,11 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/standings", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, string(apifootball.GetStandingsByLeagueId(leagueId)))
+		standings, err := apifootball.GetStandingsByLeagueId(leagueId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		return c.String(http.StatusOK, string(standings))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topscorers", func(c echo.Context) error {
