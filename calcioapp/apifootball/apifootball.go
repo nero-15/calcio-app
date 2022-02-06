@@ -223,10 +223,14 @@ type Standings struct {
 }
 
 func (api *APIClient) GetStandingsByLeagueId(leagueId string) ([]byte, error) {
-	resp, _ := api.doRequest("standings", map[string]string{
+	resp, err := api.doRequest("standings", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
+	if err != nil {
+		var result []byte
+		return result, err
+	}
 	return resp, nil
 }
 
