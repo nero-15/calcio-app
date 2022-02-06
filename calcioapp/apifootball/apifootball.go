@@ -222,16 +222,17 @@ type Standings struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetStandingsByLeagueId(leagueId string) ([]byte, error) {
+func (api *APIClient) GetStandingsByLeagueId(leagueId string) (Standings, error) {
 	resp, err := api.doRequest("standings", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
+	var standings Standings
 	if err != nil {
-		var result []byte
-		return result, err
+		return standings, err
 	}
-	return resp, nil
+	json.Unmarshal(resp, &standings)
+	return standings, nil
 }
 
 func (api *APIClient) GetTopscorersByLeagueId(leagueId string) []byte {
