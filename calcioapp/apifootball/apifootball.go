@@ -153,12 +153,86 @@ func (api *APIClient) GetLeagueByLeagueId(leagueId string) (Leagues, error) {
 	return leagues, nil
 }
 
-func (api *APIClient) GetStandingsByLeagueId(leagueId string) []byte {
-	resp, _ := api.doRequest("standings", map[string]string{
+type Standings struct {
+	Get        string `json:"get"`
+	Parameters struct {
+		League string `json:"league"`
+		Season string `json:"season"`
+	} `json:"parameters"`
+	Errors  []interface{} `json:"errors"`
+	Results int           `json:"results"`
+	Paging  struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response []struct {
+		League struct {
+			ID        int    `json:"id"`
+			Name      string `json:"name"`
+			Country   string `json:"country"`
+			Logo      string `json:"logo"`
+			Flag      string `json:"flag"`
+			Season    int    `json:"season"`
+			Standings [][]struct {
+				Rank int `json:"rank"`
+				Team struct {
+					ID   int    `json:"id"`
+					Name string `json:"name"`
+					Logo string `json:"logo"`
+				} `json:"team"`
+				Points      int    `json:"points"`
+				Goalsdiff   int    `json:"goalsDiff"`
+				Group       string `json:"group"`
+				Form        string `json:"form"`
+				Status      string `json:"status"`
+				Description string `json:"description"`
+				All         struct {
+					Played int `json:"played"`
+					Win    int `json:"win"`
+					Draw   int `json:"draw"`
+					Lose   int `json:"lose"`
+					Goals  struct {
+						For     int `json:"for"`
+						Against int `json:"against"`
+					} `json:"goals"`
+				} `json:"all"`
+				Home struct {
+					Played int `json:"played"`
+					Win    int `json:"win"`
+					Draw   int `json:"draw"`
+					Lose   int `json:"lose"`
+					Goals  struct {
+						For     int `json:"for"`
+						Against int `json:"against"`
+					} `json:"goals"`
+				} `json:"home"`
+				Away struct {
+					Played int `json:"played"`
+					Win    int `json:"win"`
+					Draw   int `json:"draw"`
+					Lose   int `json:"lose"`
+					Goals  struct {
+						For     int `json:"for"`
+						Against int `json:"against"`
+					} `json:"goals"`
+				} `json:"away"`
+				Update time.Time `json:"update"`
+			} `json:"standings"`
+		} `json:"league"`
+	} `json:"response"`
+}
+
+func (api *APIClient) GetStandingsByLeagueId(leagueId string) (Standings, error) {
+	resp, err := api.doRequest("standings", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
-	return resp
+	var standings Standings
+	if err != nil {
+		return standings, err
+	}
+	json.Unmarshal(resp, &standings)
+	return standings, nil
 }
 
 func (api *APIClient) GetTopscorersByLeagueId(leagueId string) []byte {
