@@ -84,14 +84,27 @@ type Country struct {
 	Flag string `json:"flag"`
 }
 
-func (api *APIClient) GetStatus() (Status, error) {
-	resp, err := api.doRequest("status", map[string]string{})
-	var status Status
-	if err != nil {
-		return status, err
-	}
-	json.Unmarshal(resp, &status)
-	return status, nil
+type Seasons []struct {
+	Year     int    `json:"year"`
+	Start    string `json:"start"`
+	End      string `json:"end"`
+	Current  bool   `json:"current"`
+	Coverage struct {
+		Fixtures struct {
+			Events             bool `json:"events"`
+			Lineups            bool `json:"lineups"`
+			StatisticsFixtures bool `json:"statistics_fixtures"`
+			StatisticsPlayers  bool `json:"statistics_players"`
+		} `json:"fixtures"`
+		Standings   bool `json:"standings"`
+		Players     bool `json:"players"`
+		TopScorers  bool `json:"top_scorers"`
+		TopAssists  bool `json:"top_assists"`
+		TopCards    bool `json:"top_cards"`
+		Injuries    bool `json:"injuries"`
+		Predictions bool `json:"predictions"`
+		Odds        bool `json:"odds"`
+	} `json:"coverage"`
 }
 
 type Leagues struct {
@@ -99,56 +112,8 @@ type Leagues struct {
 	Response []struct {
 		League  `json:"league"`
 		Country `json:"country"`
-		Seasons []struct {
-			Year     int    `json:"year"`
-			Start    string `json:"start"`
-			End      string `json:"end"`
-			Current  bool   `json:"current"`
-			Coverage struct {
-				Fixtures struct {
-					Events             bool `json:"events"`
-					Lineups            bool `json:"lineups"`
-					StatisticsFixtures bool `json:"statistics_fixtures"`
-					StatisticsPlayers  bool `json:"statistics_players"`
-				} `json:"fixtures"`
-				Standings   bool `json:"standings"`
-				Players     bool `json:"players"`
-				TopScorers  bool `json:"top_scorers"`
-				TopAssists  bool `json:"top_assists"`
-				TopCards    bool `json:"top_cards"`
-				Injuries    bool `json:"injuries"`
-				Predictions bool `json:"predictions"`
-				Odds        bool `json:"odds"`
-			} `json:"coverage"`
-		} `json:"seasons"`
+		Seasons `json:"seasons"`
 	} `json:"response"`
-}
-
-func (api *APIClient) GetLeagues() (Leagues, error) {
-	resp, err := api.doRequest("leagues", map[string]string{
-		"code":   "IT",
-		"season": "2021",
-	})
-	var leagues Leagues
-	if err != nil {
-		return leagues, err
-	}
-	json.Unmarshal(resp, &leagues)
-	return leagues, nil
-}
-
-func (api *APIClient) GetLeagueByLeagueId(leagueId string) (Leagues, error) {
-	resp, err := api.doRequest("leagues", map[string]string{
-		"code":   "IT",
-		"season": "2021",
-		"id":     leagueId,
-	})
-	var leagues Leagues
-	if err != nil {
-		return leagues, err
-	}
-	json.Unmarshal(resp, &leagues)
-	return leagues, nil
 }
 
 type Standings struct {
@@ -210,6 +175,43 @@ type Standings struct {
 	} `json:"response"`
 }
 
+func (api *APIClient) GetStatus() (Status, error) {
+	resp, err := api.doRequest("status", map[string]string{})
+	var status Status
+	if err != nil {
+		return status, err
+	}
+	json.Unmarshal(resp, &status)
+	return status, nil
+}
+
+func (api *APIClient) GetLeagues() (Leagues, error) {
+	resp, err := api.doRequest("leagues", map[string]string{
+		"code":   "IT",
+		"season": "2021",
+	})
+	var leagues Leagues
+	if err != nil {
+		return leagues, err
+	}
+	json.Unmarshal(resp, &leagues)
+	return leagues, nil
+}
+
+func (api *APIClient) GetLeagueByLeagueId(leagueId string) (Leagues, error) {
+	resp, err := api.doRequest("leagues", map[string]string{
+		"code":   "IT",
+		"season": "2021",
+		"id":     leagueId,
+	})
+	var leagues Leagues
+	if err != nil {
+		return leagues, err
+	}
+	json.Unmarshal(resp, &leagues)
+	return leagues, nil
+}
+
 func (api *APIClient) GetStandingsByLeagueId(leagueId string) (Standings, error) {
 	resp, err := api.doRequest("standings", map[string]string{
 		"season": "2021",
@@ -223,26 +225,28 @@ func (api *APIClient) GetStandingsByLeagueId(leagueId string) (Standings, error)
 	return standings, nil
 }
 
+type Player struct {
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Age       int    `json:"age"`
+	Birth     struct {
+		Date    string `json:"date"`
+		Place   string `json:"place"`
+		Country string `json:"country"`
+	} `json:"birth"`
+	Nationality string `json:"nationality"`
+	Height      string `json:"height"`
+	Weight      string `json:"weight"`
+	Injured     bool   `json:"injured"`
+	Photo       string `json:"photo"`
+}
+
 type Topscorers struct {
 	CommonResponse
 	Response []struct {
-		Player struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Firstname string `json:"firstname"`
-			Lastname  string `json:"lastname"`
-			Age       int    `json:"age"`
-			Birth     struct {
-				Date    string `json:"date"`
-				Place   string `json:"place"`
-				Country string `json:"country"`
-			} `json:"birth"`
-			Nationality string `json:"nationality"`
-			Height      string `json:"height"`
-			Weight      string `json:"weight"`
-			Injured     bool   `json:"injured"`
-			Photo       string `json:"photo"`
-		} `json:"player"`
+		Player     `json:"player"`
 		Statistics []struct {
 			Team struct {
 				ID   int    `json:"id"`
@@ -336,23 +340,7 @@ func (api *APIClient) GetTopscorersByLeagueId(leagueId string) (Topscorers, erro
 type Topassists struct {
 	CommonResponse
 	Response []struct {
-		Player struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Firstname string `json:"firstname"`
-			Lastname  string `json:"lastname"`
-			Age       int    `json:"age"`
-			Birth     struct {
-				Date    string `json:"date"`
-				Place   string `json:"place"`
-				Country string `json:"country"`
-			} `json:"birth"`
-			Nationality string `json:"nationality"`
-			Height      string `json:"height"`
-			Weight      string `json:"weight"`
-			Injured     bool   `json:"injured"`
-			Photo       string `json:"photo"`
-		} `json:"player"`
+		Player     `json:"player"`
 		Statistics []struct {
 			Team struct {
 				ID   int    `json:"id"`
