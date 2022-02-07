@@ -121,12 +121,28 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/topscorers", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, string(apifootball.GetTopscorersByLeagueId(leagueId)))
+		topscorers, err := apifootball.GetTopscorersByLeagueId(leagueId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if topscorers.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		topscorersByteArray, _ := json.Marshal(topscorers)
+		return c.String(http.StatusOK, string(topscorersByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topassists", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, string(apifootball.GetTopassistsByLeagueId(leagueId)))
+		topassists, err := apifootball.GetTopassistsByLeagueId(leagueId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if topassists.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		topassistsByteArray, _ := json.Marshal(topassists)
+		return c.String(http.StatusOK, string(topassistsByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topyellowcards", func(c echo.Context) error {
