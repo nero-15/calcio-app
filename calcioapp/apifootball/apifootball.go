@@ -342,12 +342,12 @@ type Topscorers struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetTopscorersByLeagueId(leagueId string) []byte {
+func (api *APIClient) GetTopscorersByLeagueId(leagueId string) ([]byte, error) {
 	resp, _ := api.doRequest("players/topscorers", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
-	return resp
+	return resp, nil
 }
 
 func (api *APIClient) GetTopassistsByLeagueId(leagueId string) []byte {
