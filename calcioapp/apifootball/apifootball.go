@@ -40,7 +40,7 @@ func (api *APIClient) doRequest(urlPath string, query map[string]string) (body [
 	return byteArray, nil
 }
 
-type Status struct {
+type CommonResponse struct {
 	Get        string        `json:"get"`
 	Parameters []interface{} `json:"parameters"`
 	Errors     []interface{} `json:"errors"`
@@ -49,6 +49,10 @@ type Status struct {
 		Current int `json:"current"`
 		Total   int `json:"total"`
 	} `json:"paging"`
+}
+
+type Status struct {
+	CommonResponse
 	Response struct {
 		Account struct {
 			Firstname string `json:"firstname"`
