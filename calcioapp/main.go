@@ -128,7 +128,8 @@ func main() {
 		if topscorers.Results == 0 {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
-		return c.String(http.StatusOK, string(topscorers))
+		topscorersByteArray, _ := json.Marshal(topscorers)
+		return c.String(http.StatusOK, string(topscorersByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topassists", func(c echo.Context) error {
