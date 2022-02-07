@@ -82,17 +82,7 @@ func (api *APIClient) GetStatus() (Status, error) {
 }
 
 type Leagues struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Code   string `json:"code"`
-		Season string `json:"season"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		League struct {
 			ID   int    `json:"id"`
