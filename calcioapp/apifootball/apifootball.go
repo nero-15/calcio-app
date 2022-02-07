@@ -343,10 +343,14 @@ type Topscorers struct {
 }
 
 func (api *APIClient) GetTopscorersByLeagueId(leagueId string) ([]byte, error) {
-	resp, _ := api.doRequest("players/topscorers", map[string]string{
+	resp, err := api.doRequest("players/topscorers", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
+	if err != nil {
+		var result []byte
+		return result, err
+	}
 	return resp, nil
 }
 
