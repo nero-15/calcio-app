@@ -148,17 +148,7 @@ func (api *APIClient) GetLeagueByLeagueId(leagueId string) (Leagues, error) {
 }
 
 type Standings struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		League string `json:"league"`
-		Season string `json:"season"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		League struct {
 			ID        int    `json:"id"`
@@ -230,17 +220,7 @@ func (api *APIClient) GetStandingsByLeagueId(leagueId string) (Standings, error)
 }
 
 type Topscorers struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		League string `json:"league"`
-		Season string `json:"season"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		Player struct {
 			ID        int    `json:"id"`
@@ -350,17 +330,7 @@ func (api *APIClient) GetTopscorersByLeagueId(leagueId string) (Topscorers, erro
 }
 
 type Topassists struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		League string `json:"league"`
-		Season string `json:"season"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		Player struct {
 			ID        int    `json:"id"`
