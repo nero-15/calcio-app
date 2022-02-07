@@ -78,6 +78,12 @@ type League struct {
 	Logo string `json:"logo"`
 }
 
+type Country struct {
+	Name string `json:"name"`
+	Code string `json:"code"`
+	Flag string `json:"flag"`
+}
+
 func (api *APIClient) GetStatus() (Status, error) {
 	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
@@ -92,11 +98,7 @@ type Leagues struct {
 	CommonResponse
 	Response []struct {
 		League  `json:"league"`
-		Country struct {
-			Name string `json:"name"`
-			Code string `json:"code"`
-			Flag string `json:"flag"`
-		} `json:"country"`
+		Country `json:"country"`
 		Seasons []struct {
 			Year     int    `json:"year"`
 			Start    string `json:"start"`
