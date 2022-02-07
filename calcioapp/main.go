@@ -134,7 +134,13 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/topassists", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		topassists, _ := apifootball.GetTopassistsByLeagueId(leagueId)
+		topassists, err := apifootball.GetTopassistsByLeagueId(leagueId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if topassists.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		topassistsByteArray, _ := json.Marshal(topassists)
 		return c.String(http.StatusOK, string(topassistsByteArray))
 	})
