@@ -71,6 +71,13 @@ type Status struct {
 	} `json:"response"`
 }
 
+type League struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Logo string `json:"logo"`
+}
+
 func (api *APIClient) GetStatus() (Status, error) {
 	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
@@ -84,12 +91,7 @@ func (api *APIClient) GetStatus() (Status, error) {
 type Leagues struct {
 	CommonResponse
 	Response []struct {
-		League struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Type string `json:"type"`
-			Logo string `json:"logo"`
-		} `json:"league"`
+		League  `json:"league"`
 		Country struct {
 			Name string `json:"name"`
 			Code string `json:"code"`
