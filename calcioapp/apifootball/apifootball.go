@@ -347,7 +347,7 @@ func (api *APIClient) GetTopscorersByLeagueId(leagueId string) (Topscorers, erro
 		"season": "2021",
 		"league": leagueId,
 	})
-	var topscorers StanTopscorersdings
+	var topscorers Topscorers
 	if err != nil {
 		return topscorers, err
 	}
