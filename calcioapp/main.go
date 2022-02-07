@@ -125,6 +125,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if topscorers.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		return c.String(http.StatusOK, string(topscorers))
 	})
 
