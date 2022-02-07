@@ -134,7 +134,9 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/topassists", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		return c.String(http.StatusOK, string(apifootball.GetTopassistsByLeagueId(leagueId)))
+		topassists, _ := apifootball.GetTopassistsByLeagueId(leagueId)
+		topassistsByteArray, _ := json.Marshal(topassists)
+		return c.String(http.StatusOK, string(topassistsByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topyellowcards", func(c echo.Context) error {
