@@ -463,7 +463,7 @@ type Topassists struct {
 }
 
 func (api *APIClient) GetTopassistsByLeagueId(leagueId string) (Topassists, error) {
-	resp, _ := api.doRequest("players/topassists", map[string]string{
+	resp, err := api.doRequest("players/topassists", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
