@@ -462,10 +462,15 @@ type Topassists struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetTopassistsByLeagueId(leagueId string) ([]byte, error) {
+func (api *APIClient) GetTopassistsByLeagueId(leagueId string) (Topassists, error) {
 	resp, _ := api.doRequest("players/topassists", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
-	return resp, nil
+	var topassists Topassists
+	if err != nil {
+		return topassists, err
+	}
+	json.Unmarshal(resp, &topassists)
+	return topassists, nil
 }
