@@ -193,56 +193,6 @@ type Player struct {
 	Photo       string `json:"photo"`
 }
 
-func (api *APIClient) GetStatus() (Status, error) {
-	resp, err := api.doRequest("status", map[string]string{})
-	var status Status
-	if err != nil {
-		return status, err
-	}
-	json.Unmarshal(resp, &status)
-	return status, nil
-}
-
-func (api *APIClient) GetLeagues() (Leagues, error) {
-	resp, err := api.doRequest("leagues", map[string]string{
-		"code":   "IT",
-		"season": "2021",
-	})
-	var leagues Leagues
-	if err != nil {
-		return leagues, err
-	}
-	json.Unmarshal(resp, &leagues)
-	return leagues, nil
-}
-
-func (api *APIClient) GetLeagueByLeagueId(leagueId string) (Leagues, error) {
-	resp, err := api.doRequest("leagues", map[string]string{
-		"code":   "IT",
-		"season": "2021",
-		"id":     leagueId,
-	})
-	var leagues Leagues
-	if err != nil {
-		return leagues, err
-	}
-	json.Unmarshal(resp, &leagues)
-	return leagues, nil
-}
-
-func (api *APIClient) GetStandingsByLeagueId(leagueId string) (Standings, error) {
-	resp, err := api.doRequest("standings", map[string]string{
-		"season": "2021",
-		"league": leagueId,
-	})
-	var standings Standings
-	if err != nil {
-		return standings, err
-	}
-	json.Unmarshal(resp, &standings)
-	return standings, nil
-}
-
 type Statistics []struct {
 	Team struct {
 		ID   int    `json:"id"`
@@ -326,6 +276,64 @@ type Topscorers struct {
 	} `json:"response"`
 }
 
+type Topassists struct {
+	CommonResponse
+	Response []struct {
+		Player     `json:"player"`
+		Statistics `json:"statistics"`
+	} `json:"response"`
+}
+
+func (api *APIClient) GetStatus() (Status, error) {
+	resp, err := api.doRequest("status", map[string]string{})
+	var status Status
+	if err != nil {
+		return status, err
+	}
+	json.Unmarshal(resp, &status)
+	return status, nil
+}
+
+func (api *APIClient) GetLeagues() (Leagues, error) {
+	resp, err := api.doRequest("leagues", map[string]string{
+		"code":   "IT",
+		"season": "2021",
+	})
+	var leagues Leagues
+	if err != nil {
+		return leagues, err
+	}
+	json.Unmarshal(resp, &leagues)
+	return leagues, nil
+}
+
+func (api *APIClient) GetLeagueByLeagueId(leagueId string) (Leagues, error) {
+	resp, err := api.doRequest("leagues", map[string]string{
+		"code":   "IT",
+		"season": "2021",
+		"id":     leagueId,
+	})
+	var leagues Leagues
+	if err != nil {
+		return leagues, err
+	}
+	json.Unmarshal(resp, &leagues)
+	return leagues, nil
+}
+
+func (api *APIClient) GetStandingsByLeagueId(leagueId string) (Standings, error) {
+	resp, err := api.doRequest("standings", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+	})
+	var standings Standings
+	if err != nil {
+		return standings, err
+	}
+	json.Unmarshal(resp, &standings)
+	return standings, nil
+}
+
 func (api *APIClient) GetTopscorersByLeagueId(leagueId string) (Topscorers, error) {
 	resp, err := api.doRequest("players/topscorers", map[string]string{
 		"season": "2021",
@@ -337,14 +345,6 @@ func (api *APIClient) GetTopscorersByLeagueId(leagueId string) (Topscorers, erro
 	}
 	json.Unmarshal(resp, &topscorers)
 	return topscorers, nil
-}
-
-type Topassists struct {
-	CommonResponse
-	Response []struct {
-		Player     `json:"player"`
-		Statistics `json:"statistics"`
-	} `json:"response"`
 }
 
 func (api *APIClient) GetTopassistsByLeagueId(leagueId string) (Topassists, error) {
