@@ -84,7 +84,7 @@ type Country struct {
 	Flag string `json:"flag"`
 }
 
-type Seasons []struct {
+type Season struct {
 	Year     int    `json:"year"`
 	Start    string `json:"start"`
 	End      string `json:"end"`
@@ -112,7 +112,7 @@ type Leagues struct {
 	Response []struct {
 		League  `json:"league"`
 		Country `json:"country"`
-		Seasons `json:"seasons"`
+		Seasons []Season `json:"seasons"`
 	} `json:"response"`
 }
 
@@ -193,7 +193,7 @@ type Player struct {
 	Photo       string `json:"photo"`
 }
 
-type Statistics []struct {
+type Statistic struct {
 	Team struct {
 		ID   int    `json:"id"`
 		Name string `json:"name"`
@@ -272,7 +272,7 @@ type Topscorers struct {
 	CommonResponse
 	Response []struct {
 		Player     `json:"player"`
-		Statistics `json:"statistics"`
+		Statistics []Statistic `json:"statistics"`
 	} `json:"response"`
 }
 
@@ -280,7 +280,7 @@ type Topassists struct {
 	CommonResponse
 	Response []struct {
 		Player     `json:"player"`
-		Statistics `json:"statistics"`
+		Statistics []Statistic `json:"statistics"`
 	} `json:"response"`
 }
 
