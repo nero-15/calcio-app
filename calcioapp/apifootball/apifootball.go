@@ -193,7 +193,7 @@ type Player struct {
 	Photo       string `json:"photo"`
 }
 
-type Statistics []struct {
+type Statistic struct {
 	Team struct {
 		ID   int    `json:"id"`
 		Name string `json:"name"`
@@ -272,7 +272,7 @@ type Topscorers struct {
 	CommonResponse
 	Response []struct {
 		Player     `json:"player"`
-		Statistics `json:"statistics"`
+		Statistics []Statistic `json:"statistics"`
 	} `json:"response"`
 }
 
@@ -280,7 +280,7 @@ type Topassists struct {
 	CommonResponse
 	Response []struct {
 		Player     `json:"player"`
-		Statistics `json:"statistics"`
+		Statistics []Statistic `json:"statistics"`
 	} `json:"response"`
 }
 
