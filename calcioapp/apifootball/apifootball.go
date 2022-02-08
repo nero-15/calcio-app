@@ -84,7 +84,7 @@ type Country struct {
 	Flag string `json:"flag"`
 }
 
-type Seasons []struct {
+type Season struct {
 	Year     int    `json:"year"`
 	Start    string `json:"start"`
 	End      string `json:"end"`
@@ -112,7 +112,7 @@ type Leagues struct {
 	Response []struct {
 		League  `json:"league"`
 		Country `json:"country"`
-		Seasons `json:"seasons"`
+		Seasons []Season `json:"seasons"`
 	} `json:"response"`
 }
 
