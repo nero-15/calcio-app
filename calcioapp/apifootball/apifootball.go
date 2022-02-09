@@ -367,3 +367,11 @@ func (api *APIClient) GetTopyellowcardsByLeagueId(leagueId string) ([]byte, erro
 	})
 	return resp, nil
 }
+
+func (api *APIClient) GetTopredcardsByLeagueId(leagueId string) ([]byte, error) {
+	resp, _ := api.doRequest("players/topredcards", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+	})
+	return resp, nil
+}
