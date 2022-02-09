@@ -359,3 +359,19 @@ func (api *APIClient) GetTopassistsByLeagueId(leagueId string) (Topassists, erro
 	json.Unmarshal(resp, &topassists)
 	return topassists, nil
 }
+
+func (api *APIClient) GetTopyellowcardsByLeagueId(leagueId string) ([]byte, error) {
+	resp, _ := api.doRequest("players/topyellowcards", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+	})
+	return resp, nil
+}
+
+func (api *APIClient) GetTopredcardsByLeagueId(leagueId string) ([]byte, error) {
+	resp, _ := api.doRequest("players/topredcards", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+	})
+	return resp, nil
+}
