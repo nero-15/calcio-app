@@ -151,7 +151,8 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
-		return c.String(http.StatusOK, string(topyellowcards))
+		topyellowcardsByteArray, _ := json.Marshal(topyellowcards)
+		return c.String(http.StatusOK, string(topyellowcardsByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/topredcards", func(c echo.Context) error {
