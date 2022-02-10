@@ -476,6 +476,7 @@ func (api *APIClient) GetTopyellowcardsByLeagueId(leagueId string) (Topyellowcar
 	if err != nil {
 		return topyellowcards, err
 	}
+	json.Unmarshal(resp, &topyellowcards)
 	return topyellowcards, nil
 }
 
