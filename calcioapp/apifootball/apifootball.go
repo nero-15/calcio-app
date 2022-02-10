@@ -467,12 +467,16 @@ type Topyellowcards struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetTopyellowcardsByLeagueId(leagueId string) ([]byte, error) {
-	resp, _ := api.doRequest("players/topyellowcards", map[string]string{
+func (api *APIClient) GetTopyellowcardsByLeagueId(leagueId string) (Topyellowcards, error) {
+	resp, err := api.doRequest("players/topyellowcards", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
-	return resp, nil
+	var topyellowcards Topyellowcards
+	if err != nil {
+		return topyellowcards, err
+	}
+	return topyellowcards, nil
 }
 
 func (api *APIClient) GetTopredcardsByLeagueId(leagueId string) ([]byte, error) {
