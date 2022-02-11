@@ -284,6 +284,14 @@ type Topassists struct {
 	} `json:"response"`
 }
 
+type Topyellowcards struct {
+	CommonResponse
+	Response []struct {
+		Player
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
+}
+
 func (api *APIClient) GetStatus() (Status, error) {
 	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
@@ -358,14 +366,6 @@ func (api *APIClient) GetTopassistsByLeagueId(leagueId string) (Topassists, erro
 	}
 	json.Unmarshal(resp, &topassists)
 	return topassists, nil
-}
-
-type Topyellowcards struct {
-	CommonResponse
-	Response []struct {
-		Player
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
 }
 
 func (api *APIClient) GetTopyellowcardsByLeagueId(leagueId string) (Topyellowcards, error) {
