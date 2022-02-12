@@ -164,6 +164,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if topredcards.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		topyellowcardsByteArray, _ := json.Marshal(topredcards)
 		return c.String(http.StatusOK, string(topyellowcardsByteArray))
 	})
