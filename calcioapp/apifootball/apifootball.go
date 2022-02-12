@@ -292,6 +292,14 @@ type Topyellowcards struct {
 	} `json:"response"`
 }
 
+type Topredcards struct {
+	CommonResponse
+	Response []struct {
+		Player
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
+}
+
 func (api *APIClient) GetStatus() (Status, error) {
 	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
@@ -381,10 +389,15 @@ func (api *APIClient) GetTopyellowcardsByLeagueId(leagueId string) (Topyellowcar
 	return topyellowcards, nil
 }
 
-func (api *APIClient) GetTopredcardsByLeagueId(leagueId string) ([]byte, error) {
-	resp, _ := api.doRequest("players/topredcards", map[string]string{
+func (api *APIClient) GetTopredcardsByLeagueId(leagueId string) (Topredcards, error) {
+	resp, err := api.doRequest("players/topredcards", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
-	return resp, nil
+	var topyellowcards Topredcards
+	if err != nil {
+		return topyellowcards, err
+	}
+	json.Unmarshal(resp, &topyellowcards)
+	return topyellowcards, nil
 }

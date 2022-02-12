@@ -160,8 +160,15 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/topredcards", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		topredcards, _ := apifootball.GetTopredcardsByLeagueId(leagueId)
-		return c.String(http.StatusOK, string(topredcards))
+		topredcards, err := apifootball.GetTopredcardsByLeagueId(leagueId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if topredcards.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		topyellowcardsByteArray, _ := json.Marshal(topredcards)
+		return c.String(http.StatusOK, string(topyellowcardsByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/teams", func(c echo.Context) error {
