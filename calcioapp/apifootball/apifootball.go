@@ -300,6 +300,30 @@ type Topredcards struct {
 	} `json:"response"`
 }
 
+type Teams struct {
+	CommonResponse
+	Response []struct {
+		Team struct {
+			ID       int    `json:"id"`
+			Name     string `json:"name"`
+			Code     string `json:"code"`
+			Country  string `json:"country"`
+			Founded  int    `json:"founded"`
+			National bool   `json:"national"`
+			Logo     string `json:"logo"`
+		} `json:"team"`
+		Venue struct {
+			ID       int    `json:"id"`
+			Name     string `json:"name"`
+			Address  string `json:"address"`
+			City     string `json:"city"`
+			Capacity int    `json:"capacity"`
+			Surface  string `json:"surface"`
+			Image    string `json:"image"`
+		} `json:"venue"`
+	} `json:"response"`
+}
+
 func (api *APIClient) GetStatus() (Status, error) {
 	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
@@ -400,4 +424,17 @@ func (api *APIClient) GetTopredcardsByLeagueId(leagueId string) (Topredcards, er
 	}
 	json.Unmarshal(resp, &topyellowcards)
 	return topyellowcards, nil
+}
+
+func (api *APIClient) GetTeamsByLeagueId(leagueId string) (Teams, error) {
+	resp, err := api.doRequest("teams", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+	})
+	var teams Teams
+	if err != nil {
+		return teams, err
+	}
+	json.Unmarshal(resp, &teams)
+	return teams, nil
 }
