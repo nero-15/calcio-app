@@ -403,17 +403,7 @@ func (api *APIClient) GetTopredcardsByLeagueId(leagueId string) (Topredcards, er
 }
 
 type Teams struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		League string `json:"league"`
-		Season string `json:"season"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		Player struct {
 			ID        int    `json:"id"`
