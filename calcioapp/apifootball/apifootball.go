@@ -303,8 +303,24 @@ type Topredcards struct {
 type Teams struct {
 	CommonResponse
 	Response []struct {
-		Player     Player      `json:"player"`
-		Statistics []Statistic `json:"statistics"`
+		Team struct {
+			ID       int    `json:"id"`
+			Name     string `json:"name"`
+			Code     string `json:"code"`
+			Country  string `json:"country"`
+			Founded  int    `json:"founded"`
+			National bool   `json:"national"`
+			Logo     string `json:"logo"`
+		} `json:"team"`
+		Venue struct {
+			ID       int    `json:"id"`
+			Name     string `json:"name"`
+			Address  string `json:"address"`
+			City     string `json:"city"`
+			Capacity int    `json:"capacity"`
+			Surface  string `json:"surface"`
+			Image    string `json:"image"`
+		} `json:"venue"`
 	} `json:"response"`
 }
 
@@ -411,7 +427,7 @@ func (api *APIClient) GetTopredcardsByLeagueId(leagueId string) (Topredcards, er
 }
 
 func (api *APIClient) GetTeamsByLeagueId(leagueId string) (Teams, error) {
-	resp, err := api.doRequest("players/topredcards", map[string]string{
+	resp, err := api.doRequest("teams", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 	})
