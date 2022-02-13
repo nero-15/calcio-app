@@ -435,3 +435,16 @@ type Teams struct {
 		} `json:"venue"`
 	} `json:"response"`
 }
+
+func (api *APIClient) GetTeamsByLeagueId(leagueId string) (Teams, error) {
+	resp, err := api.doRequest("players/topredcards", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+	})
+	var teams Teams
+	if err != nil {
+		return teams, err
+	}
+	json.Unmarshal(resp, &teams)
+	return teams, nil
+}
