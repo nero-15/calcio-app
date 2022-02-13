@@ -173,22 +173,9 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/teams", func(c echo.Context) error {
 		leagueId := c.Param("leagueId") //SerieA: 135, SerieB: 136
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "teams")
-
-		queryParams := url.Query()
-		queryParams.Set("league", leagueId)
-		queryParams.Set("season", "2021")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		teams, _ := apifootball.GetTeamsByLeagueId(leagueId)
+		teamsByteArray, _ := json.Marshal(teams)
+		return c.String(http.StatusOK, string(teamsByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/team/:teamId", func(c echo.Context) error {
