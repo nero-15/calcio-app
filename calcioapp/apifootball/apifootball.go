@@ -454,7 +454,7 @@ func (api *APIClient) GetTeamsByLeagueIdAndTeamId(leagueId string, teamId string
 }
 
 func (api *APIClient) GetStatisticsByLeagueIdAndTeamId(leagueId string, teamId string) ([]byte, error) {
-	resp, err := api.doRequest("teams", map[string]string{
+	resp, err := api.doRequest("teams/statistics", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 		"team":   teamId,
