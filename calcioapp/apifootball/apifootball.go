@@ -452,3 +452,12 @@ func (api *APIClient) GetTeamsByLeagueIdAndTeamId(leagueId string, teamId string
 	json.Unmarshal(resp, &teams)
 	return teams, nil
 }
+
+func (api *APIClient) GetStatisticsByLeagueIdAndTeamId(leagueId string, teamId string) ([]byte, error) {
+	resp, err := api.doRequest("teams", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+		"team":   teamId,
+	})
+	return resp, err
+}
