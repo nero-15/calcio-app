@@ -217,7 +217,7 @@ func main() {
 		leagueId := c.Param("leagueId")
 		teamId := c.Param("teamId")
 
-		resp, _ := apifootball.GetPlayersByLeagueIdAndTeamId(leagueId, teamId)
+		resp, _ := apifootball.GetFixturesByLeagueIdAndTeamId(leagueId, teamId)
 		return c.String(http.StatusOK, string(resp))
 
 		// url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
