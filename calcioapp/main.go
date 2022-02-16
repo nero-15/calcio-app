@@ -210,7 +210,7 @@ func main() {
 		leagueId := c.Param("leagueId")
 		teamId := c.Param("teamId")
 		resp, _ := apifootball.GetStatisticsByLeagueIdAndTeamId(leagueId, teamId)
-		return c.String(http.
+		return c.String(http.StatusOK, string(resp))
 
 		// url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		// url.Path = path.Join(url.Path, "players")
