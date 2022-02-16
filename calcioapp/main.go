@@ -209,7 +209,7 @@ func main() {
 	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/players", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
 		teamId := c.Param("teamId")
-		resp, _ := apifootball.GetStatisticsByLeagueIdAndTeamId(leagueId, teamId)
+		resp, _ := apifootball.GetPlayersByLeagueIdAndTeamId(leagueId, teamId)
 		return c.String(http.StatusOK, string(resp))
 
 		// url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
