@@ -461,3 +461,21 @@ func (api *APIClient) GetStatisticsByLeagueIdAndTeamId(leagueId string, teamId s
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetPlayersByLeagueIdAndTeamId(leagueId string, teamId string) ([]byte, error) {
+	resp, err := api.doRequest("players", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+		"team":   teamId,
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetFixturesByLeagueIdAndTeamId(leagueId string, teamId string) ([]byte, error) {
+	resp, err := api.doRequest("fixtures", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+		"team":   teamId,
+	})
+	return resp, err
+}
