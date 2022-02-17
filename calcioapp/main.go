@@ -225,24 +225,8 @@ func main() {
 		teamId := c.Param("teamId")
 		fixtureId := c.Param("fixtureId")
 
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "fixtures")
-
-		queryParams := url.Query()
-		queryParams.Set("id", fixtureId)
-		queryParams.Set("league", leagueId)
-		queryParams.Set("team", teamId)
-		queryParams.Set("season", "2021")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetFixtureByLeagueIdAndTeamIdAndFixtureId(leagueId, teamId, fixtureId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/fixture/:fixtureId/injuries", func(c echo.Context) error {
