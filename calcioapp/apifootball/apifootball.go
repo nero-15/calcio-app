@@ -512,3 +512,11 @@ func (api *APIClient) GetEventsByTeamIdAndFixtureId(teamId string, fixtureId str
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetLineupsByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
+	resp, err := api.doRequest("fixtures/lineups", map[string]string{
+		"team":    teamId,
+		"fixture": fixtureId,
+	})
+	return resp, err
+}
