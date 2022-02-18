@@ -221,11 +221,8 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/fixture/:fixtureId", func(c echo.Context) error {
-		leagueId := c.Param("leagueId")
-		teamId := c.Param("teamId")
 		fixtureId := c.Param("fixtureId")
-
-		resp, _ := apifootball.GetFixtureByLeagueIdAndTeamIdAndFixtureId(leagueId, teamId, fixtureId)
+		resp, _ := apifootball.GetFixtureByFixtureId(fixtureId)
 		return c.String(http.StatusOK, string(resp))
 	})
 
@@ -234,68 +231,24 @@ func main() {
 		teamId := c.Param("teamId")
 		fixtureId := c.Param("fixtureId")
 
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "injuries")
-
-		queryParams := url.Query()
-		queryParams.Set("fixture", fixtureId)
-		queryParams.Set("league", leagueId)
-		queryParams.Set("team", teamId)
-		queryParams.Set("season", "2021")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId, teamId, fixtureId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/team/:teamId/fixture/:fixtureId/statistics", func(c echo.Context) error {
 		teamId := c.Param("teamId")
 		fixtureId := c.Param("fixtureId")
 
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "fixtures", "statistics")
-
-		queryParams := url.Query()
-		queryParams.Set("fixture", fixtureId)
-		queryParams.Set("team", teamId)
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetStatisticsByTeamIdAndFixtureId(teamId, fixtureId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/team/:teamId/fixture/:fixtureId/events", func(c echo.Context) error {
 		teamId := c.Param("teamId")
 		fixtureId := c.Param("fixtureId") //731698
 
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "fixtures", "events")
-
-		queryParams := url.Query()
-		queryParams.Set("fixture", fixtureId)
-		queryParams.Set("team", teamId)
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetEventsByTeamIdAndFixtureId(teamId, fixtureId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/team/:teamId/fixture/:fixtureId/lineups", func(c echo.Context) error {

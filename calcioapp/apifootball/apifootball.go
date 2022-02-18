@@ -480,12 +480,35 @@ func (api *APIClient) GetFixturesByLeagueIdAndTeamId(leagueId string, teamId str
 	return resp, err
 }
 
-func (api *APIClient) GetFixtureByLeagueIdAndTeamIdAndFixtureId(leagueId string, teamId string, fixtureId string) ([]byte, error) {
+func (api *APIClient) GetFixtureByFixtureId(fixtureId string) ([]byte, error) {
 	resp, err := api.doRequest("fixtures", map[string]string{
-		"season": "2021",
-		"league": leagueId,
-		"team":   teamId,
-		"id":     fixtureId,
+		"id": fixtureId,
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId string, teamId string, fixtureId string) ([]byte, error) {
+	resp, err := api.doRequest("injuries", map[string]string{
+		"season":  "2021",
+		"league":  leagueId,
+		"team":    teamId,
+		"fixture": fixtureId,
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetStatisticsByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
+	resp, err := api.doRequest("fixtures/statistics", map[string]string{
+		"team":    teamId,
+		"fixture": fixtureId,
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetEventsByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
+	resp, err := api.doRequest("fixtures/events", map[string]string{
+		"team":    teamId,
+		"fixture": fixtureId,
 	})
 	return resp, err
 }
