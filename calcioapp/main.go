@@ -222,7 +222,6 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/fixture/:fixtureId", func(c echo.Context) error {
 		fixtureId := c.Param("fixtureId")
-
 		resp, _ := apifootball.GetFixtureByFixtureId(fixtureId)
 		return c.String(http.StatusOK, string(resp))
 	})
