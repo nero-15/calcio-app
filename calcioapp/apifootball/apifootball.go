@@ -528,3 +528,10 @@ func (api *APIClient) GetPlayersByTeamIdAndFixtureId(teamId string, fixtureId st
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetCoachsByTeamId(teamId string) ([]byte, error) {
+	resp, err := api.doRequest("fixtures/players", map[string]string{
+		"team": teamId,
+	})
+	return resp, err
+}
