@@ -499,7 +499,6 @@ func (api *APIClient) GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId string
 
 func (api *APIClient) GetStatisticsByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
 	resp, err := api.doRequest("fixtures/statistics", map[string]string{
-		"season":  "2021",
 		"team":    teamId,
 		"fixture": fixtureId,
 	})
