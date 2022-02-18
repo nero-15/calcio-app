@@ -535,3 +535,10 @@ func (api *APIClient) GetCoachsByTeamId(teamId string) ([]byte, error) {
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetSquadsByTeamId(teamId string) ([]byte, error) {
+	resp, err := api.doRequest("players/squads", map[string]string{
+		"team": teamId,
+	})
+	return resp, err
+}
