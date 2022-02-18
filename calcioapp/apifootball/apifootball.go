@@ -512,3 +512,33 @@ func (api *APIClient) GetEventsByTeamIdAndFixtureId(teamId string, fixtureId str
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetLineupsByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
+	resp, err := api.doRequest("fixtures/lineups", map[string]string{
+		"team":    teamId,
+		"fixture": fixtureId,
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetPlayersByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
+	resp, err := api.doRequest("fixtures/players", map[string]string{
+		"team":    teamId,
+		"fixture": fixtureId,
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetCoachsByTeamId(teamId string) ([]byte, error) {
+	resp, err := api.doRequest("coachs", map[string]string{
+		"team": teamId,
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetSquadsByTeamId(teamId string) ([]byte, error) {
+	resp, err := api.doRequest("players/squads", map[string]string{
+		"team": teamId,
+	})
+	return resp, err
+}
