@@ -489,3 +489,13 @@ func (api *APIClient) GetFixtureByLeagueIdAndTeamIdAndFixtureId(leagueId string,
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId string, teamId string, fixtureId string) ([]byte, error) {
+	resp, err := api.doRequest("injuries", map[string]string{
+		"season":  "2021",
+		"league":  leagueId,
+		"team":    teamId,
+		"fixture": fixtureId,
+	})
+	return resp, err
+}
