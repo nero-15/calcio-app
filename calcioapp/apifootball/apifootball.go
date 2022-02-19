@@ -542,3 +542,27 @@ func (api *APIClient) GetSquadsByTeamId(teamId string) ([]byte, error) {
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetHeadtoheadByLeagueIdAndH2hId(leagueId string, h2hId string) ([]byte, error) {
+	resp, err := api.doRequest("fixtures/headtohead", map[string]string{
+		"league": leagueId,
+		"h2h":    h2hId,
+		"season": "2021",
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetVenues() ([]byte, error) {
+	resp, err := api.doRequest("venues", map[string]string{
+		"country": "Italy",
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetVenueByVenueId(venueId string) ([]byte, error) {
+	resp, err := api.doRequest("venues", map[string]string{
+		"country": "Italy",
+		"id":      venueId,
+	})
+	return resp, err
+}

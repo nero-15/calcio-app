@@ -281,64 +281,20 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/fixtures/headtohead/:h2h", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		h2h := c.Param("h2h")
-
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "fixtures", "headtohead")
-
-		queryParams := url.Query()
-		queryParams.Set("league", leagueId)
-		queryParams.Set("h2h", h2h)
-		queryParams.Set("season", "2021")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		h2hId := c.Param("h2h")
+		resp, _ := apifootball.GetHeadtoheadByLeagueIdAndH2hId(leagueId, h2hId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/venues", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "venues")
-
-		queryParams := url.Query()
-		queryParams.Set("country", "Italy")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetVenues()
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/venue/:venueId", func(c echo.Context) error {
 		venueId := c.Param("venueId") //Stadio Giuseppe Meazza: 907
-
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "venues")
-
-		queryParams := url.Query()
-		queryParams.Set("id", venueId)
-		queryParams.Set("country", "Italy")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetVenueByVenueId(venueId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/predictions/:fixtureId", func(c echo.Context) error {
