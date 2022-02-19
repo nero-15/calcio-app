@@ -281,14 +281,14 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/fixtures/headtohead/:h2h", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
-		h2h := c.Param("h2h")
+		h2hId := c.Param("h2h")
 
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "fixtures", "headtohead")
 
 		queryParams := url.Query()
 		queryParams.Set("league", leagueId)
-		queryParams.Set("h2h", h2h)
+		queryParams.Set("h2h", h2hId)
 		queryParams.Set("season", "2021")
 		url.RawQuery = queryParams.Encode()
 

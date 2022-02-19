@@ -543,9 +543,11 @@ func (api *APIClient) GetSquadsByTeamId(teamId string) ([]byte, error) {
 	return resp, err
 }
 
-func (api *APIClient) GetHeadtoheadByTeamId(teamId string) ([]byte, error) {
+func (api *APIClient) GetHeadtoheadByLeagueIdAndH2hId(leagueId string, h2hId string) ([]byte, error) {
 	resp, err := api.doRequest("fixtures/headtohead", map[string]string{
-		"team": teamId,
+		"league": leagueId,
+		"h2h":    h2hId,
+		"season": "2021",
 	})
 	return resp, err
 }
