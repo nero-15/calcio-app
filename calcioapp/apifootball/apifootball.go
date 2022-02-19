@@ -558,3 +558,11 @@ func (api *APIClient) GetVenues() ([]byte, error) {
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetVenueByVenueId(venueId string) ([]byte, error) {
+	resp, err := api.doRequest("venues", map[string]string{
+		"country": "Italy",
+		"id":      venueId,
+	})
+	return resp, err
+}
