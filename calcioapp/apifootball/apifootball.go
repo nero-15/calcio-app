@@ -542,3 +542,10 @@ func (api *APIClient) GetSquadsByTeamId(teamId string) ([]byte, error) {
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetHeadtoheadByTeamId(teamId string) ([]byte, error) {
+	resp, err := api.doRequest("fixtures/headtohead", map[string]string{
+		"team": teamId,
+	})
+	return resp, err
+}
