@@ -553,7 +553,7 @@ func (api *APIClient) GetHeadtoheadByLeagueIdAndH2hId(leagueId string, h2hId str
 }
 
 func (api *APIClient) GetVenues() ([]byte, error) {
-	resp, err := api.doRequest("fixtures/headtohead", map[string]string{
+	resp, err := api.doRequest("venues", map[string]string{
 		"country": "Italy",
 	})
 	return resp, err
