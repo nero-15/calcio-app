@@ -282,7 +282,6 @@ func main() {
 	e.GET("/api/apiFootball/league/:leagueId/fixtures/headtohead/:h2h", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
 		h2hId := c.Param("h2h")
-
 		resp, _ := apifootball.GetHeadtoheadByLeagueIdAndH2hId(leagueId, h2hId)
 		return c.String(http.StatusOK, string(resp))
 	})
