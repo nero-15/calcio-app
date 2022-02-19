@@ -283,23 +283,8 @@ func main() {
 		leagueId := c.Param("leagueId")
 		h2hId := c.Param("h2h")
 
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "fixtures", "headtohead")
-
-		queryParams := url.Query()
-		queryParams.Set("league", leagueId)
-		queryParams.Set("h2h", h2hId)
-		queryParams.Set("season", "2021")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetHeadtoheadByLeagueIdAndH2hId(leagueId, h2hId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/venues", func(c echo.Context) error {
