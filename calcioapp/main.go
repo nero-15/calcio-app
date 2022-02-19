@@ -288,21 +288,8 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/venues", func(c echo.Context) error {
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "venues")
-
-		queryParams := url.Query()
-		queryParams.Set("country", "Italy")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetVenues()
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/venue/:venueId", func(c echo.Context) error {
