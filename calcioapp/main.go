@@ -299,6 +299,7 @@ func main() {
 
 	e.GET("/api/apiFootball/predictions/:fixtureId", func(c echo.Context) error {
 		fixtureId := c.Param("fixtureId")
+		resp, _ := apifootball.GetVenueByVenueId(venueId)
 
 		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
 		url.Path = path.Join(url.Path, "predictions")
