@@ -299,22 +299,8 @@ func main() {
 
 	e.GET("/api/apiFootball/predictions/:fixtureId", func(c echo.Context) error {
 		fixtureId := c.Param("fixtureId")
-
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "predictions")
-
-		queryParams := url.Query()
-		queryParams.Set("fixture", fixtureId)
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetPredictionsByFixtureId(fixtureId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/player/:playerId", func(c echo.Context) error {
