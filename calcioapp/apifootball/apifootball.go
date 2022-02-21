@@ -566,3 +566,10 @@ func (api *APIClient) GetVenueByVenueId(venueId string) ([]byte, error) {
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetPredictionsByVenueId(fixtureId string) ([]byte, error) {
+	resp, err := api.doRequest("predictions", map[string]string{
+		"fixture": fixtureId,
+	})
+	return resp, err
+}
