@@ -573,3 +573,25 @@ func (api *APIClient) GetPredictionsByFixtureId(fixtureId string) ([]byte, error
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetPlayersByPlayerId(playerId string) ([]byte, error) {
+	resp, err := api.doRequest("players", map[string]string{
+		"id":     playerId,
+		"season": "2021",
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetTransfersByPlayerId(playerId string) ([]byte, error) {
+	resp, err := api.doRequest("transfers", map[string]string{
+		"player": playerId,
+	})
+	return resp, err
+}
+
+func (api *APIClient) GetTrophiesByPlayerId(playerId string) ([]byte, error) {
+	resp, err := api.doRequest("trophies", map[string]string{
+		"player": playerId,
+	})
+	return resp, err
+}

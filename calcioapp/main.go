@@ -305,63 +305,20 @@ func main() {
 
 	e.GET("/api/apiFootball/player/:playerId", func(c echo.Context) error {
 		playerId := c.Param("playerId") // M. Škriniar: 198
-
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "players")
-
-		queryParams := url.Query()
-		queryParams.Set("id", playerId)
-		queryParams.Set("season", "2021")
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetPlayersByPlayerId(playerId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/player/:playerId/transfers", func(c echo.Context) error {
 		playerId := c.Param("playerId")
-
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "transfers")
-
-		queryParams := url.Query()
-		queryParams.Set("player", playerId)
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetTransfersByPlayerId(playerId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/player/:playerId/trophies", func(c echo.Context) error {
 		playerId := c.Param("playerId")
-
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "trophies")
-
-		queryParams := url.Query()
-		queryParams.Set("player", playerId)
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetTrophiesByPlayerId(playerId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/player/:playerId/sidelined", func(c echo.Context) error {
