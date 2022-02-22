@@ -588,3 +588,10 @@ func (api *APIClient) GetTransfersByPlayerId(playerId string) ([]byte, error) {
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetTrophiesByPlayerId(playerId string) ([]byte, error) {
+	resp, err := api.doRequest("trophies", map[string]string{
+		"player": playerId,
+	})
+	return resp, err
+}
