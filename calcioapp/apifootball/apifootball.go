@@ -573,3 +573,11 @@ func (api *APIClient) GetPredictionsByFixtureId(fixtureId string) ([]byte, error
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetPlayersByPlayerId(playerId string) ([]byte, error) {
+	resp, err := api.doRequest("players", map[string]string{
+		"id":     playerId,
+		"season": "2021",
+	})
+	return resp, err
+}
