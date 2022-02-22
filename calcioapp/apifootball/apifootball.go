@@ -595,3 +595,10 @@ func (api *APIClient) GetTrophiesByPlayerId(playerId string) ([]byte, error) {
 	})
 	return resp, err
 }
+
+func (api *APIClient) GetSidelinedByPlayerId(playerId string) ([]byte, error) {
+	resp, err := api.doRequest("sidelined", map[string]string{
+		"player": playerId,
+	})
+	return resp, err
+}
