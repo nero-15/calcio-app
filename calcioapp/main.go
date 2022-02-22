@@ -313,7 +313,7 @@ func main() {
 	e.GET("/api/apiFootball/player/:playerId/transfers", func(c echo.Context) error {
 		playerId := c.Param("playerId")
 
-		resp, _ := apifootball.GetPlayersByPlayerId(playerId)
+		resp, _ := apifootball.GetTransfersByPlayerId(playerId)
 		return c.String(http.StatusOK, string(resp))
 	})
 
