@@ -324,21 +324,8 @@ func main() {
 	e.GET("/api/apiFootball/player/:playerId/sidelined", func(c echo.Context) error {
 		playerId := c.Param("playerId")
 
-		url, _ := url.Parse(config.Config.ApiFootballBaseUrl)
-		url.Path = path.Join(url.Path, "sidelined")
-
-		queryParams := url.Query()
-		queryParams.Set("player", playerId)
-		url.RawQuery = queryParams.Encode()
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("x-apisports-key", config.Config.ApiFootballApiToken)
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		resp, _ := apifootball.GetSidelinedByPlayerId(playerId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.Logger.Fatal(e.Start(":8080"))
