@@ -317,7 +317,6 @@ func main() {
 
 	e.GET("/api/apiFootball/player/:playerId/trophies", func(c echo.Context) error {
 		playerId := c.Param("playerId")
-
 		resp, _ := apifootball.GetTrophiesByPlayerId(playerId)
 		return c.String(http.StatusOK, string(resp))
 	})
