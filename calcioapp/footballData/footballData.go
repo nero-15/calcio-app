@@ -1,4 +1,4 @@
-package apifootball
+package footballData
 
 import "net/http"
 

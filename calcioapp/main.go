@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"io"
 	"io/ioutil"
@@ -14,6 +15,7 @@ import (
 
 	"github.com/nero-15/calcio-app/apifootball"
 	"github.com/nero-15/calcio-app/config"
+	"github.com/nero-15/calcio-app/footballData"
 )
 
 // TemplateRenderer is a custom html/template renderer for Echo framework
@@ -53,6 +55,8 @@ func main() {
 	})
 
 	e.GET("api/footballData/teams/:teamId", func(c echo.Context) error {
+		footballData := footballData.New(config.Config.FootballDataApiToken, config.Config.FootballDataBaseUrl)
+		fmt.Println(footballData)
 		//inter = 108
 		teamId := c.Param("teamId")
 
