@@ -58,19 +58,6 @@ func main() {
 		teamId := c.Param("teamId")
 		resp, _ := footballData.DoRequest("teams", teamId)
 		return c.String(http.StatusOK, string(resp))
-
-		// 取得したいデータのURL作成
-		// url, _ := url.Parse(config.Config.FootballDataBaseUrl)
-		// url.Path = path.Join(url.Path, "teams", teamId)
-
-		// req, _ := http.NewRequest("GET", url.String(), nil)
-		// req.Header.Add("X-Auth-Token", config.Config.FootballDataApiToken) // アカウント登録時に送られてきたAPIトークンをリクエストヘッダーに追加
-		// client := new(http.Client)
-		// resp, _ := client.Do(req)
-		// defer resp.Body.Close()
-
-		// byteArray, _ := ioutil.ReadAll(resp.Body)
-		// return c.String(http.StatusOK, string(byteArray))
 	})
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
