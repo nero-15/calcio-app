@@ -4,16 +4,14 @@ import (
 	"encoding/json"
 	"html/template"
 	"io"
-	"io/ioutil"
 	"net/http"
-	"net/url"
-	"path"
 
 	echo "github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
 	"github.com/nero-15/calcio-app/apifootball"
 	"github.com/nero-15/calcio-app/config"
+	"github.com/nero-15/calcio-app/footballData"
 )
 
 // TemplateRenderer is a custom html/template renderer for Echo framework
@@ -53,21 +51,10 @@ func main() {
 	})
 
 	e.GET("api/footballData/teams/:teamId", func(c echo.Context) error {
-		//inter = 108
-		teamId := c.Param("teamId")
-
-		// 取得したいデータのURL作成
-		url, _ := url.Parse(config.Config.FootballDataBaseUrl)
-		url.Path = path.Join(url.Path, "teams", teamId)
-
-		req, _ := http.NewRequest("GET", url.String(), nil)
-		req.Header.Add("X-Auth-Token", config.Config.FootballDataApiToken) // アカウント登録時に送られてきたAPIトークンをリクエストヘッダーに追加
-		client := new(http.Client)
-		resp, _ := client.Do(req)
-		defer resp.Body.Close()
-
-		byteArray, _ := ioutil.ReadAll(resp.Body)
-		return c.String(http.StatusOK, string(byteArray))
+		teamId := c.Param("teamId") //inter = 108
+		footballData := footballData.New(config.Config.FootballDataApiToken, config.Config.FootballDataBaseUrl)
+		resp, _ := footballData.DoRequest("teams", teamId)
+		return c.String(http.StatusOK, string(resp))
 	})
 
 	e.GET("/api/apiFootball/status", func(c echo.Context) error {
