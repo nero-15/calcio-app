@@ -453,6 +453,20 @@ func (api *APIClient) GetTeamsByLeagueIdAndTeamId(leagueId string, teamId string
 	return teams, nil
 }
 
+func (api *APIClient) GetStatisticsByLeagueIdAndTeamId(leagueId string, teamId string) (Statistics, error) {
+	resp, err := api.doRequest("teams/statistics", map[string]string{
+		"season": "2021",
+		"league": leagueId,
+		"team":   teamId,
+	})
+	var statistics Statistics
+	if err != nil {
+		return statistics, err
+	}
+	json.Unmarshal(resp, &statistics)
+	return statistics, nil
+}
+
 type Statistics struct {
 	Get        string `json:"get"`
 	Parameters struct {
@@ -718,15 +732,6 @@ type Statistics struct {
 			} `json:"red"`
 		} `json:"cards"`
 	} `json:"response"`
-}
-
-func (api *APIClient) GetStatisticsByLeagueIdAndTeamId(leagueId string, teamId string) ([]byte, error) {
-	resp, err := api.doRequest("teams/statistics", map[string]string{
-		"season": "2021",
-		"league": leagueId,
-		"team":   teamId,
-	})
-	return resp, err
 }
 
 func (api *APIClient) GetPlayersByLeagueIdAndTeamId(leagueId string, teamId string) ([]byte, error) {
