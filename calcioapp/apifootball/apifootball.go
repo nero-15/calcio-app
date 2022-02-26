@@ -72,10 +72,12 @@ type Status struct {
 }
 
 type League struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Type string `json:"type"`
-	Logo string `json:"logo"`
+	ID      int    `json:"id"`
+	Name    string `json:"name"`
+	Country string `json:"country"`
+	Logo    string `json:"logo"`
+	Flag    string `json:"flag"`
+	Season  int    `json:"season"`
 }
 
 type Country struct {
@@ -199,15 +201,8 @@ type Statistic struct {
 		Name string `json:"name"`
 		Logo string `json:"logo"`
 	} `json:"team"`
-	League struct {
-		ID      int    `json:"id"`
-		Name    string `json:"name"`
-		Country string `json:"country"`
-		Logo    string `json:"logo"`
-		Flag    string `json:"flag"`
-		Season  int    `json:"season"`
-	} `json:"league"`
-	Games struct {
+	League `json:"league"`
+	Games  struct {
 		Appearences int         `json:"appearences"`
 		Lineups     int         `json:"lineups"`
 		Minutes     int         `json:"minutes"`
@@ -470,15 +465,8 @@ func (api *APIClient) GetStatisticsByLeagueIdAndTeamId(leagueId string, teamId s
 type Statistics struct {
 	CommonResponse
 	Response struct {
-		League struct {
-			ID      int    `json:"id"`
-			Name    string `json:"name"`
-			Country string `json:"country"`
-			Logo    string `json:"logo"`
-			Flag    string `json:"flag"`
-			Season  int    `json:"season"`
-		} `json:"league"`
-		Team struct {
+		League `json:"league"`
+		Team   struct {
 			ID   int    `json:"id"`
 			Name string `json:"name"`
 			Logo string `json:"logo"`
