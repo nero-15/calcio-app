@@ -207,7 +207,7 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
-		if statistics.Results == 0 {
+		if players.Results == 0 {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
 		playersByteArray, _ := json.Marshal(players)
