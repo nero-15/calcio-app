@@ -195,12 +195,14 @@ type Player struct {
 	Photo       string `json:"photo"`
 }
 
+type Team struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Logo string `json:"logo"`
+}
+
 type Statistic struct {
-	Team struct {
-		ID   int    `json:"id"`
-		Name string `json:"name"`
-		Logo string `json:"logo"`
-	} `json:"team"`
+	Team   `json:"team"`
 	League `json:"league"`
 	Games  struct {
 		Appearences int         `json:"appearences"`
@@ -465,12 +467,8 @@ func (api *APIClient) GetStatisticsByLeagueIdAndTeamId(leagueId string, teamId s
 type Statistics struct {
 	CommonResponse
 	Response struct {
-		League `json:"league"`
-		Team   struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"team"`
+		League   `json:"league"`
+		Team     `json:"team"`
 		Form     string `json:"form"`
 		Fixtures struct {
 			Played struct {
