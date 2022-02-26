@@ -705,13 +705,18 @@ func (api *APIClient) GetStatisticsByLeagueIdAndTeamId(leagueId string, teamId s
 	return statistics, nil
 }
 
-func (api *APIClient) GetPlayersByLeagueIdAndTeamId(leagueId string, teamId string) ([]byte, error) {
+func (api *APIClient) GetPlayersByLeagueIdAndTeamId(leagueId string, teamId string) (Players, error) {
 	resp, err := api.doRequest("players", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 		"team":   teamId,
 	})
-	return resp, err
+	var players Players
+	if err != nil {
+		return players, err
+	}
+	json.Unmarshal(resp, &players)
+	return players, nil
 }
 
 type Players struct {
