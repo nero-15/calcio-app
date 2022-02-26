@@ -468,18 +468,7 @@ func (api *APIClient) GetStatisticsByLeagueIdAndTeamId(leagueId string, teamId s
 }
 
 type Statistics struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		League string `json:"league"`
-		Season string `json:"season"`
-		Team   string `json:"team"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response struct {
 		League struct {
 			ID      int    `json:"id"`
