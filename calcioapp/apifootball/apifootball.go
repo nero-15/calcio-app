@@ -301,11 +301,7 @@ type Team struct {
 	Logo     string `json:"logo"`
 }
 
-type Teams struct {
-	CommonResponse
-	Response []struct {
-		Team  `json:"team"`
-		Venue struct {
+type　Venue struct {
 			ID       int    `json:"id"`
 			Name     string `json:"name"`
 			Address  string `json:"address"`
@@ -313,9 +309,17 @@ type Teams struct {
 			Capacity int    `json:"capacity"`
 			Surface  string `json:"surface"`
 			Image    string `json:"image"`
-		} `json:"venue"`
+		}
+
+type Teams struct {
+	CommonResponse
+	Response []struct {
+		Team  `json:"team"`
+		Venue `json:"venue"`
 	} `json:"response"`
 }
+
+
 
 type Statistics struct {
 	CommonResponse
