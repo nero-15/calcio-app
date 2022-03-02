@@ -301,15 +301,15 @@ type Team struct {
 	Logo     string `json:"logo"`
 }
 
-type　Venue struct {
-			ID       int    `json:"id"`
-			Name     string `json:"name"`
-			Address  string `json:"address"`
-			City     string `json:"city"`
-			Capacity int    `json:"capacity"`
-			Surface  string `json:"surface"`
-			Image    string `json:"image"`
-		}
+type Venue struct {
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Address  string `json:"address"`
+	City     string `json:"city"`
+	Capacity int    `json:"capacity"`
+	Surface  string `json:"surface"`
+	Image    string `json:"image"`
+}
 
 type Teams struct {
 	CommonResponse
@@ -320,39 +320,39 @@ type Teams struct {
 }
 
 type Minute struct {
-					Zero15 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"0-15"`
-					One630 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"16-30"`
-					Three145 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"31-45"`
-					Four660 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"46-60"`
-					Six175 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"61-75"`
-					Seven690 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"76-90"`
-					Nine1105 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"91-105"`
-					One06120 struct {
-						Total      interface{} `json:"total"`
-						Percentage interface{} `json:"percentage"`
-					} `json:"106-120"`
-				}
+	Zero15 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"0-15"`
+	One630 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"16-30"`
+	Three145 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"31-45"`
+	Four660 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"46-60"`
+	Six175 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"61-75"`
+	Seven690 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"76-90"`
+	Nine1105 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"91-105"`
+	One06120 struct {
+		Total      interface{} `json:"total"`
+		Percentage interface{} `json:"percentage"`
+	} `json:"106-120"`
+}
 
 type Statistics struct {
 	CommonResponse
