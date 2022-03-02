@@ -52,7 +52,7 @@ func main() {
 
 	e.GET("api/footballData/teams/:teamId", func(c echo.Context) error {
 		footballData := footballData.New(config.Config.FootballDataApiToken, config.Config.FootballDataBaseUrl)
-		resp, _ := footballData.DoRequest("teams", c.Param("teamId"))　//inter = 108
+		resp, _ := footballData.DoRequest("teams", c.Param("teamId")) //inter = 108
 		return c.String(http.StatusOK, string(resp))
 	})
 
