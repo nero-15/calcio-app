@@ -320,18 +320,7 @@ type Teams struct {
 }
 
 type Players struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		League string `json:"league"`
-		Season string `json:"season"`
-		Team   string `json:"team"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		Player     `json:"player"`
 		Statistics []Statistic `json:"statistics"`
