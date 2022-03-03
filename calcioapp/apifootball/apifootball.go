@@ -333,23 +333,7 @@ type Players struct {
 		Total   int `json:"total"`
 	} `json:"paging"`
 	Response []struct {
-		Player struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Firstname string `json:"firstname"`
-			Lastname  string `json:"lastname"`
-			Age       int    `json:"age"`
-			Birth     struct {
-				Date    string      `json:"date"`
-				Place   interface{} `json:"place"`
-				Country string      `json:"country"`
-			} `json:"birth"`
-			Nationality string      `json:"nationality"`
-			Height      interface{} `json:"height"`
-			Weight      interface{} `json:"weight"`
-			Injured     bool        `json:"injured"`
-			Photo       string      `json:"photo"`
-		} `json:"player"`
+		Player     `json:"player"`
 		Statistics []struct {
 			Team struct {
 				ID   int    `json:"id"`
