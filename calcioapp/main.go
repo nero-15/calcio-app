@@ -216,7 +216,13 @@ func main() {
 	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/fixtures", func(c echo.Context) error {
 		leagueId := c.Param("leagueId")
 		teamId := c.Param("teamId")
-		fixtures, _ := apifootball.GetFixturesByLeagueIdAndTeamId(leagueId, teamId)
+		fixtures, err := apifootball.GetFixturesByLeagueIdAndTeamId(leagueId, teamId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if fixtures.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		fixturesByteArray, _ := json.Marshal(fixtures)
 		return c.String(http.StatusOK, string(fixturesByteArray))
 	})
