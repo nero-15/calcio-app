@@ -632,13 +632,18 @@ func (api *APIClient) GetPlayersByLeagueIdAndTeamId(leagueId string, teamId stri
 	return players, nil
 }
 
-func (api *APIClient) GetFixturesByLeagueIdAndTeamId(leagueId string, teamId string) ([]byte, error) {
+func (api *APIClient) GetFixturesByLeagueIdAndTeamId(leagueId string, teamId string) (Fixtures, error) {
 	resp, err := api.doRequest("fixtures", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 		"team":   teamId,
 	})
-	return resp, err
+	var fixtures Fixtures
+	if err != nil {
+		return fixtures, err
+	}
+	json.Unmarshal(resp, &fixtures)
+	return fixtures, nil
 }
 
 type Fixtures struct {
