@@ -78,6 +78,7 @@ type League struct {
 	Logo    string `json:"logo"`
 	Flag    string `json:"flag"`
 	Season  int    `json:"season"`
+	Round   string `json:"round"`
 }
 
 type Country struct {
@@ -499,16 +500,8 @@ type Fixtures struct {
 				Elapsed int    `json:"elapsed"`
 			} `json:"status"`
 		} `json:"fixture"`
-		League struct {
-			ID      int    `json:"id"`
-			Name    string `json:"name"`
-			Country string `json:"country"`
-			Logo    string `json:"logo"`
-			Flag    string `json:"flag"`
-			Season  int    `json:"season"`
-			Round   string `json:"round"`
-		} `json:"league"`
-		Teams struct {
+		League `json:"league"`
+		Teams  struct {
 			Home struct {
 				ID     int    `json:"id"`
 				Name   string `json:"name"`
