@@ -78,6 +78,7 @@ type League struct {
 	Logo    string `json:"logo"`
 	Flag    string `json:"flag"`
 	Season  int    `json:"season"`
+	Round   string `json:"round"`
 }
 
 type Country struct {
@@ -475,6 +476,70 @@ type Statistics struct {
 	} `json:"response"`
 }
 
+type Fixtures struct {
+	CommonResponse
+	Response []struct {
+		Fixture struct {
+			ID        int       `json:"id"`
+			Referee   string    `json:"referee"`
+			Timezone  string    `json:"timezone"`
+			Date      time.Time `json:"date"`
+			Timestamp int       `json:"timestamp"`
+			Periods   struct {
+				First  int `json:"first"`
+				Second int `json:"second"`
+			} `json:"periods"`
+			Venue struct {
+				ID   int    `json:"id"`
+				Name string `json:"name"`
+				City string `json:"city"`
+			} `json:"venue"`
+			Status struct {
+				Long    string `json:"long"`
+				Short   string `json:"short"`
+				Elapsed int    `json:"elapsed"`
+			} `json:"status"`
+		} `json:"fixture"`
+		League `json:"league"`
+		Teams  struct {
+			Home struct {
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Logo   string `json:"logo"`
+				Winner bool   `json:"winner"`
+			} `json:"home"`
+			Away struct {
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Logo   string `json:"logo"`
+				Winner bool   `json:"winner"`
+			} `json:"away"`
+		} `json:"teams"`
+		Goals struct {
+			Home int `json:"home"`
+			Away int `json:"away"`
+		} `json:"goals"`
+		Score struct {
+			Halftime struct {
+				Home int `json:"home"`
+				Away int `json:"away"`
+			} `json:"halftime"`
+			Fulltime struct {
+				Home int `json:"home"`
+				Away int `json:"away"`
+			} `json:"fulltime"`
+			Extratime struct {
+				Home interface{} `json:"home"`
+				Away interface{} `json:"away"`
+			} `json:"extratime"`
+			Penalty struct {
+				Home interface{} `json:"home"`
+				Away interface{} `json:"away"`
+			} `json:"penalty"`
+		} `json:"score"`
+	} `json:"response"`
+}
+
 func (api *APIClient) GetStatus() (Status, error) {
 	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
@@ -632,13 +697,18 @@ func (api *APIClient) GetPlayersByLeagueIdAndTeamId(leagueId string, teamId stri
 	return players, nil
 }
 
-func (api *APIClient) GetFixturesByLeagueIdAndTeamId(leagueId string, teamId string) ([]byte, error) {
+func (api *APIClient) GetFixturesByLeagueIdAndTeamId(leagueId string, teamId string) (Fixtures, error) {
 	resp, err := api.doRequest("fixtures", map[string]string{
 		"season": "2021",
 		"league": leagueId,
 		"team":   teamId,
 	})
-	return resp, err
+	var fixtures Fixtures
+	if err != nil {
+		return fixtures, err
+	}
+	json.Unmarshal(resp, &fixtures)
+	return fixtures, nil
 }
 
 func (api *APIClient) GetFixtureByFixtureId(fixtureId string) ([]byte, error) {
