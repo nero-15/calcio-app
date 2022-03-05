@@ -249,6 +249,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if injuries.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		injuriesByteArray, _ := json.Marshal(injuries)
 		return c.String(http.StatusOK, string(injuriesByteArray))
 	})
