@@ -711,11 +711,16 @@ func (api *APIClient) GetFixturesByLeagueIdAndTeamId(leagueId string, teamId str
 	return fixtures, nil
 }
 
-func (api *APIClient) GetFixtureByFixtureId(fixtureId string) ([]byte, error) {
+func (api *APIClient) GetFixtureByFixtureId(fixtureId string) (Fixtures, error) {
 	resp, err := api.doRequest("fixtures", map[string]string{
 		"id": fixtureId,
 	})
-	return resp, err
+	var fixtures Fixtures
+	if err != nil {
+		return fixtures, err
+	}
+	json.Unmarshal(resp, &fixtures)
+	return fixtures, nil
 }
 
 func (api *APIClient) GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId string, teamId string, fixtureId string) ([]byte, error) {
