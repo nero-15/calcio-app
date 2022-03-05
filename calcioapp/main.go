@@ -229,7 +229,10 @@ func main() {
 
 	e.GET("/api/apiFootball/league/:leagueId/team/:teamId/fixture/:fixtureId", func(c echo.Context) error {
 		fixtureId := c.Param("fixtureId")
-		fixtures, _ := apifootball.GetFixtureByFixtureId(fixtureId)
+		fixtures, err := apifootball.GetFixtureByFixtureId(fixtureId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		fixturesByteArray, _ := json.Marshal(fixtures)
 		return c.String(http.StatusOK, string(fixturesByteArray))
 	})
