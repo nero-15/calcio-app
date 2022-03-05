@@ -245,7 +245,10 @@ func main() {
 		teamId := c.Param("teamId")
 		fixtureId := c.Param("fixtureId")
 
-		injuries, _ := apifootball.GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId, teamId, fixtureId)
+		injuries, err := apifootball.GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId, teamId, fixtureId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		injuriesByteArray, _ := json.Marshal(injuries)
 		return c.String(http.StatusOK, string(injuriesByteArray))
 	})
