@@ -233,6 +233,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if fixtures.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		fixturesByteArray, _ := json.Marshal(fixtures)
 		return c.String(http.StatusOK, string(fixturesByteArray))
 	})
