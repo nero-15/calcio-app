@@ -723,14 +723,19 @@ func (api *APIClient) GetFixtureByFixtureId(fixtureId string) (Fixtures, error) 
 	return fixtures, nil
 }
 
-func (api *APIClient) GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId string, teamId string, fixtureId string) ([]byte, error) {
+func (api *APIClient) GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId string, teamId string, fixtureId string) (Injuries, error) {
 	resp, err := api.doRequest("injuries", map[string]string{
 		"season":  "2021",
 		"league":  leagueId,
 		"team":    teamId,
 		"fixture": fixtureId,
 	})
-	return resp, err
+	var injuries Injuries
+	if err != nil {
+		return injuries, err
+	}
+	json.Unmarshal(resp, &injuries)
+	return injuries, nil
 }
 
 type Injuries struct {
