@@ -782,12 +782,42 @@ type Injuries struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetStatisticsByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
+func (api *APIClient) GetStatisticsByTeamIdAndFixtureId(teamId string, fixtureId string) (FixturesStatistics, error) {
 	resp, err := api.doRequest("fixtures/statistics", map[string]string{
 		"team":    teamId,
 		"fixture": fixtureId,
 	})
-	return resp, err
+	var fixturesStatistics FixturesStatistics
+	if err != nil {
+		return fixturesStatistics, err
+	}
+	json.Unmarshal(resp, &fixturesStatistics)
+	return fixturesStatistics, nil
+}
+
+type FixturesStatistics struct {
+	Get        string `json:"get"`
+	Parameters struct {
+		Fixture string `json:"fixture"`
+		Team    string `json:"team"`
+	} `json:"parameters"`
+	Errors  []interface{} `json:"errors"`
+	Results int           `json:"results"`
+	Paging  struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response []struct {
+		Team struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"team"`
+		Statistics []struct {
+			Type  string `json:"type"`
+			Value int    `json:"value"`
+		} `json:"statistics"`
+	} `json:"response"`
 }
 
 func (api *APIClient) GetEventsByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
