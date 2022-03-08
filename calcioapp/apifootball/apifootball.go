@@ -820,12 +820,17 @@ type FixturesStatistics struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetEventsByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
+func (api *APIClient) GetEventsByTeamIdAndFixtureId(teamId string, fixtureId string) (Events, error) {
 	resp, err := api.doRequest("fixtures/events", map[string]string{
 		"team":    teamId,
 		"fixture": fixtureId,
 	})
-	return resp, err
+	var events Events
+	if err != nil {
+		return events, err
+	}
+	json.Unmarshal(resp, &events)
+	return events, nil
 }
 
 type Events struct {
