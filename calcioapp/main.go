@@ -279,6 +279,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if events.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		eventsByteArray, _ := json.Marshal(events)
 		return c.String(http.StatusOK, string(eventsByteArray))
 	})
