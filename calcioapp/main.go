@@ -290,8 +290,15 @@ func main() {
 		teamId := c.Param("teamId")
 		fixtureId := c.Param("fixtureId") //731698
 
-		resp, _ := apifootball.GetLineupsByTeamIdAndFixtureId(teamId, fixtureId)
-		return c.String(http.StatusOK, string(resp))
+		lineups, err := apifootball.GetLineupsByTeamIdAndFixtureId(teamId, fixtureId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if lineups.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		lineupsByteArray, _ := json.Marshal(lineups)
+		return c.String(http.StatusOK, string(lineupsByteArray))
 	})
 
 	e.GET("/api/apiFootball/team/:teamId/fixture/:fixtureId/players", func(c echo.Context) error {
