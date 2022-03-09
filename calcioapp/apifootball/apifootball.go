@@ -877,6 +877,63 @@ func (api *APIClient) GetLineupsByTeamIdAndFixtureId(teamId string, fixtureId st
 	return resp, err
 }
 
+type Lineups struct {
+	Get        string `json:"get"`
+	Parameters struct {
+		Fixture string `json:"fixture"`
+		Team    string `json:"team"`
+	} `json:"parameters"`
+	Errors  []interface{} `json:"errors"`
+	Results int           `json:"results"`
+	Paging  struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response []struct {
+		Team struct {
+			ID     int    `json:"id"`
+			Name   string `json:"name"`
+			Logo   string `json:"logo"`
+			Colors struct {
+				Player struct {
+					Primary string `json:"primary"`
+					Number  string `json:"number"`
+					Border  string `json:"border"`
+				} `json:"player"`
+				Goalkeeper struct {
+					Primary string `json:"primary"`
+					Number  string `json:"number"`
+					Border  string `json:"border"`
+				} `json:"goalkeeper"`
+			} `json:"colors"`
+		} `json:"team"`
+		Coach struct {
+			ID    int    `json:"id"`
+			Name  string `json:"name"`
+			Photo string `json:"photo"`
+		} `json:"coach"`
+		Formation string `json:"formation"`
+		Startxi   []struct {
+			Player struct {
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Number int    `json:"number"`
+				Pos    string `json:"pos"`
+				Grid   string `json:"grid"`
+			} `json:"player"`
+		} `json:"startXI"`
+		Substitutes []struct {
+			Player struct {
+				ID     int         `json:"id"`
+				Name   string      `json:"name"`
+				Number int         `json:"number"`
+				Pos    string      `json:"pos"`
+				Grid   interface{} `json:"grid"`
+			} `json:"player"`
+		} `json:"substitutes"`
+	} `json:"response"`
+}
+
 func (api *APIClient) GetPlayersByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
 	resp, err := api.doRequest("fixtures/players", map[string]string{
 		"team":    teamId,
