@@ -939,12 +939,101 @@ type Lineups struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetPlayersByTeamIdAndFixtureId(teamId string, fixtureId string) ([]byte, error) {
+func (api *APIClient) GetPlayersByTeamIdAndFixtureId(teamId string, fixtureId string) (FixturesPlayers, error) {
 	resp, err := api.doRequest("fixtures/players", map[string]string{
 		"team":    teamId,
 		"fixture": fixtureId,
 	})
-	return resp, err
+	var fixturesPlayers FixturesPlayers
+	if err != nil {
+		return fixturesPlayers, err
+	}
+	json.Unmarshal(resp, &fixturesPlayers)
+	return fixturesPlayers, nil
+}
+
+type FixturesPlayers struct {
+	Get        string `json:"get"`
+	Parameters struct {
+		Fixture string `json:"fixture"`
+		Team    string `json:"team"`
+	} `json:"parameters"`
+	Errors  []interface{} `json:"errors"`
+	Results int           `json:"results"`
+	Paging  struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response []struct {
+		Team struct {
+			ID     int       `json:"id"`
+			Name   string    `json:"name"`
+			Logo   string    `json:"logo"`
+			Update time.Time `json:"update"`
+		} `json:"team"`
+		Players []struct {
+			Player struct {
+				ID    int    `json:"id"`
+				Name  string `json:"name"`
+				Photo string `json:"photo"`
+			} `json:"player"`
+			Statistics []struct {
+				Games struct {
+					Minutes    int    `json:"minutes"`
+					Number     int    `json:"number"`
+					Position   string `json:"position"`
+					Rating     string `json:"rating"`
+					Captain    bool   `json:"captain"`
+					Substitute bool   `json:"substitute"`
+				} `json:"games"`
+				Offsides interface{} `json:"offsides"`
+				Shots    struct {
+					Total interface{} `json:"total"`
+					On    interface{} `json:"on"`
+				} `json:"shots"`
+				Goals struct {
+					Total    interface{} `json:"total"`
+					Conceded int         `json:"conceded"`
+					Assists  interface{} `json:"assists"`
+					Saves    interface{} `json:"saves"`
+				} `json:"goals"`
+				Passes struct {
+					Total    int         `json:"total"`
+					Key      interface{} `json:"key"`
+					Accuracy string      `json:"accuracy"`
+				} `json:"passes"`
+				Tackles struct {
+					Total         interface{} `json:"total"`
+					Blocks        interface{} `json:"blocks"`
+					Interceptions interface{} `json:"interceptions"`
+				} `json:"tackles"`
+				Duels struct {
+					Total interface{} `json:"total"`
+					Won   interface{} `json:"won"`
+				} `json:"duels"`
+				Dribbles struct {
+					Attempts interface{} `json:"attempts"`
+					Success  interface{} `json:"success"`
+					Past     interface{} `json:"past"`
+				} `json:"dribbles"`
+				Fouls struct {
+					Drawn     interface{} `json:"drawn"`
+					Committed interface{} `json:"committed"`
+				} `json:"fouls"`
+				Cards struct {
+					Yellow int `json:"yellow"`
+					Red    int `json:"red"`
+				} `json:"cards"`
+				Penalty struct {
+					Won      interface{} `json:"won"`
+					Commited interface{} `json:"commited"`
+					Scored   int         `json:"scored"`
+					Missed   int         `json:"missed"`
+					Saved    int         `json:"saved"`
+				} `json:"penalty"`
+			} `json:"statistics"`
+		} `json:"players"`
+	} `json:"response"`
 }
 
 func (api *APIClient) GetCoachsByTeamId(teamId string) ([]byte, error) {
