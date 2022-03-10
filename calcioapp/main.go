@@ -305,8 +305,9 @@ func main() {
 		teamId := c.Param("teamId")
 		fixtureId := c.Param("fixtureId") //731698
 
-		resp, _ := apifootball.GetPlayersByTeamIdAndFixtureId(teamId, fixtureId)
-		return c.String(http.StatusOK, string(resp))
+		fixturesPlayers, _ := apifootball.GetPlayersByTeamIdAndFixtureId(teamId, fixtureId)
+		fixturesPlayersByteArray, _ := json.Marshal(fixturesPlayers)
+		return c.String(http.StatusOK, string(fixturesPlayersByteArray))
 	})
 
 	e.GET("/api/apiFootball/team/:teamId/coachs", func(c echo.Context) error {
