@@ -318,7 +318,10 @@ func main() {
 
 	e.GET("/api/apiFootball/team/:teamId/coachs", func(c echo.Context) error {
 		teamId := c.Param("teamId")
-		coachs, _ := apifootball.GetCoachsByTeamId(teamId)
+		coachs, err := apifootball.GetCoachsByTeamId(teamId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		coachsByteArray, _ := json.Marshal(coachs)
 		return c.String(http.StatusOK, string(coachsByteArray))
 	})
