@@ -322,6 +322,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if coachs.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		coachsByteArray, _ := json.Marshal(coachs)
 		return c.String(http.StatusOK, string(coachsByteArray))
 	})
