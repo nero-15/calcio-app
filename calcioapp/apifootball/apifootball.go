@@ -1091,11 +1091,16 @@ type Coachs struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetSquadsByTeamId(teamId string) ([]byte, error) {
+func (api *APIClient) GetSquadsByTeamId(teamId string) (Squads, error) {
 	resp, err := api.doRequest("players/squads", map[string]string{
 		"team": teamId,
 	})
-	return resp, err
+	var squads Squads
+	if err != nil {
+		return squads, err
+	}
+	json.Unmarshal(resp, &squads)
+	return squads, nil
 }
 
 type Squads struct {
