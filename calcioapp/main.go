@@ -331,8 +331,15 @@ func main() {
 
 	e.GET("/api/apiFootball/team/:teamId/squads", func(c echo.Context) error {
 		teamId := c.Param("teamId")
-		resp, _ := apifootball.GetSquadsByTeamId(teamId)
-		return c.String(http.StatusOK, string(resp))
+		squads, err := apifootball.GetSquadsByTeamId(teamId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if squads.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		squadsByteArray, _ := json.Marshal(squads)
+		return c.String(http.StatusOK, string(squadsByteArray))
 	})
 
 	e.GET("/api/apiFootball/league/:leagueId/fixtures/headtohead/:h2h", func(c echo.Context) error {

@@ -1091,11 +1091,44 @@ type Coachs struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetSquadsByTeamId(teamId string) ([]byte, error) {
+func (api *APIClient) GetSquadsByTeamId(teamId string) (Squads, error) {
 	resp, err := api.doRequest("players/squads", map[string]string{
 		"team": teamId,
 	})
-	return resp, err
+	var squads Squads
+	if err != nil {
+		return squads, err
+	}
+	json.Unmarshal(resp, &squads)
+	return squads, nil
+}
+
+type Squads struct {
+	Get        string `json:"get"`
+	Parameters struct {
+		Team string `json:"team"`
+	} `json:"parameters"`
+	Errors  []interface{} `json:"errors"`
+	Results int           `json:"results"`
+	Paging  struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response []struct {
+		Team struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"team"`
+		Players []struct {
+			ID       int    `json:"id"`
+			Name     string `json:"name"`
+			Age      int    `json:"age"`
+			Number   int    `json:"number"`
+			Position string `json:"position"`
+			Photo    string `json:"photo"`
+		} `json:"players"`
+	} `json:"response"`
 }
 
 func (api *APIClient) GetHeadtoheadByLeagueIdAndH2hId(leagueId string, h2hId string) ([]byte, error) {
