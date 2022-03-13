@@ -1140,11 +1140,16 @@ func (api *APIClient) GetHeadtoheadByLeagueIdAndH2hId(leagueId string, h2hId str
 	return resp, err
 }
 
-func (api *APIClient) GetVenues() ([]byte, error) {
+func (api *APIClient) GetVenues() (Venues, error) {
 	resp, err := api.doRequest("venues", map[string]string{
 		"country": "Italy",
 	})
-	return resp, err
+	var venues Venues
+	if err != nil {
+		return venues, err
+	}
+	json.Unmarshal(resp, &venues)
+	return venues, nil
 }
 
 type Venues struct {
