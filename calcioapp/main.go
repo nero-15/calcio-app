@@ -350,8 +350,9 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/venues", func(c echo.Context) error {
-		resp, _ := apifootball.GetVenues()
-		return c.String(http.StatusOK, string(resp))
+		venues, _ := apifootball.GetVenues()
+		venuesByteArray, _ := json.Marshal(venues)
+		return c.String(http.StatusOK, string(venuesByteArray))
 	})
 
 	e.GET("/api/apiFootball/venue/:venueId", func(c echo.Context) error {
