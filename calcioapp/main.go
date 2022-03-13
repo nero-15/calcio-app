@@ -350,7 +350,10 @@ func main() {
 	})
 
 	e.GET("/api/apiFootball/venues", func(c echo.Context) error {
-		venues, _ := apifootball.GetVenues()
+		venues, err := apifootball.GetVenues()
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		venuesByteArray, _ := json.Marshal(venues)
 		return c.String(http.StatusOK, string(venuesByteArray))
 	})
