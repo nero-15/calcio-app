@@ -1147,6 +1147,29 @@ func (api *APIClient) GetVenues() ([]byte, error) {
 	return resp, err
 }
 
+type Venues struct {
+	Get        string `json:"get"`
+	Parameters struct {
+		Country string `json:"country"`
+	} `json:"parameters"`
+	Errors  []interface{} `json:"errors"`
+	Results int           `json:"results"`
+	Paging  struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response []struct {
+		ID       int    `json:"id"`
+		Name     string `json:"name"`
+		Address  string `json:"address"`
+		City     string `json:"city"`
+		Country  string `json:"country"`
+		Capacity int    `json:"capacity"`
+		Surface  string `json:"surface"`
+		Image    string `json:"image"`
+	} `json:"response"`
+}
+
 func (api *APIClient) GetVenueByVenueId(venueId string) ([]byte, error) {
 	resp, err := api.doRequest("venues", map[string]string{
 		"country": "Italy",
