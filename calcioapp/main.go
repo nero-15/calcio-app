@@ -363,7 +363,10 @@ func main() {
 
 	e.GET("/api/apiFootball/venue/:venueId", func(c echo.Context) error {
 		venueId := c.Param("venueId") //Stadio Giuseppe Meazza: 907
-		venues, _ := apifootball.GetVenueByVenueId(venueId)
+		venues, err := apifootball.GetVenueByVenueId(venueId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		venuesByteArray, _ := json.Marshal(venues)
 		return c.String(http.StatusOK, string(venuesByteArray))
 	})
