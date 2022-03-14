@@ -307,6 +307,7 @@ type Venue struct {
 	Name     string `json:"name"`
 	Address  string `json:"address"`
 	City     string `json:"city"`
+	Country  string `json:"country"`
 	Capacity int    `json:"capacity"`
 	Surface  string `json:"surface"`
 	Image    string `json:"image"`
@@ -537,6 +538,13 @@ type Fixtures struct {
 				Away interface{} `json:"away"`
 			} `json:"penalty"`
 		} `json:"score"`
+	} `json:"response"`
+}
+
+type Venues struct {
+	CommonResponse
+	Response []struct {
+		Venue
 	} `json:"response"`
 }
 
@@ -1152,35 +1160,17 @@ func (api *APIClient) GetVenues() (Venues, error) {
 	return venues, nil
 }
 
-type Venues struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Country string `json:"country"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
-	Response []struct {
-		ID       int    `json:"id"`
-		Name     string `json:"name"`
-		Address  string `json:"address"`
-		City     string `json:"city"`
-		Country  string `json:"country"`
-		Capacity int    `json:"capacity"`
-		Surface  string `json:"surface"`
-		Image    string `json:"image"`
-	} `json:"response"`
-}
-
-func (api *APIClient) GetVenueByVenueId(venueId string) ([]byte, error) {
+func (api *APIClient) GetVenueByVenueId(venueId string) (Venues, error) {
 	resp, err := api.doRequest("venues", map[string]string{
 		"country": "Italy",
 		"id":      venueId,
 	})
-	return resp, err
+	var venues Venues
+	if err != nil {
+		return venues, err
+	}
+	json.Unmarshal(resp, &venues)
+	return venues, nil
 }
 
 func (api *APIClient) GetPredictionsByFixtureId(fixtureId string) ([]byte, error) {
