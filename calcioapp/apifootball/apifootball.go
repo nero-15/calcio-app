@@ -541,6 +541,13 @@ type Fixtures struct {
 	} `json:"response"`
 }
 
+type Venues struct {
+	CommonResponse
+	Response []struct {
+		Venue
+	} `json:"response"`
+}
+
 func (api *APIClient) GetStatus() (Status, error) {
 	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
@@ -1151,13 +1158,6 @@ func (api *APIClient) GetVenues() (Venues, error) {
 	}
 	json.Unmarshal(resp, &venues)
 	return venues, nil
-}
-
-type Venues struct {
-	CommonResponse
-	Response []struct {
-		Venue
-	} `json:"response"`
 }
 
 func (api *APIClient) GetVenueByVenueId(venueId string) (Venues, error) {
