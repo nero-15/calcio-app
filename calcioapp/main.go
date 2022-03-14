@@ -367,6 +367,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if venues.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		venuesByteArray, _ := json.Marshal(venues)
 		return c.String(http.StatusOK, string(venuesByteArray))
 	})
