@@ -1175,12 +1175,17 @@ type Venues struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetVenueByVenueId(venueId string) ([]byte, error) {
+func (api *APIClient) GetVenueByVenueId(venueId string) (Venues, error) {
 	resp, err := api.doRequest("venues", map[string]string{
 		"country": "Italy",
 		"id":      venueId,
 	})
-	return resp, err
+	var venues Venues
+	if err != nil {
+		return venues, err
+	}
+	json.Unmarshal(resp, &venues)
+	return venues, nil
 }
 
 func (api *APIClient) GetPredictionsByFixtureId(fixtureId string) ([]byte, error) {
