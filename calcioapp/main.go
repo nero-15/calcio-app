@@ -364,6 +364,7 @@ func main() {
 	e.GET("/api/apiFootball/venue/:venueId", func(c echo.Context) error {
 		venueId := c.Param("venueId") //Stadio Giuseppe Meazza: 907
 		venues, err := apifootball.GetVenueByVenueId(venueId)
+
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
