@@ -1153,16 +1153,7 @@ func (api *APIClient) GetVenues() (Venues, error) {
 }
 
 type Venues struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Country string `json:"country"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		ID       int    `json:"id"`
 		Name     string `json:"name"`
