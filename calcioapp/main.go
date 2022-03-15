@@ -377,7 +377,10 @@ func main() {
 
 	e.GET("/api/apiFootball/predictions/:fixtureId", func(c echo.Context) error {
 		fixtureId := c.Param("fixtureId")
-		predictions, _ := apifootball.GetPredictionsByFixtureId(fixtureId)
+		predictions, err := apifootball.GetPredictionsByFixtureId(fixtureId)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		predictionsByteArray, _ := json.Marshal(predictions)
 		return c.String(http.StatusOK, string(predictionsByteArray))
 	})
