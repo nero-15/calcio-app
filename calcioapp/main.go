@@ -381,6 +381,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if predictions.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		predictionsByteArray, _ := json.Marshal(predictions)
 		return c.String(http.StatusOK, string(predictionsByteArray))
 	})
