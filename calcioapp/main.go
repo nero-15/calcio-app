@@ -377,8 +377,9 @@ func main() {
 
 	e.GET("/api/apiFootball/predictions/:fixtureId", func(c echo.Context) error {
 		fixtureId := c.Param("fixtureId")
-		resp, _ := apifootball.GetPredictionsByFixtureId(fixtureId)
-		return c.String(http.StatusOK, string(resp))
+		predictions, _ := apifootball.GetPredictionsByFixtureId(fixtureId)
+		predictionsByteArray, _ := json.Marshal(predictions)
+		return c.String(http.StatusOK, string(predictionsByteArray))
 	})
 
 	e.GET("/api/apiFootball/player/:playerId", func(c echo.Context) error {
