@@ -1173,11 +1173,16 @@ func (api *APIClient) GetVenueByVenueId(venueId string) (Venues, error) {
 	return venues, nil
 }
 
-func (api *APIClient) GetPredictionsByFixtureId(fixtureId string) ([]byte, error) {
+func (api *APIClient) GetPredictionsByFixtureId(fixtureId string) (Predictions, error) {
 	resp, err := api.doRequest("predictions", map[string]string{
 		"fixture": fixtureId,
 	})
-	return resp, err
+	var predictions Predictions
+	if err != nil {
+		return predictions, err
+	}
+	json.Unmarshal(resp, &predictions)
+	return predictions, nil
 }
 
 type Predictions struct {
