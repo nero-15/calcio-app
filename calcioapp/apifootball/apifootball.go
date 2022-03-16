@@ -1845,12 +1845,17 @@ type Predictions struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetPlayersByPlayerId(playerId string) ([]byte, error) {
+func (api *APIClient) GetPlayersByPlayerId(playerId string) (Players2, error) {
 	resp, err := api.doRequest("players", map[string]string{
 		"id":     playerId,
 		"season": "2021",
 	})
-	return resp, err
+	var players Players2
+	if err != nil {
+		return players, err
+	}
+	json.Unmarshal(resp, &players)
+	return players, nil
 }
 
 type Players2 struct {
