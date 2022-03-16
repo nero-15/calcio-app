@@ -395,6 +395,9 @@ func main() {
 		if err != nil {
 			return echo.NewHTTPError(http.StatusNotFound, "not found")
 		}
+		if players.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		playersByteArray, _ := json.Marshal(players)
 		return c.String(http.StatusOK, string(playersByteArray))
 	})
