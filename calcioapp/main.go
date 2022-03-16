@@ -390,7 +390,11 @@ func main() {
 
 	e.GET("/api/apiFootball/player/:playerId", func(c echo.Context) error {
 		playerId := c.Param("playerId") // M. Škriniar: 198
-		players, _ := apifootball.GetPlayersByPlayerId(playerId)
+		players, err := apifootball.GetPlayersByPlayerId(playerId)
+
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		playersByteArray, _ := json.Marshal(players)
 		return c.String(http.StatusOK, string(playersByteArray))
 	})
