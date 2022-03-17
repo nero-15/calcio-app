@@ -404,7 +404,14 @@ func main() {
 
 	e.GET("/api/apiFootball/player/:playerId/transfers", func(c echo.Context) error {
 		playerId := c.Param("playerId")
-		transfers, _ := apifootball.GetTransfersByPlayerId(playerId)
+		transfers, err := apifootball.GetTransfersByPlayerId(playerId)
+
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if transfers.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
 		transfersByteArray, _ := json.Marshal(transfers)
 		return c.String(http.StatusOK, string(transfersByteArray))
 	})
