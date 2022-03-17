@@ -1965,11 +1965,16 @@ type Players2 struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetTransfersByPlayerId(playerId string) ([]byte, error) {
+func (api *APIClient) GetTransfersByPlayerId(playerId string) (Transfers, error) {
 	resp, err := api.doRequest("transfers", map[string]string{
 		"player": playerId,
 	})
-	return resp, err
+	var transfers Transfers
+	if err != nil {
+		return transfers, err
+	}
+	json.Unmarshal(resp, &transfers)
+	return transfers, nil
 }
 
 type Transfers struct {
