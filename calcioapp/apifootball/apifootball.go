@@ -1972,6 +1972,42 @@ func (api *APIClient) GetTransfersByPlayerId(playerId string) ([]byte, error) {
 	return resp, err
 }
 
+type Transfers struct {
+	Get        string `json:"get"`
+	Parameters struct {
+		Player string `json:"player"`
+	} `json:"parameters"`
+	Errors  []interface{} `json:"errors"`
+	Results int           `json:"results"`
+	Paging  struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response []struct {
+		Player struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+		} `json:"player"`
+		Update    time.Time `json:"update"`
+		Transfers []struct {
+			Date  string `json:"date"`
+			Type  string `json:"type"`
+			Teams struct {
+				In struct {
+					ID   int    `json:"id"`
+					Name string `json:"name"`
+					Logo string `json:"logo"`
+				} `json:"in"`
+				Out struct {
+					ID   int    `json:"id"`
+					Name string `json:"name"`
+					Logo string `json:"logo"`
+				} `json:"out"`
+			} `json:"teams"`
+		} `json:"transfers"`
+	} `json:"response"`
+}
+
 func (api *APIClient) GetTrophiesByPlayerId(playerId string) ([]byte, error) {
 	resp, err := api.doRequest("trophies", map[string]string{
 		"player": playerId,
