@@ -404,8 +404,9 @@ func main() {
 
 	e.GET("/api/apiFootball/player/:playerId/transfers", func(c echo.Context) error {
 		playerId := c.Param("playerId")
-		resp, _ := apifootball.GetTransfersByPlayerId(playerId)
-		return c.String(http.StatusOK, string(resp))
+		transfers, _ := apifootball.GetTransfersByPlayerId(playerId)
+		transfersByteArray, _ := json.Marshal(transfers)
+		return c.String(http.StatusOK, string(transfersByteArray))
 	})
 
 	e.GET("/api/apiFootball/player/:playerId/trophies", func(c echo.Context) error {
