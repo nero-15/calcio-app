@@ -2013,11 +2013,16 @@ type Transfers struct {
 	} `json:"response"`
 }
 
-func (api *APIClient) GetTrophiesByPlayerId(playerId string) ([]byte, error) {
+func (api *APIClient) GetTrophiesByPlayerId(playerId string) (Trophies, error) {
 	resp, err := api.doRequest("trophies", map[string]string{
 		"player": playerId,
 	})
-	return resp, err
+	var trophies Trophies
+	if err != nil {
+		return trophies, err
+	}
+	json.Unmarshal(resp, &trophies)
+	return trophies, nil
 }
 
 type Trophies struct {
