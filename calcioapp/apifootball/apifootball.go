@@ -2020,6 +2020,25 @@ func (api *APIClient) GetTrophiesByPlayerId(playerId string) ([]byte, error) {
 	return resp, err
 }
 
+type Trophies struct {
+	Get        string `json:"get"`
+	Parameters struct {
+		Player string `json:"player"`
+	} `json:"parameters"`
+	Errors  []interface{} `json:"errors"`
+	Results int           `json:"results"`
+	Paging  struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response []struct {
+		League  string `json:"league"`
+		Country string `json:"country"`
+		Season  string `json:"season"`
+		Place   string `json:"place"`
+	} `json:"response"`
+}
+
 func (api *APIClient) GetSidelinedByPlayerId(playerId string) ([]byte, error) {
 	resp, err := api.doRequest("sidelined", map[string]string{
 		"player": playerId,
