@@ -418,8 +418,16 @@ func main() {
 
 	e.GET("/api/apiFootball/player/:playerId/trophies", func(c echo.Context) error {
 		playerId := c.Param("playerId")
-		resp, _ := apifootball.GetTrophiesByPlayerId(playerId)
-		return c.String(http.StatusOK, string(resp))
+		trophies, err := apifootball.GetTrophiesByPlayerId(playerId)
+
+		if err != nil {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		if trophies.Results == 0 {
+			return echo.NewHTTPError(http.StatusNotFound, "not found")
+		}
+		trophiesByteArray, _ := json.Marshal(trophies)
+		return c.String(http.StatusOK, string(trophiesByteArray))
 	})
 
 	e.GET("/api/apiFootball/player/:playerId/sidelined", func(c echo.Context) error {
