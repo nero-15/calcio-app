@@ -548,6 +548,20 @@ type Venues struct {
 	} `json:"response"`
 }
 
+type Trophies struct {
+	CommonResponse
+	Response []struct {
+		Trophy
+	} `json:"response"`
+}
+
+type Trophy struct {
+	League  string `json:"league"`
+	Country string `json:"country"`
+	Season  string `json:"season"`
+	Place   string `json:"place"`
+}
+
 func (api *APIClient) GetStatus() (Status, error) {
 	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
@@ -2023,25 +2037,6 @@ func (api *APIClient) GetTrophiesByPlayerId(playerId string) (Trophies, error) {
 	}
 	json.Unmarshal(resp, &trophies)
 	return trophies, nil
-}
-
-type Trophies struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Player string `json:"player"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
-	Response []struct {
-		League  string `json:"league"`
-		Country string `json:"country"`
-		Season  string `json:"season"`
-		Place   string `json:"place"`
-	} `json:"response"`
 }
 
 func (api *APIClient) GetSidelinedByPlayerId(playerId string) ([]byte, error) {
