@@ -2035,6 +2035,13 @@ type Trophies struct {
 	} `json:"response"`
 }
 
+type Trophy struct {
+	League  string `json:"league"`
+	Country string `json:"country"`
+	Season  string `json:"season"`
+	Place   string `json:"place"`
+}
+
 func (api *APIClient) GetSidelinedByPlayerId(playerId string) ([]byte, error) {
 	resp, err := api.doRequest("sidelined", map[string]string{
 		"player": playerId,
