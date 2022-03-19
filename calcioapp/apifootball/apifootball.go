@@ -2028,10 +2028,7 @@ func (api *APIClient) GetTrophiesByPlayerId(playerId string) (Trophies, error) {
 type Trophies struct {
 	CommonResponse
 	Response []struct {
-		League  string `json:"league"`
-		Country string `json:"country"`
-		Season  string `json:"season"`
-		Place   string `json:"place"`
+		Trophy
 	} `json:"response"`
 }
 
