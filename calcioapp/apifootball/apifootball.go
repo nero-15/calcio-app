@@ -2026,16 +2026,7 @@ func (api *APIClient) GetTrophiesByPlayerId(playerId string) (Trophies, error) {
 }
 
 type Trophies struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Player string `json:"player"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		League  string `json:"league"`
 		Country string `json:"country"`
