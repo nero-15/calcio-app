@@ -1998,23 +1998,8 @@ type Transfers struct {
 			ID   int    `json:"id"`
 			Name string `json:"name"`
 		} `json:"player"`
-		Update    time.Time `json:"update"`
-		Transfers []struct {
-			Date  string `json:"date"`
-			Type  string `json:"type"`
-			Teams struct {
-				In struct {
-					ID   int    `json:"id"`
-					Name string `json:"name"`
-					Logo string `json:"logo"`
-				} `json:"in"`
-				Out struct {
-					ID   int    `json:"id"`
-					Name string `json:"name"`
-					Logo string `json:"logo"`
-				} `json:"out"`
-			} `json:"teams"`
-		} `json:"transfers"`
+		Update    time.Time  `json:"update"`
+		Transfers []Transfer `json:"transfers"`
 	} `json:"response"`
 }
 
