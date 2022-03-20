@@ -541,13 +541,6 @@ type Fixtures struct {
 	} `json:"response"`
 }
 
-type Venues struct {
-	CommonResponse
-	Response []struct {
-		Venue
-	} `json:"response"`
-}
-
 type Trophies struct {
 	CommonResponse
 	Response []struct {
@@ -589,6 +582,13 @@ type Transfer struct {
 			Logo string `json:"logo"`
 		} `json:"out"`
 	} `json:"teams"`
+}
+
+type Venues struct {
+	CommonResponse
+	Response []struct {
+		Venue
+	} `json:"response"`
 }
 
 type Injuries struct {
