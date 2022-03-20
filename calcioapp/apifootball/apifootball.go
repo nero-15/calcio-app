@@ -541,6 +541,21 @@ type Fixtures struct {
 	} `json:"response"`
 }
 
+type Injuries struct {
+	CommonResponse
+	Response []struct {
+		Player  `json:"player"`
+		Team    `json:"team"`
+		Fixture struct {
+			ID        int       `json:"id"`
+			Timezone  string    `json:"timezone"`
+			Date      time.Time `json:"date"`
+			Timestamp int       `json:"timestamp"`
+		} `json:"fixture"`
+		League `json:"league"`
+	} `json:"response"`
+}
+
 type Trophies struct {
 	CommonResponse
 	Response []struct {
@@ -588,21 +603,6 @@ type Venues struct {
 	CommonResponse
 	Response []struct {
 		Venue
-	} `json:"response"`
-}
-
-type Injuries struct {
-	CommonResponse
-	Response []struct {
-		Player  `json:"player"`
-		Team    `json:"team"`
-		Fixture struct {
-			ID        int       `json:"id"`
-			Timezone  string    `json:"timezone"`
-			Date      time.Time `json:"date"`
-			Timestamp int       `json:"timestamp"`
-		} `json:"fixture"`
-		League `json:"league"`
 	} `json:"response"`
 }
 
