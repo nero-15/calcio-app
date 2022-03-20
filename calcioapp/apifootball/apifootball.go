@@ -51,6 +51,171 @@ type CommonResponse struct {
 	} `json:"paging"`
 }
 
+type Country struct {
+	Name string `json:"name"`
+	Code string `json:"code"`
+	Flag string `json:"flag"`
+}
+
+type Fixtures struct {
+	CommonResponse
+	Response []struct {
+		Fixture struct {
+			ID        int       `json:"id"`
+			Referee   string    `json:"referee"`
+			Timezone  string    `json:"timezone"`
+			Date      time.Time `json:"date"`
+			Timestamp int       `json:"timestamp"`
+			Periods   struct {
+				First  int `json:"first"`
+				Second int `json:"second"`
+			} `json:"periods"`
+			Venue struct {
+				ID   int    `json:"id"`
+				Name string `json:"name"`
+				City string `json:"city"`
+			} `json:"venue"`
+			Status struct {
+				Long    string `json:"long"`
+				Short   string `json:"short"`
+				Elapsed int    `json:"elapsed"`
+			} `json:"status"`
+		} `json:"fixture"`
+		League `json:"league"`
+		Teams  struct {
+			Home struct {
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Logo   string `json:"logo"`
+				Winner bool   `json:"winner"`
+			} `json:"home"`
+			Away struct {
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Logo   string `json:"logo"`
+				Winner bool   `json:"winner"`
+			} `json:"away"`
+		} `json:"teams"`
+		Goals struct {
+			Home int `json:"home"`
+			Away int `json:"away"`
+		} `json:"goals"`
+		Score struct {
+			Halftime struct {
+				Home int `json:"home"`
+				Away int `json:"away"`
+			} `json:"halftime"`
+			Fulltime struct {
+				Home int `json:"home"`
+				Away int `json:"away"`
+			} `json:"fulltime"`
+			Extratime struct {
+				Home interface{} `json:"home"`
+				Away interface{} `json:"away"`
+			} `json:"extratime"`
+			Penalty struct {
+				Home interface{} `json:"home"`
+				Away interface{} `json:"away"`
+			} `json:"penalty"`
+		} `json:"score"`
+	} `json:"response"`
+}
+
+type Injuries struct {
+	CommonResponse
+	Response []struct {
+		Player  `json:"player"`
+		Team    `json:"team"`
+		Fixture struct {
+			ID        int       `json:"id"`
+			Timezone  string    `json:"timezone"`
+			Date      time.Time `json:"date"`
+			Timestamp int       `json:"timestamp"`
+		} `json:"fixture"`
+		League `json:"league"`
+	} `json:"response"`
+}
+
+type League struct {
+	ID      int    `json:"id"`
+	Name    string `json:"name"`
+	Country string `json:"country"`
+	Logo    string `json:"logo"`
+	Flag    string `json:"flag"`
+	Season  int    `json:"season"`
+	Round   string `json:"round"`
+}
+
+type Leagues struct {
+	CommonResponse
+	Response []struct {
+		League  `json:"league"`
+		Country `json:"country"`
+		Seasons []Season `json:"seasons"`
+	} `json:"response"`
+}
+
+type Minute struct {
+	Zero15 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"0-15"`
+	One630 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"16-30"`
+	Three145 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"31-45"`
+	Four660 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"46-60"`
+	Six175 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"61-75"`
+	Seven690 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"76-90"`
+	Nine1105 struct {
+		Total      int    `json:"total"`
+		Percentage string `json:"percentage"`
+	} `json:"91-105"`
+	One06120 struct {
+		Total      interface{} `json:"total"`
+		Percentage interface{} `json:"percentage"`
+	} `json:"106-120"`
+}
+
+type Player struct {
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Age       int    `json:"age"`
+	Birth     struct {
+		Date    string `json:"date"`
+		Place   string `json:"place"`
+		Country string `json:"country"`
+	} `json:"birth"`
+	Nationality string `json:"nationality"`
+	Height      string `json:"height"`
+	Weight      string `json:"weight"`
+	Injured     bool   `json:"injured"`
+	Photo       string `json:"photo"`
+}
+
+type Players struct {
+	CommonResponse
+	Response []struct {
+		Player     `json:"player"`
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
+}
+
 type Status struct {
 	CommonResponse
 	Response struct {
@@ -69,22 +234,6 @@ type Status struct {
 			LimitDay int `json:"limit_day"`
 		} `json:"requests"`
 	} `json:"response"`
-}
-
-type League struct {
-	ID      int    `json:"id"`
-	Name    string `json:"name"`
-	Country string `json:"country"`
-	Logo    string `json:"logo"`
-	Flag    string `json:"flag"`
-	Season  int    `json:"season"`
-	Round   string `json:"round"`
-}
-
-type Country struct {
-	Name string `json:"name"`
-	Code string `json:"code"`
-	Flag string `json:"flag"`
 }
 
 type Season struct {
@@ -108,15 +257,6 @@ type Season struct {
 		Predictions bool `json:"predictions"`
 		Odds        bool `json:"odds"`
 	} `json:"coverage"`
-}
-
-type Leagues struct {
-	CommonResponse
-	Response []struct {
-		League  `json:"league"`
-		Country `json:"country"`
-		Seasons []Season `json:"seasons"`
-	} `json:"response"`
 }
 
 type Standings struct {
@@ -176,24 +316,6 @@ type Standings struct {
 			} `json:"standings"`
 		} `json:"league"`
 	} `json:"response"`
-}
-
-type Player struct {
-	ID        int    `json:"id"`
-	Name      string `json:"name"`
-	Firstname string `json:"firstname"`
-	Lastname  string `json:"lastname"`
-	Age       int    `json:"age"`
-	Birth     struct {
-		Date    string `json:"date"`
-		Place   string `json:"place"`
-		Country string `json:"country"`
-	} `json:"birth"`
-	Nationality string `json:"nationality"`
-	Height      string `json:"height"`
-	Weight      string `json:"weight"`
-	Injured     bool   `json:"injured"`
-	Photo       string `json:"photo"`
 }
 
 type Statistic struct {
@@ -258,110 +380,6 @@ type Statistic struct {
 		Missed   int         `json:"missed"`
 		Saved    interface{} `json:"saved"`
 	} `json:"penalty"`
-}
-
-type Topscorers struct {
-	CommonResponse
-	Response []struct {
-		Player     `json:"player"`
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
-type Topassists struct {
-	CommonResponse
-	Response []struct {
-		Player     `json:"player"`
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
-type Topyellowcards struct {
-	CommonResponse
-	Response []struct {
-		Player
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
-type Topredcards struct {
-	CommonResponse
-	Response []struct {
-		Player
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
-type Team struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Code     string `json:"code"`
-	Country  string `json:"country"`
-	Founded  int    `json:"founded"`
-	National bool   `json:"national"`
-	Logo     string `json:"logo"`
-}
-
-type Venue struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Address  string `json:"address"`
-	City     string `json:"city"`
-	Country  string `json:"country"`
-	Capacity int    `json:"capacity"`
-	Surface  string `json:"surface"`
-	Image    string `json:"image"`
-}
-
-type Teams struct {
-	CommonResponse
-	Response []struct {
-		Team  `json:"team"`
-		Venue `json:"venue"`
-	} `json:"response"`
-}
-
-type Players struct {
-	CommonResponse
-	Response []struct {
-		Player     `json:"player"`
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
-type Minute struct {
-	Zero15 struct {
-		Total      int    `json:"total"`
-		Percentage string `json:"percentage"`
-	} `json:"0-15"`
-	One630 struct {
-		Total      int    `json:"total"`
-		Percentage string `json:"percentage"`
-	} `json:"16-30"`
-	Three145 struct {
-		Total      int    `json:"total"`
-		Percentage string `json:"percentage"`
-	} `json:"31-45"`
-	Four660 struct {
-		Total      int    `json:"total"`
-		Percentage string `json:"percentage"`
-	} `json:"46-60"`
-	Six175 struct {
-		Total      int    `json:"total"`
-		Percentage string `json:"percentage"`
-	} `json:"61-75"`
-	Seven690 struct {
-		Total      int    `json:"total"`
-		Percentage string `json:"percentage"`
-	} `json:"76-90"`
-	Nine1105 struct {
-		Total      int    `json:"total"`
-		Percentage string `json:"percentage"`
-	} `json:"91-105"`
-	One06120 struct {
-		Total      interface{} `json:"total"`
-		Percentage interface{} `json:"percentage"`
-	} `json:"106-120"`
 }
 
 type Statistics struct {
@@ -477,74 +495,53 @@ type Statistics struct {
 	} `json:"response"`
 }
 
-type Fixtures struct {
+type Topscorers struct {
 	CommonResponse
 	Response []struct {
-		Fixture struct {
-			ID        int       `json:"id"`
-			Referee   string    `json:"referee"`
-			Timezone  string    `json:"timezone"`
-			Date      time.Time `json:"date"`
-			Timestamp int       `json:"timestamp"`
-			Periods   struct {
-				First  int `json:"first"`
-				Second int `json:"second"`
-			} `json:"periods"`
-			Venue struct {
-				ID   int    `json:"id"`
-				Name string `json:"name"`
-				City string `json:"city"`
-			} `json:"venue"`
-			Status struct {
-				Long    string `json:"long"`
-				Short   string `json:"short"`
-				Elapsed int    `json:"elapsed"`
-			} `json:"status"`
-		} `json:"fixture"`
-		League `json:"league"`
-		Teams  struct {
-			Home struct {
-				ID     int    `json:"id"`
-				Name   string `json:"name"`
-				Logo   string `json:"logo"`
-				Winner bool   `json:"winner"`
-			} `json:"home"`
-			Away struct {
-				ID     int    `json:"id"`
-				Name   string `json:"name"`
-				Logo   string `json:"logo"`
-				Winner bool   `json:"winner"`
-			} `json:"away"`
-		} `json:"teams"`
-		Goals struct {
-			Home int `json:"home"`
-			Away int `json:"away"`
-		} `json:"goals"`
-		Score struct {
-			Halftime struct {
-				Home int `json:"home"`
-				Away int `json:"away"`
-			} `json:"halftime"`
-			Fulltime struct {
-				Home int `json:"home"`
-				Away int `json:"away"`
-			} `json:"fulltime"`
-			Extratime struct {
-				Home interface{} `json:"home"`
-				Away interface{} `json:"away"`
-			} `json:"extratime"`
-			Penalty struct {
-				Home interface{} `json:"home"`
-				Away interface{} `json:"away"`
-			} `json:"penalty"`
-		} `json:"score"`
+		Player     `json:"player"`
+		Statistics []Statistic `json:"statistics"`
 	} `json:"response"`
 }
 
-type Venues struct {
+type Topassists struct {
 	CommonResponse
 	Response []struct {
-		Venue
+		Player     `json:"player"`
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
+}
+
+type Topyellowcards struct {
+	CommonResponse
+	Response []struct {
+		Player
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
+}
+
+type Topredcards struct {
+	CommonResponse
+	Response []struct {
+		Player
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
+}
+
+type Team struct {
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Code     string `json:"code"`
+	Country  string `json:"country"`
+	Founded  int    `json:"founded"`
+	National bool   `json:"national"`
+	Logo     string `json:"logo"`
+}
+
+type Teams struct {
+	CommonResponse
+	Response []struct {
+		Team  `json:"team"`
+		Venue `json:"venue"`
 	} `json:"response"`
 }
 
@@ -589,6 +586,24 @@ type Transfer struct {
 			Logo string `json:"logo"`
 		} `json:"out"`
 	} `json:"teams"`
+}
+
+type Venue struct {
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Address  string `json:"address"`
+	City     string `json:"city"`
+	Country  string `json:"country"`
+	Capacity int    `json:"capacity"`
+	Surface  string `json:"surface"`
+	Image    string `json:"image"`
+}
+
+type Venues struct {
+	CommonResponse
+	Response []struct {
+		Venue
+	} `json:"response"`
 }
 
 func (api *APIClient) GetStatus() (Status, error) {
@@ -787,50 +802,6 @@ func (api *APIClient) GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId string
 	}
 	json.Unmarshal(resp, &injuries)
 	return injuries, nil
-}
-
-type Injuries struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Fixture string `json:"fixture"`
-		League  string `json:"league"`
-		Season  string `json:"season"`
-		Team    string `json:"team"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
-	Response []struct {
-		Player struct {
-			ID     int    `json:"id"`
-			Name   string `json:"name"`
-			Photo  string `json:"photo"`
-			Type   string `json:"type"`
-			Reason string `json:"reason"`
-		} `json:"player"`
-		Team struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"team"`
-		Fixture struct {
-			ID        int       `json:"id"`
-			Timezone  string    `json:"timezone"`
-			Date      time.Time `json:"date"`
-			Timestamp int       `json:"timestamp"`
-		} `json:"fixture"`
-		League struct {
-			ID      int    `json:"id"`
-			Season  int    `json:"season"`
-			Name    string `json:"name"`
-			Country string `json:"country"`
-			Logo    string `json:"logo"`
-			Flag    string `json:"flag"`
-		} `json:"league"`
-	} `json:"response"`
 }
 
 func (api *APIClient) GetStatisticsByTeamIdAndFixtureId(teamId string, fixtureId string) (FixturesStatistics, error) {
