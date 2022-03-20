@@ -249,48 +249,6 @@ type Topscorers struct {
 	} `json:"response"`
 }
 
-type Topassists struct {
-	CommonResponse
-	Response []struct {
-		Player     `json:"player"`
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
-type Topyellowcards struct {
-	CommonResponse
-	Response []struct {
-		Player
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
-type Topredcards struct {
-	CommonResponse
-	Response []struct {
-		Player
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
-type Team struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Code     string `json:"code"`
-	Country  string `json:"country"`
-	Founded  int    `json:"founded"`
-	National bool   `json:"national"`
-	Logo     string `json:"logo"`
-}
-
-type Teams struct {
-	CommonResponse
-	Response []struct {
-		Team  `json:"team"`
-		Venue `json:"venue"`
-	} `json:"response"`
-}
-
 type Fixtures struct {
 	CommonResponse
 	Response []struct {
@@ -542,6 +500,48 @@ type Statistics struct {
 			Yellow Minute `json:"yellow"`
 			Red    Minute `json:"red"`
 		} `json:"cards"`
+	} `json:"response"`
+}
+
+type Topassists struct {
+	CommonResponse
+	Response []struct {
+		Player     `json:"player"`
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
+}
+
+type Topyellowcards struct {
+	CommonResponse
+	Response []struct {
+		Player
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
+}
+
+type Topredcards struct {
+	CommonResponse
+	Response []struct {
+		Player
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
+}
+
+type Team struct {
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Code     string `json:"code"`
+	Country  string `json:"country"`
+	Founded  int    `json:"founded"`
+	National bool   `json:"national"`
+	Logo     string `json:"logo"`
+}
+
+type Teams struct {
+	CommonResponse
+	Response []struct {
+		Team  `json:"team"`
+		Venue `json:"venue"`
 	} `json:"response"`
 }
 
