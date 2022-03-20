@@ -71,16 +71,6 @@ type Status struct {
 	} `json:"response"`
 }
 
-type League struct {
-	ID      int    `json:"id"`
-	Name    string `json:"name"`
-	Country string `json:"country"`
-	Logo    string `json:"logo"`
-	Flag    string `json:"flag"`
-	Season  int    `json:"season"`
-	Round   string `json:"round"`
-}
-
 type Country struct {
 	Name string `json:"name"`
 	Code string `json:"code"`
@@ -108,15 +98,6 @@ type Season struct {
 		Predictions bool `json:"predictions"`
 		Odds        bool `json:"odds"`
 	} `json:"coverage"`
-}
-
-type Leagues struct {
-	CommonResponse
-	Response []struct {
-		League  `json:"league"`
-		Country `json:"country"`
-		Seasons []Season `json:"seasons"`
-	} `json:"response"`
 }
 
 type Standings struct {
@@ -394,6 +375,25 @@ type Injuries struct {
 			Timestamp int       `json:"timestamp"`
 		} `json:"fixture"`
 		League `json:"league"`
+	} `json:"response"`
+}
+
+type League struct {
+	ID      int    `json:"id"`
+	Name    string `json:"name"`
+	Country string `json:"country"`
+	Logo    string `json:"logo"`
+	Flag    string `json:"flag"`
+	Season  int    `json:"season"`
+	Round   string `json:"round"`
+}
+
+type Leagues struct {
+	CommonResponse
+	Response []struct {
+		League  `json:"league"`
+		Country `json:"country"`
+		Seasons []Season `json:"seasons"`
 	} `json:"response"`
 }
 
