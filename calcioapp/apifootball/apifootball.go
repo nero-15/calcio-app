@@ -594,14 +594,8 @@ type Transfer struct {
 type Injuries struct {
 	CommonResponse
 	Response []struct {
-		Player struct {
-			ID     int    `json:"id"`
-			Name   string `json:"name"`
-			Photo  string `json:"photo"`
-			Type   string `json:"type"`
-			Reason string `json:"reason"`
-		} `json:"player"`
-		Team struct {
+		Player `json:"player"`
+		Team   struct {
 			ID   int    `json:"id"`
 			Name string `json:"name"`
 			Logo string `json:"logo"`
