@@ -159,24 +159,6 @@ type Standings struct {
 	} `json:"response"`
 }
 
-type Player struct {
-	ID        int    `json:"id"`
-	Name      string `json:"name"`
-	Firstname string `json:"firstname"`
-	Lastname  string `json:"lastname"`
-	Age       int    `json:"age"`
-	Birth     struct {
-		Date    string `json:"date"`
-		Place   string `json:"place"`
-		Country string `json:"country"`
-	} `json:"birth"`
-	Nationality string `json:"nationality"`
-	Height      string `json:"height"`
-	Weight      string `json:"weight"`
-	Injured     bool   `json:"injured"`
-	Photo       string `json:"photo"`
-}
-
 type Statistic struct {
 	Team   `json:"team"`
 	League `json:"league"`
@@ -372,6 +354,24 @@ type Minute struct {
 		Total      interface{} `json:"total"`
 		Percentage interface{} `json:"percentage"`
 	} `json:"106-120"`
+}
+
+type Player struct {
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
+	Age       int    `json:"age"`
+	Birth     struct {
+		Date    string `json:"date"`
+		Place   string `json:"place"`
+		Country string `json:"country"`
+	} `json:"birth"`
+	Nationality string `json:"nationality"`
+	Height      string `json:"height"`
+	Weight      string `json:"weight"`
+	Injured     bool   `json:"injured"`
+	Photo       string `json:"photo"`
 }
 
 type Players struct {
