@@ -2019,6 +2019,20 @@ type Transfers struct {
 }
 
 type Transfer struct {
+	Date  string `json:"date"`
+	Type  string `json:"type"`
+	Teams struct {
+		In struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"in"`
+		Out struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"out"`
+	} `json:"teams"`
 }
 
 func (api *APIClient) GetTrophiesByPlayerId(playerId string) (Trophies, error) {
