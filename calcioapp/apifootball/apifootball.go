@@ -291,14 +291,6 @@ type Teams struct {
 	} `json:"response"`
 }
 
-type Players struct {
-	CommonResponse
-	Response []struct {
-		Player     `json:"player"`
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
 type Fixtures struct {
 	CommonResponse
 	Response []struct {
@@ -430,6 +422,14 @@ type Minute struct {
 		Total      interface{} `json:"total"`
 		Percentage interface{} `json:"percentage"`
 	} `json:"106-120"`
+}
+
+type Players struct {
+	CommonResponse
+	Response []struct {
+		Player     `json:"player"`
+		Statistics []Statistic `json:"statistics"`
+	} `json:"response"`
 }
 
 type Statistics struct {
