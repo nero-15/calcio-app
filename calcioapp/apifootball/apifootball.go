@@ -594,19 +594,15 @@ type Transfer struct {
 type Injuries struct {
 	CommonResponse
 	Response []struct {
-		Player `json:"player"`
-		Team   struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"team"`
+		Player  `json:"player"`
+		Team    `json:"team"`
 		Fixture struct {
 			ID        int       `json:"id"`
 			Timezone  string    `json:"timezone"`
 			Date      time.Time `json:"date"`
 			Timestamp int       `json:"timestamp"`
 		} `json:"fixture"`
-		League
+		League `json:"league"`
 	} `json:"response"`
 }
 
