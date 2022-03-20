@@ -364,6 +364,85 @@ type Minute struct {
 	} `json:"106-120"`
 }
 
+type Fixtures struct {
+	CommonResponse
+	Response []struct {
+		Fixture struct {
+			ID        int       `json:"id"`
+			Referee   string    `json:"referee"`
+			Timezone  string    `json:"timezone"`
+			Date      time.Time `json:"date"`
+			Timestamp int       `json:"timestamp"`
+			Periods   struct {
+				First  int `json:"first"`
+				Second int `json:"second"`
+			} `json:"periods"`
+			Venue struct {
+				ID   int    `json:"id"`
+				Name string `json:"name"`
+				City string `json:"city"`
+			} `json:"venue"`
+			Status struct {
+				Long    string `json:"long"`
+				Short   string `json:"short"`
+				Elapsed int    `json:"elapsed"`
+			} `json:"status"`
+		} `json:"fixture"`
+		League `json:"league"`
+		Teams  struct {
+			Home struct {
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Logo   string `json:"logo"`
+				Winner bool   `json:"winner"`
+			} `json:"home"`
+			Away struct {
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Logo   string `json:"logo"`
+				Winner bool   `json:"winner"`
+			} `json:"away"`
+		} `json:"teams"`
+		Goals struct {
+			Home int `json:"home"`
+			Away int `json:"away"`
+		} `json:"goals"`
+		Score struct {
+			Halftime struct {
+				Home int `json:"home"`
+				Away int `json:"away"`
+			} `json:"halftime"`
+			Fulltime struct {
+				Home int `json:"home"`
+				Away int `json:"away"`
+			} `json:"fulltime"`
+			Extratime struct {
+				Home interface{} `json:"home"`
+				Away interface{} `json:"away"`
+			} `json:"extratime"`
+			Penalty struct {
+				Home interface{} `json:"home"`
+				Away interface{} `json:"away"`
+			} `json:"penalty"`
+		} `json:"score"`
+	} `json:"response"`
+}
+
+type Injuries struct {
+	CommonResponse
+	Response []struct {
+		Player  `json:"player"`
+		Team    `json:"team"`
+		Fixture struct {
+			ID        int       `json:"id"`
+			Timezone  string    `json:"timezone"`
+			Date      time.Time `json:"date"`
+			Timestamp int       `json:"timestamp"`
+		} `json:"fixture"`
+		League `json:"league"`
+	} `json:"response"`
+}
+
 type Statistics struct {
 	CommonResponse
 	Response struct {
@@ -474,85 +553,6 @@ type Statistics struct {
 			Yellow Minute `json:"yellow"`
 			Red    Minute `json:"red"`
 		} `json:"cards"`
-	} `json:"response"`
-}
-
-type Fixtures struct {
-	CommonResponse
-	Response []struct {
-		Fixture struct {
-			ID        int       `json:"id"`
-			Referee   string    `json:"referee"`
-			Timezone  string    `json:"timezone"`
-			Date      time.Time `json:"date"`
-			Timestamp int       `json:"timestamp"`
-			Periods   struct {
-				First  int `json:"first"`
-				Second int `json:"second"`
-			} `json:"periods"`
-			Venue struct {
-				ID   int    `json:"id"`
-				Name string `json:"name"`
-				City string `json:"city"`
-			} `json:"venue"`
-			Status struct {
-				Long    string `json:"long"`
-				Short   string `json:"short"`
-				Elapsed int    `json:"elapsed"`
-			} `json:"status"`
-		} `json:"fixture"`
-		League `json:"league"`
-		Teams  struct {
-			Home struct {
-				ID     int    `json:"id"`
-				Name   string `json:"name"`
-				Logo   string `json:"logo"`
-				Winner bool   `json:"winner"`
-			} `json:"home"`
-			Away struct {
-				ID     int    `json:"id"`
-				Name   string `json:"name"`
-				Logo   string `json:"logo"`
-				Winner bool   `json:"winner"`
-			} `json:"away"`
-		} `json:"teams"`
-		Goals struct {
-			Home int `json:"home"`
-			Away int `json:"away"`
-		} `json:"goals"`
-		Score struct {
-			Halftime struct {
-				Home int `json:"home"`
-				Away int `json:"away"`
-			} `json:"halftime"`
-			Fulltime struct {
-				Home int `json:"home"`
-				Away int `json:"away"`
-			} `json:"fulltime"`
-			Extratime struct {
-				Home interface{} `json:"home"`
-				Away interface{} `json:"away"`
-			} `json:"extratime"`
-			Penalty struct {
-				Home interface{} `json:"home"`
-				Away interface{} `json:"away"`
-			} `json:"penalty"`
-		} `json:"score"`
-	} `json:"response"`
-}
-
-type Injuries struct {
-	CommonResponse
-	Response []struct {
-		Player  `json:"player"`
-		Team    `json:"team"`
-		Fixture struct {
-			ID        int       `json:"id"`
-			Timezone  string    `json:"timezone"`
-			Date      time.Time `json:"date"`
-			Timestamp int       `json:"timestamp"`
-		} `json:"fixture"`
-		League `json:"league"`
 	} `json:"response"`
 }
 
