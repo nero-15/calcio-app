@@ -302,17 +302,6 @@ type Team struct {
 	Logo     string `json:"logo"`
 }
 
-type Venue struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Address  string `json:"address"`
-	City     string `json:"city"`
-	Country  string `json:"country"`
-	Capacity int    `json:"capacity"`
-	Surface  string `json:"surface"`
-	Image    string `json:"image"`
-}
-
 type Teams struct {
 	CommonResponse
 	Response []struct {
@@ -597,6 +586,17 @@ type Transfer struct {
 			Logo string `json:"logo"`
 		} `json:"out"`
 	} `json:"teams"`
+}
+
+type Venue struct {
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Address  string `json:"address"`
+	City     string `json:"city"`
+	Country  string `json:"country"`
+	Capacity int    `json:"capacity"`
+	Surface  string `json:"surface"`
+	Image    string `json:"image"`
 }
 
 type Venues struct {
