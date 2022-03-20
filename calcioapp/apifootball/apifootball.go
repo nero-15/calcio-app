@@ -241,14 +241,6 @@ type Statistic struct {
 	} `json:"penalty"`
 }
 
-type Topscorers struct {
-	CommonResponse
-	Response []struct {
-		Player     `json:"player"`
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
 type Fixtures struct {
 	CommonResponse
 	Response []struct {
@@ -500,6 +492,14 @@ type Statistics struct {
 			Yellow Minute `json:"yellow"`
 			Red    Minute `json:"red"`
 		} `json:"cards"`
+	} `json:"response"`
+}
+
+type Topscorers struct {
+	CommonResponse
+	Response []struct {
+		Player     `json:"player"`
+		Statistics []Statistic `json:"statistics"`
 	} `json:"response"`
 }
 
