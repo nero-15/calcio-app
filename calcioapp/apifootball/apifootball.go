@@ -606,14 +606,7 @@ type Injuries struct {
 			Date      time.Time `json:"date"`
 			Timestamp int       `json:"timestamp"`
 		} `json:"fixture"`
-		League struct {
-			ID      int    `json:"id"`
-			Season  int    `json:"season"`
-			Name    string `json:"name"`
-			Country string `json:"country"`
-			Logo    string `json:"logo"`
-			Flag    string `json:"flag"`
-		} `json:"league"`
+		League
 	} `json:"response"`
 }
 
