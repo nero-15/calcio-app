@@ -51,53 +51,10 @@ type CommonResponse struct {
 	} `json:"paging"`
 }
 
-type Status struct {
-	CommonResponse
-	Response struct {
-		Account struct {
-			Firstname string `json:"firstname"`
-			Lastname  string `json:"lastname"`
-			Email     string `json:"email"`
-		} `json:"account"`
-		Subscription struct {
-			Plan   string    `json:"plan"`
-			End    time.Time `json:"end"`
-			Active bool      `json:"active"`
-		} `json:"subscription"`
-		Requests struct {
-			Current  int `json:"current"`
-			LimitDay int `json:"limit_day"`
-		} `json:"requests"`
-	} `json:"response"`
-}
-
 type Country struct {
 	Name string `json:"name"`
 	Code string `json:"code"`
 	Flag string `json:"flag"`
-}
-
-type Season struct {
-	Year     int    `json:"year"`
-	Start    string `json:"start"`
-	End      string `json:"end"`
-	Current  bool   `json:"current"`
-	Coverage struct {
-		Fixtures struct {
-			Events             bool `json:"events"`
-			Lineups            bool `json:"lineups"`
-			StatisticsFixtures bool `json:"statistics_fixtures"`
-			StatisticsPlayers  bool `json:"statistics_players"`
-		} `json:"fixtures"`
-		Standings   bool `json:"standings"`
-		Players     bool `json:"players"`
-		TopScorers  bool `json:"top_scorers"`
-		TopAssists  bool `json:"top_assists"`
-		TopCards    bool `json:"top_cards"`
-		Injuries    bool `json:"injuries"`
-		Predictions bool `json:"predictions"`
-		Odds        bool `json:"odds"`
-	} `json:"coverage"`
 }
 
 type Fixtures struct {
@@ -257,6 +214,49 @@ type Players struct {
 		Player     `json:"player"`
 		Statistics []Statistic `json:"statistics"`
 	} `json:"response"`
+}
+
+type Status struct {
+	CommonResponse
+	Response struct {
+		Account struct {
+			Firstname string `json:"firstname"`
+			Lastname  string `json:"lastname"`
+			Email     string `json:"email"`
+		} `json:"account"`
+		Subscription struct {
+			Plan   string    `json:"plan"`
+			End    time.Time `json:"end"`
+			Active bool      `json:"active"`
+		} `json:"subscription"`
+		Requests struct {
+			Current  int `json:"current"`
+			LimitDay int `json:"limit_day"`
+		} `json:"requests"`
+	} `json:"response"`
+}
+
+type Season struct {
+	Year     int    `json:"year"`
+	Start    string `json:"start"`
+	End      string `json:"end"`
+	Current  bool   `json:"current"`
+	Coverage struct {
+		Fixtures struct {
+			Events             bool `json:"events"`
+			Lineups            bool `json:"lineups"`
+			StatisticsFixtures bool `json:"statistics_fixtures"`
+			StatisticsPlayers  bool `json:"statistics_players"`
+		} `json:"fixtures"`
+		Standings   bool `json:"standings"`
+		Players     bool `json:"players"`
+		TopScorers  bool `json:"top_scorers"`
+		TopAssists  bool `json:"top_assists"`
+		TopCards    bool `json:"top_cards"`
+		Injuries    bool `json:"injuries"`
+		Predictions bool `json:"predictions"`
+		Odds        bool `json:"odds"`
+	} `json:"coverage"`
 }
 
 type Standings struct {
