@@ -562,6 +562,35 @@ type Trophy struct {
 	Place   string `json:"place"`
 }
 
+type Transfers struct {
+	CommonResponse
+	Response []struct {
+		Player struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+		} `json:"player"`
+		Update    time.Time  `json:"update"`
+		Transfers []Transfer `json:"transfers"`
+	} `json:"response"`
+}
+
+type Transfer struct {
+	Date  string `json:"date"`
+	Type  string `json:"type"`
+	Teams struct {
+		In struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"in"`
+		Out struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"out"`
+	} `json:"teams"`
+}
+
 func (api *APIClient) GetStatus() (Status, error) {
 	resp, err := api.doRequest("status", map[string]string{})
 	var status Status
@@ -1989,35 +2018,6 @@ func (api *APIClient) GetTransfersByPlayerId(playerId string) (Transfers, error)
 	}
 	json.Unmarshal(resp, &transfers)
 	return transfers, nil
-}
-
-type Transfers struct {
-	CommonResponse
-	Response []struct {
-		Player struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-		} `json:"player"`
-		Update    time.Time  `json:"update"`
-		Transfers []Transfer `json:"transfers"`
-	} `json:"response"`
-}
-
-type Transfer struct {
-	Date  string `json:"date"`
-	Type  string `json:"type"`
-	Teams struct {
-		In struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"in"`
-		Out struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"out"`
-	} `json:"teams"`
 }
 
 func (api *APIClient) GetTrophiesByPlayerId(playerId string) (Trophies, error) {
