@@ -1992,16 +1992,7 @@ func (api *APIClient) GetTransfersByPlayerId(playerId string) (Transfers, error)
 }
 
 type Transfers struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Player string `json:"player"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		Player struct {
 			ID   int    `json:"id"`
