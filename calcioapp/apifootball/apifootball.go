@@ -2018,6 +2018,9 @@ type Transfers struct {
 	} `json:"response"`
 }
 
+type Transfer struct {
+}
+
 func (api *APIClient) GetTrophiesByPlayerId(playerId string) (Trophies, error) {
 	resp, err := api.doRequest("trophies", map[string]string{
 		"player": playerId,
