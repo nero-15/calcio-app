@@ -790,19 +790,7 @@ func (api *APIClient) GetInjuriesByLeagueIdAndTeamIdAndFixtureId(leagueId string
 }
 
 type Injuries struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Fixture string `json:"fixture"`
-		League  string `json:"league"`
-		Season  string `json:"season"`
-		Team    string `json:"team"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		Player struct {
 			ID     int    `json:"id"`
