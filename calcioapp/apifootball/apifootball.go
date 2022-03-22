@@ -121,6 +121,21 @@ type Fixtures struct {
 	} `json:"response"`
 }
 
+type FixturesStatistics struct {
+	CommonResponse
+	Response []struct {
+		Team struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"team"`
+		Statistics []struct {
+			Type  string `json:"type"`
+			Value int    `json:"value"`
+		} `json:"statistics"`
+	} `json:"response"`
+}
+
 type Injuries struct {
 	CommonResponse
 	Response []struct {
@@ -815,21 +830,6 @@ func (api *APIClient) GetStatisticsByTeamIdAndFixtureId(teamId string, fixtureId
 	}
 	json.Unmarshal(resp, &fixturesStatistics)
 	return fixturesStatistics, nil
-}
-
-type FixturesStatistics struct {
-	CommonResponse
-	Response []struct {
-		Team struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"team"`
-		Statistics []struct {
-			Type  string `json:"type"`
-			Value int    `json:"value"`
-		} `json:"statistics"`
-	} `json:"response"`
 }
 
 func (api *APIClient) GetEventsByTeamIdAndFixtureId(teamId string, fixtureId string) (Events, error) {
