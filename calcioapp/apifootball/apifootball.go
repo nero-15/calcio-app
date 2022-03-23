@@ -57,6 +57,32 @@ type Country struct {
 	Flag string `json:"flag"`
 }
 
+type Events struct {
+	CommonResponse
+	Response []struct {
+		Time struct {
+			Elapsed int         `json:"elapsed"`
+			Extra   interface{} `json:"extra"`
+		} `json:"time"`
+		Team struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"team"`
+		Player struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+		} `json:"player"`
+		Assist struct {
+			ID   interface{} `json:"id"`
+			Name interface{} `json:"name"`
+		} `json:"assist"`
+		Type     string      `json:"type"`
+		Detail   string      `json:"detail"`
+		Comments interface{} `json:"comments"`
+	} `json:"response"`
+}
+
 type Fixtures struct {
 	CommonResponse
 	Response []struct {
@@ -843,42 +869,6 @@ func (api *APIClient) GetEventsByTeamIdAndFixtureId(teamId string, fixtureId str
 	}
 	json.Unmarshal(resp, &events)
 	return events, nil
-}
-
-type Events struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Fixture string `json:"fixture"`
-		Team    string `json:"team"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
-	Response []struct {
-		Time struct {
-			Elapsed int         `json:"elapsed"`
-			Extra   interface{} `json:"extra"`
-		} `json:"time"`
-		Team struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"team"`
-		Player struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-		} `json:"player"`
-		Assist struct {
-			ID   interface{} `json:"id"`
-			Name interface{} `json:"name"`
-		} `json:"assist"`
-		Type     string      `json:"type"`
-		Detail   string      `json:"detail"`
-		Comments interface{} `json:"comments"`
-	} `json:"response"`
 }
 
 func (api *APIClient) GetLineupsByTeamIdAndFixtureId(teamId string, fixtureId string) (Lineups, error) {
