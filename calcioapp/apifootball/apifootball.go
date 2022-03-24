@@ -885,17 +885,7 @@ func (api *APIClient) GetLineupsByTeamIdAndFixtureId(teamId string, fixtureId st
 }
 
 type Lineups struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Fixture string `json:"fixture"`
-		Team    string `json:"team"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		Team struct {
 			ID     int    `json:"id"`
