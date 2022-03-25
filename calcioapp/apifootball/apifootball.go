@@ -40,6 +40,40 @@ func (api *APIClient) doRequest(urlPath string, query map[string]string) (body [
 	return byteArray, nil
 }
 
+type Coachs struct {
+	CommonResponse
+	Response []struct {
+		ID        int    `json:"id"`
+		Name      string `json:"name"`
+		Firstname string `json:"firstname"`
+		Lastname  string `json:"lastname"`
+		Age       int    `json:"age"`
+		Birth     struct {
+			Date    string      `json:"date"`
+			Place   interface{} `json:"place"`
+			Country string      `json:"country"`
+		} `json:"birth"`
+		Nationality string      `json:"nationality"`
+		Height      interface{} `json:"height"`
+		Weight      interface{} `json:"weight"`
+		Photo       string      `json:"photo"`
+		Team        struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"team"`
+		Career []struct {
+			Team struct {
+				ID   int    `json:"id"`
+				Name string `json:"name"`
+				Logo string `json:"logo"`
+			} `json:"team"`
+			Start string `json:"start"`
+			End   string `json:"end"`
+		} `json:"career"`
+	} `json:"response"`
+}
+
 type CommonResponse struct {
 	Get        string        `json:"get"`
 	Parameters []interface{} `json:"parameters"`
@@ -1028,49 +1062,6 @@ func (api *APIClient) GetCoachsByTeamId(teamId string) (Coachs, error) {
 	}
 	json.Unmarshal(resp, &coachs)
 	return coachs, nil
-}
-
-type Coachs struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Team string `json:"team"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
-	Response []struct {
-		ID        int    `json:"id"`
-		Name      string `json:"name"`
-		Firstname string `json:"firstname"`
-		Lastname  string `json:"lastname"`
-		Age       int    `json:"age"`
-		Birth     struct {
-			Date    string      `json:"date"`
-			Place   interface{} `json:"place"`
-			Country string      `json:"country"`
-		} `json:"birth"`
-		Nationality string      `json:"nationality"`
-		Height      interface{} `json:"height"`
-		Weight      interface{} `json:"weight"`
-		Photo       string      `json:"photo"`
-		Team        struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"team"`
-		Career []struct {
-			Team struct {
-				ID   int    `json:"id"`
-				Name string `json:"name"`
-				Logo string `json:"logo"`
-			} `json:"team"`
-			Start string `json:"start"`
-			End   string `json:"end"`
-		} `json:"career"`
-	} `json:"response"`
 }
 
 func (api *APIClient) GetSquadsByTeamId(teamId string) (Squads, error) {
