@@ -516,6 +516,25 @@ type Standings struct {
 	} `json:"response"`
 }
 
+type Squads struct {
+	CommonResponse
+	Response []struct {
+		Team struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+			Logo string `json:"logo"`
+		} `json:"team"`
+		Players []struct {
+			ID       int    `json:"id"`
+			Name     string `json:"name"`
+			Age      int    `json:"age"`
+			Number   int    `json:"number"`
+			Position string `json:"position"`
+			Photo    string `json:"photo"`
+		} `json:"players"`
+	} `json:"response"`
+}
+
 type Statistic struct {
 	Team   `json:"team"`
 	League `json:"league"`
@@ -1076,25 +1095,6 @@ func (api *APIClient) GetSquadsByTeamId(teamId string) (Squads, error) {
 	}
 	json.Unmarshal(resp, &squads)
 	return squads, nil
-}
-
-type Squads struct {
-	CommonResponse
-	Response []struct {
-		Team struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"team"`
-		Players []struct {
-			ID       int    `json:"id"`
-			Name     string `json:"name"`
-			Age      int    `json:"age"`
-			Number   int    `json:"number"`
-			Position string `json:"position"`
-			Photo    string `json:"photo"`
-		} `json:"players"`
-	} `json:"response"`
 }
 
 func (api *APIClient) GetHeadtoheadByLeagueIdAndH2hId(leagueId string, h2hId string) ([]byte, error) {
