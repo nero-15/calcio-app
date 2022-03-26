@@ -1144,16 +1144,7 @@ func (api *APIClient) GetPredictionsByFixtureId(fixtureId string) (Predictions, 
 }
 
 type Predictions struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		Fixture string `json:"fixture"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		Predictions struct {
 			Winner struct {
