@@ -73,36 +73,7 @@ type Coach struct {
 
 type Coachs struct {
 	CommonResponse
-	Response []struct {
-		ID        int    `json:"id"`
-		Name      string `json:"name"`
-		Firstname string `json:"firstname"`
-		Lastname  string `json:"lastname"`
-		Age       int    `json:"age"`
-		Birth     struct {
-			Date    string      `json:"date"`
-			Place   interface{} `json:"place"`
-			Country string      `json:"country"`
-		} `json:"birth"`
-		Nationality string      `json:"nationality"`
-		Height      interface{} `json:"height"`
-		Weight      interface{} `json:"weight"`
-		Photo       string      `json:"photo"`
-		Team        struct {
-			ID   int    `json:"id"`
-			Name string `json:"name"`
-			Logo string `json:"logo"`
-		} `json:"team"`
-		Career []struct {
-			Team struct {
-				ID   int    `json:"id"`
-				Name string `json:"name"`
-				Logo string `json:"logo"`
-			} `json:"team"`
-			Start string `json:"start"`
-			End   string `json:"end"`
-		} `json:"career"`
-	} `json:"response"`
+	Response []Coach `json:"response"`
 }
 
 type CommonResponse struct {
