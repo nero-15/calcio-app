@@ -1143,6 +1143,157 @@ func (api *APIClient) GetPredictionsByFixtureId(fixtureId string) (Predictions, 
 	return predictions, nil
 }
 
+func (api *APIClient) GetPlayersByPlayerId(playerId string) (Players2, error) {
+	resp, err := api.doRequest("players", map[string]string{
+		"id":     playerId,
+		"season": "2021",
+	})
+	var players Players2
+	if err != nil {
+		return players, err
+	}
+	json.Unmarshal(resp, &players)
+	return players, nil
+}
+
+type Players2 struct {
+	Get        string `json:"get"`
+	Parameters struct {
+		ID     string `json:"id"`
+		Season string `json:"season"`
+	} `json:"parameters"`
+	Errors  []interface{} `json:"errors"`
+	Results int           `json:"results"`
+	Paging  struct {
+		Current int `json:"current"`
+		Total   int `json:"total"`
+	} `json:"paging"`
+	Response []struct {
+		Player struct {
+			ID        int    `json:"id"`
+			Name      string `json:"name"`
+			Firstname string `json:"firstname"`
+			Lastname  string `json:"lastname"`
+			Age       int    `json:"age"`
+			Birth     struct {
+				Date    string `json:"date"`
+				Place   string `json:"place"`
+				Country string `json:"country"`
+			} `json:"birth"`
+			Nationality string `json:"nationality"`
+			Height      string `json:"height"`
+			Weight      string `json:"weight"`
+			Injured     bool   `json:"injured"`
+			Photo       string `json:"photo"`
+		} `json:"player"`
+		Statistics []struct {
+			Team struct {
+				ID   int    `json:"id"`
+				Name string `json:"name"`
+				Logo string `json:"logo"`
+			} `json:"team"`
+			League struct {
+				ID      int    `json:"id"`
+				Name    string `json:"name"`
+				Country string `json:"country"`
+				Logo    string `json:"logo"`
+				Flag    string `json:"flag"`
+				Season  int    `json:"season"`
+			} `json:"league"`
+			Games struct {
+				Appearences int         `json:"appearences"`
+				Lineups     int         `json:"lineups"`
+				Minutes     int         `json:"minutes"`
+				Number      interface{} `json:"number"`
+				Position    string      `json:"position"`
+				Rating      string      `json:"rating"`
+				Captain     bool        `json:"captain"`
+			} `json:"games"`
+			Substitutes struct {
+				In    int `json:"in"`
+				Out   int `json:"out"`
+				Bench int `json:"bench"`
+			} `json:"substitutes"`
+			Shots struct {
+				Total int `json:"total"`
+				On    int `json:"on"`
+			} `json:"shots"`
+			Goals struct {
+				Total    int         `json:"total"`
+				Conceded int         `json:"conceded"`
+				Assists  interface{} `json:"assists"`
+				Saves    interface{} `json:"saves"`
+			} `json:"goals"`
+			Passes struct {
+				Total    int `json:"total"`
+				Key      int `json:"key"`
+				Accuracy int `json:"accuracy"`
+			} `json:"passes"`
+			Tackles struct {
+				Total         int `json:"total"`
+				Blocks        int `json:"blocks"`
+				Interceptions int `json:"interceptions"`
+			} `json:"tackles"`
+			Duels struct {
+				Total int `json:"total"`
+				Won   int `json:"won"`
+			} `json:"duels"`
+			Dribbles struct {
+				Attempts int         `json:"attempts"`
+				Success  int         `json:"success"`
+				Past     interface{} `json:"past"`
+			} `json:"dribbles"`
+			Fouls struct {
+				Drawn     int `json:"drawn"`
+				Committed int `json:"committed"`
+			} `json:"fouls"`
+			Cards struct {
+				Yellow    int `json:"yellow"`
+				Yellowred int `json:"yellowred"`
+				Red       int `json:"red"`
+			} `json:"cards"`
+			Penalty struct {
+				Won      interface{} `json:"won"`
+				Commited interface{} `json:"commited"`
+				Scored   int         `json:"scored"`
+				Missed   int         `json:"missed"`
+				Saved    interface{} `json:"saved"`
+			} `json:"penalty"`
+		} `json:"statistics"`
+	} `json:"response"`
+}
+
+func (api *APIClient) GetTransfersByPlayerId(playerId string) (Transfers, error) {
+	resp, err := api.doRequest("transfers", map[string]string{
+		"player": playerId,
+	})
+	var transfers Transfers
+	if err != nil {
+		return transfers, err
+	}
+	json.Unmarshal(resp, &transfers)
+	return transfers, nil
+}
+
+func (api *APIClient) GetTrophiesByPlayerId(playerId string) (Trophies, error) {
+	resp, err := api.doRequest("trophies", map[string]string{
+		"player": playerId,
+	})
+	var trophies Trophies
+	if err != nil {
+		return trophies, err
+	}
+	json.Unmarshal(resp, &trophies)
+	return trophies, nil
+}
+
+func (api *APIClient) GetSidelinedByPlayerId(playerId string) ([]byte, error) {
+	resp, err := api.doRequest("sidelined", map[string]string{
+		"player": playerId,
+	})
+	return resp, err
+}
+
 type Predictions struct {
 	CommonResponse
 	Response []struct {
@@ -1792,155 +1943,4 @@ type Predictions struct {
 			} `json:"score"`
 		} `json:"h2h"`
 	} `json:"response"`
-}
-
-func (api *APIClient) GetPlayersByPlayerId(playerId string) (Players2, error) {
-	resp, err := api.doRequest("players", map[string]string{
-		"id":     playerId,
-		"season": "2021",
-	})
-	var players Players2
-	if err != nil {
-		return players, err
-	}
-	json.Unmarshal(resp, &players)
-	return players, nil
-}
-
-type Players2 struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		ID     string `json:"id"`
-		Season string `json:"season"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
-	Response []struct {
-		Player struct {
-			ID        int    `json:"id"`
-			Name      string `json:"name"`
-			Firstname string `json:"firstname"`
-			Lastname  string `json:"lastname"`
-			Age       int    `json:"age"`
-			Birth     struct {
-				Date    string `json:"date"`
-				Place   string `json:"place"`
-				Country string `json:"country"`
-			} `json:"birth"`
-			Nationality string `json:"nationality"`
-			Height      string `json:"height"`
-			Weight      string `json:"weight"`
-			Injured     bool   `json:"injured"`
-			Photo       string `json:"photo"`
-		} `json:"player"`
-		Statistics []struct {
-			Team struct {
-				ID   int    `json:"id"`
-				Name string `json:"name"`
-				Logo string `json:"logo"`
-			} `json:"team"`
-			League struct {
-				ID      int    `json:"id"`
-				Name    string `json:"name"`
-				Country string `json:"country"`
-				Logo    string `json:"logo"`
-				Flag    string `json:"flag"`
-				Season  int    `json:"season"`
-			} `json:"league"`
-			Games struct {
-				Appearences int         `json:"appearences"`
-				Lineups     int         `json:"lineups"`
-				Minutes     int         `json:"minutes"`
-				Number      interface{} `json:"number"`
-				Position    string      `json:"position"`
-				Rating      string      `json:"rating"`
-				Captain     bool        `json:"captain"`
-			} `json:"games"`
-			Substitutes struct {
-				In    int `json:"in"`
-				Out   int `json:"out"`
-				Bench int `json:"bench"`
-			} `json:"substitutes"`
-			Shots struct {
-				Total int `json:"total"`
-				On    int `json:"on"`
-			} `json:"shots"`
-			Goals struct {
-				Total    int         `json:"total"`
-				Conceded int         `json:"conceded"`
-				Assists  interface{} `json:"assists"`
-				Saves    interface{} `json:"saves"`
-			} `json:"goals"`
-			Passes struct {
-				Total    int `json:"total"`
-				Key      int `json:"key"`
-				Accuracy int `json:"accuracy"`
-			} `json:"passes"`
-			Tackles struct {
-				Total         int `json:"total"`
-				Blocks        int `json:"blocks"`
-				Interceptions int `json:"interceptions"`
-			} `json:"tackles"`
-			Duels struct {
-				Total int `json:"total"`
-				Won   int `json:"won"`
-			} `json:"duels"`
-			Dribbles struct {
-				Attempts int         `json:"attempts"`
-				Success  int         `json:"success"`
-				Past     interface{} `json:"past"`
-			} `json:"dribbles"`
-			Fouls struct {
-				Drawn     int `json:"drawn"`
-				Committed int `json:"committed"`
-			} `json:"fouls"`
-			Cards struct {
-				Yellow    int `json:"yellow"`
-				Yellowred int `json:"yellowred"`
-				Red       int `json:"red"`
-			} `json:"cards"`
-			Penalty struct {
-				Won      interface{} `json:"won"`
-				Commited interface{} `json:"commited"`
-				Scored   int         `json:"scored"`
-				Missed   int         `json:"missed"`
-				Saved    interface{} `json:"saved"`
-			} `json:"penalty"`
-		} `json:"statistics"`
-	} `json:"response"`
-}
-
-func (api *APIClient) GetTransfersByPlayerId(playerId string) (Transfers, error) {
-	resp, err := api.doRequest("transfers", map[string]string{
-		"player": playerId,
-	})
-	var transfers Transfers
-	if err != nil {
-		return transfers, err
-	}
-	json.Unmarshal(resp, &transfers)
-	return transfers, nil
-}
-
-func (api *APIClient) GetTrophiesByPlayerId(playerId string) (Trophies, error) {
-	resp, err := api.doRequest("trophies", map[string]string{
-		"player": playerId,
-	})
-	var trophies Trophies
-	if err != nil {
-		return trophies, err
-	}
-	json.Unmarshal(resp, &trophies)
-	return trophies, nil
-}
-
-func (api *APIClient) GetSidelinedByPlayerId(playerId string) ([]byte, error) {
-	resp, err := api.doRequest("sidelined", map[string]string{
-		"player": playerId,
-	})
-	return resp, err
 }
