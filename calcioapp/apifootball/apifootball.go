@@ -1151,12 +1151,12 @@ func (api *APIClient) GetPredictionsByFixtureId(fixtureId string) (Predictions, 
 	return predictions, nil
 }
 
-func (api *APIClient) GetPlayersByPlayerId(playerId string) (Players2, error) {
+func (api *APIClient) GetPlayersByPlayerId(playerId string) (Players, error) {
 	resp, err := api.doRequest("players", map[string]string{
 		"id":     playerId,
 		"season": "2021",
 	})
-	var players Players2
+	var players Players
 	if err != nil {
 		return players, err
 	}
