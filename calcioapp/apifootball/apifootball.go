@@ -1157,17 +1157,7 @@ func (api *APIClient) GetPlayersByPlayerId(playerId string) (Players2, error) {
 }
 
 type Players2 struct {
-	Get        string `json:"get"`
-	Parameters struct {
-		ID     string `json:"id"`
-		Season string `json:"season"`
-	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	CommonResponse
 	Response []struct {
 		Player struct {
 			ID        int    `json:"id"`
