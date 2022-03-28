@@ -414,14 +414,6 @@ type Players struct {
 	} `json:"response"`
 }
 
-type Players2 struct {
-	CommonResponse
-	Response []struct {
-		Player     `json:"player"`
-		Statistics []Statistic `json:"statistics"`
-	} `json:"response"`
-}
-
 type Status struct {
 	CommonResponse
 	Response struct {
